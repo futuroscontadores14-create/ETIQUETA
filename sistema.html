@@ -362,6 +362,21 @@ ul.lista button.item {
 .linha-edita .junto { display: flex; align-items: center; gap: 0.35rem; margin-left: auto; }
 .resumo:empty { display: none; }
 
+/* faixa que aparece enquanto os dados são os do exemplo */
+.faixa-exemplo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  border: 1px solid var(--atencao);
+  background: var(--cartao);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+}
+.faixa-exemplo p { font-size: 0.9rem; color: var(--grafite); flex: 1 1 14rem; }
+.faixa-exemplo strong { display: block; color: var(--tinta); }
+
 /* ---------------- diálogo e aviso (no lugar de alert/confirm) ---------------- */
 
 .dialogo-fundo {
@@ -788,12 +803,19 @@ function carregar () {
       d.canais = d.canais || []
       d.insumos = d.insumos || []
       d.fichas = d.fichas || []
+      if (d.exemplo === undefined) d.exemplo = pareceExemplo(d)
       return d
     }
   } catch (e) {
     console.warn('Não foi possível ler os dados salvos:', e)
   }
   return { negocio: Object.assign({}, NEGOCIO_PADRAO), canais: [], insumos: [], fichas: [] }
+}
+
+/* dados salvos antes da marca "exemplo" existir: reconhece o caso da confeitaria */
+function pareceExemplo (d) {
+  return (d.fichas || []).some(f => f.nome === 'Bolo de pote — chocolate') &&
+    (d.insumos || []).some(i => i.nome === 'Chocolate em pó')
 }
 
 function salvar () {
@@ -861,6 +883,7 @@ function carregarExemplo () {
   precosPraticados[canais[3].id] = 12
 
   dados = {
+    exemplo: true,
     negocio: {
       porte: 'MEI',
       aliquotaSimples: 0,
@@ -990,7 +1013,7 @@ function telaPainel () {
     return titulo('Etiqueta', 'Saiba quanto cobrar. E quanto sobra.') + avisoArmazenamento() +
       '<div class="vazio">Comece pela base do negócio: dez minutos, uma vez só.' +
       '<div class="botoes" style="justify-content:center">' +
-      '<button class="acao" data-acao="ir" data-chave="base">Configurar a base</button>' +
+      '<button class="acao" data-acao="ir" data-chave="base">Começar com os meus dados</button>' +
       '<button class="acao secundaria" data-acao="exemplo">Ver com o exemplo pronto</button>' +
       '</div></div>'
   }
@@ -1787,6 +1810,7 @@ function render () {
       '<p class="apoio" style="margin-top:.5rem">Confira margens e taxas dos canais em ' +
       '<a href="#base">Base</a>.</p></div>'
   }
+  if (dados.exemplo) html = faixaExemplo() + html
   atualizar(document.getElementById('tela'), html)
 
   atualizar(document.getElementById('navegacao'), TELAS.map(t =>
@@ -1818,6 +1842,13 @@ function render () {
       }
     }
   }
+}
+
+function faixaExemplo () {
+  return '<div class="faixa-exemplo" role="note">' +
+    '<p><strong>Você está vendo um exemplo.</strong>Os números são de uma confeitaria fictícia. ' +
+    'Para usar com o seu negócio, comece com os campos em branco.</p>' +
+    '<button class="acao" data-acao="comecar-meu">Começar com os meus dados</button></div>'
 }
 
 /* ---- diálogo de confirmação e aviso rápido ----
@@ -2100,6 +2131,19 @@ document.addEventListener('click', function (e) {
       dados = { negocio: Object.assign({}, NEGOCIO_PADRAO), canais: [], insumos: [], fichas: [] }
       ui.mensagem = 'Tudo apagado.'
       break
+    case 'comecar-meu':
+      perguntar('Começar com os seus dados?',
+        'O exemplo da confeitaria sai deste aparelho e todos os campos ficam em branco para você ' +
+        'preencher, começando pela base do negócio.', 'Começar em branco', 'comecar-meu-sim')
+      break
+    case 'comecar-meu-sim':
+      ui.pergunta = null
+      dados = { negocio: Object.assign({}, NEGOCIO_PADRAO), canais: [], insumos: [], fichas: [] }
+      salvar()
+      avisar('Campos em branco. Comece pela base do negócio.')
+      location.hash = 'base'
+      window.scrollTo(0, 0)
+      break
     case 'pergunta-cancelar': ui.pergunta = null; break
 
     case 'backup-baixar': baixarBackup(); return
@@ -2267,6 +2311,7 @@ function restaurarDeTexto (texto) {
     d.canais = d.canais || []
     d.insumos = d.insumos || []
     d.fichas = d.fichas || []
+    if (d.exemplo === undefined) d.exemplo = pareceExemplo(d)
     dados = d
     salvar()
     ui.mensagem = 'Backup restaurado.'
