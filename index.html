@@ -1,0 +1,1044 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Apresentação do Etiqueta</title>
+<meta name="description" content="Etiqueta: formação de preço de venda para MEI, ME e EPP. Como funciona, funcionalidades, benefícios e acesso ao sistema." />
+<meta name="format-detection" content="telephone=no" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M9 5h20v22H9L2 16z' fill='%23f4c542' stroke='%2315181b' stroke-width='2' stroke-linejoin='round'/%3E%3Ccircle cx='9.5' cy='16' r='2.2' fill='none' stroke='%2315181b' stroke-width='1.8'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" />
+
+<style>
+/* Direção: a página é uma etiqueta de preço e uma ficha técnica.
+   Títulos em grotesca condensada de etiqueta de mercado, texto em sans
+   de documento, e todo número em mono tabular, como no sistema. */
+:root {
+  --papel: #f6f4ee;
+  --cartao: #ffffff;
+  --tinta: #15181b;
+  --grafite: #575e66;
+  --linha: #dedad0;
+  --verde: #1b4332;
+  --verde-suave: #e6eee9;
+  --etiqueta: #f4c542;
+  --prejuizo: #9b2c2c;
+
+  --display: "Archivo", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --texto: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --largura: 70rem;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --papel: #111412;
+    --cartao: #191d1a;
+    --tinta: #ecebe5;
+    --grafite: #a3aaa4;
+    --linha: #2c322e;
+    --verde: #7cc3a0;
+    --verde-suave: #1c2a22;
+    --etiqueta: #f4c542;
+    --prejuizo: #ec8d8d;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --papel: #111412;
+  --cartao: #191d1a;
+  --tinta: #ecebe5;
+  --grafite: #a3aaa4;
+  --linha: #2c322e;
+  --verde: #7cc3a0;
+  --verde-suave: #1c2a22;
+  --etiqueta: #f4c542;
+  --prejuizo: #ec8d8d;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--texto);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: var(--verde); }
+:focus-visible { outline: 3px solid var(--verde); outline-offset: 3px; }
+
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+.miolo {
+  max-width: var(--largura);
+  margin: 0 auto;
+  padding: 0 max(1rem, 4vw);
+}
+
+/* ---------------- cabeçalho ---------------- */
+
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--papel);
+  border-bottom: 1px solid var(--linha);
+}
+
+.topo .miolo {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: 3.75rem;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--tinta);
+  text-decoration: none;
+  font-family: var(--display);
+  font-stretch: 75%;
+  font-weight: 800;
+  font-size: 1.45rem;
+  letter-spacing: 0.01em;
+  flex-shrink: 0;
+}
+
+/* etiquetinha da marca */
+.marca svg { width: 1.6rem; height: 1rem; flex-shrink: 0; }
+
+.topo nav { flex: 1; min-width: 0; }
+.topo nav ul {
+  display: flex;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.topo nav ul::-webkit-scrollbar { display: none; }
+.topo nav a {
+  display: block;
+  padding: 0.9rem 0;
+  color: var(--grafite);
+  text-decoration: none;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+.topo nav a:hover { color: var(--tinta); }
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0 1.4rem;
+  background: var(--verde);
+  color: var(--papel);
+  border: 1px solid var(--verde);
+  font-family: var(--texto);
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  touch-action: manipulation;
+}
+.botao:hover { filter: brightness(1.12); }
+.botao.vazado { background: transparent; color: var(--tinta); border-color: var(--tinta); }
+.botao.pequeno { min-height: 40px; padding: 0 1rem; font-size: 0.9rem; flex-shrink: 0; }
+.botao svg { width: 1rem; height: 1rem; }
+
+/* ---------------- seções ---------------- */
+
+section { padding: 5rem 0; border-bottom: 1px solid var(--linha); scroll-margin-top: 3.75rem; }
+
+.rotulo {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--grafite);
+  margin-bottom: 0.9rem;
+}
+
+h2 {
+  font-family: var(--display);
+  font-stretch: 72%;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.005em;
+  max-width: 20ch;
+}
+
+.abertura { display: grid; gap: 1.25rem; margin-bottom: 3rem; }
+.abertura p { max-width: 62ch; color: var(--grafite); font-size: 1.12rem; }
+
+/* ---------------- início ---------------- */
+
+.inicio { padding: 4.5rem 0 5rem; }
+.inicio .miolo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 3rem;
+  align-items: center;
+}
+
+.inicio h1 {
+  font-family: var(--display);
+  font-stretch: 68%;
+  font-weight: 900;
+  font-size: clamp(3.3rem, 9vw, 6.4rem);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.5rem;
+}
+.inicio h1 span { display: block; color: var(--verde); }
+
+.inicio .lead { font-size: 1.2rem; max-width: 36rem; margin-bottom: 1rem; }
+.inicio .lead + p { color: var(--grafite); max-width: 36rem; }
+.acoes { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+
+.pergunta {
+  margin-top: 2.25rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--linha);
+  background: var(--cartao);
+  max-width: 36rem;
+}
+.pergunta strong { display: block; font-size: 0.8rem; font-family: var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--grafite); font-weight: 500; margin-bottom: 0.25rem; }
+
+/* a etiqueta: o único ponto de cor forte da página */
+.vitrine { display: grid; justify-items: center; gap: 1.25rem; }
+.pendurada {
+  position: relative;
+  width: min(100%, 23rem);
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.14));
+}
+.cordao {
+  position: absolute;
+  left: -2.6rem;
+  top: -2.4rem;
+  width: 4.4rem;
+  height: 5.6rem;
+  color: var(--grafite);
+  pointer-events: none;
+}
+.tag {
+  position: relative;
+  background: var(--etiqueta);
+  color: #15181b;
+  padding: 1.5rem 1.6rem 1.4rem 3.6rem;
+  -webkit-clip-path: polygon(2.4rem 0, 100% 0, 100% 100%, 2.4rem 100%, 0 50%);
+  clip-path: polygon(2.4rem 0, 100% 0, 100% 100%, 2.4rem 100%, 0 50%);
+  transform: rotate(-4deg);
+  transform-origin: 1.3rem 50%;
+  animation: balanco 2.2s cubic-bezier(.3, .6, .3, 1) 0.2s 1 both;
+}
+.tag::before {
+  content: "";
+  position: absolute;
+  left: 1.05rem;
+  top: 50%;
+  width: 0.85rem;
+  height: 0.85rem;
+  margin-top: -0.425rem;
+  border-radius: 50%;
+  background: var(--papel);
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.28);
+}
+.tag .produto {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.75);
+  padding-bottom: 0.55rem;
+  margin-bottom: 0.7rem;
+}
+.tag dl { margin: 0; display: grid; gap: 0.35rem; }
+.tag dl div { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.tag dt { font-size: 0.95rem; font-weight: 500; }
+.tag dd {
+  margin: 0;
+  font-family: var(--display);
+  font-stretch: 70%;
+  font-weight: 900;
+  font-size: 2.6rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.tag dd small { font-size: 0.5em; font-weight: 700; margin-right: 0.1em; }
+.tag .rodape {
+  margin-top: 0.8rem;
+  padding-top: 0.55rem;
+  border-top: 1px dashed rgba(0, 0, 0, 0.5);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+}
+
+.vitrine figcaption { max-width: 23rem; font-size: 0.92rem; color: var(--grafite); }
+
+@keyframes balanco {
+  0%   { transform: rotate(-14deg); }
+  35%  { transform: rotate(2deg); }
+  60%  { transform: rotate(-7deg); }
+  80%  { transform: rotate(-3deg); }
+  100% { transform: rotate(-4deg); }
+}
+
+/* ---------------- como funciona ---------------- */
+
+.etapas { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--linha); }
+.etapa {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.5rem 2.5rem;
+  padding: 2.25rem 0;
+  border-bottom: 1px solid var(--linha);
+}
+.etapa .n {
+  font-family: var(--display);
+  font-stretch: 70%;
+  font-weight: 900;
+  font-size: 3.4rem;
+  line-height: 0.85;
+  color: var(--verde);
+  font-variant-numeric: tabular-nums;
+}
+.etapa h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.3rem; }
+.etapa .quando { font-family: var(--mono); font-size: 0.8rem; color: var(--grafite); display: block; margin-bottom: 0.75rem; }
+.etapa p + p { margin-top: 0.6rem; }
+.etapa .texto p { color: var(--grafite); }
+.etapa .texto p strong { color: var(--tinta); font-weight: 600; }
+
+/* o exemplo de cada etapa, como um pedaço de ficha */
+.exemplo {
+  background: var(--cartao);
+  border: 1px solid var(--linha);
+  padding: 1rem 1.15rem;
+  font-size: 0.95rem;
+  align-self: start;
+}
+.exemplo .titulo-ex {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--grafite);
+  margin-bottom: 0.6rem;
+}
+.conta { display: grid; gap: 0.2rem; }
+.conta div { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
+.conta div span:first-child { color: var(--grafite); min-width: 0; }
+.conta div span:last-child { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.conta .total { border-top: 1px solid var(--tinta); margin-top: 0.4rem; padding-top: 0.45rem; font-weight: 600; }
+.conta .total span:first-child { color: var(--tinta); }
+.conta .ruim span:last-child { color: var(--prejuizo); }
+
+.formula {
+  font-family: var(--mono);
+  font-size: 0.98rem;
+  background: var(--verde-suave);
+  border-left: 0;
+  padding: 0.8rem 1rem;
+  margin: 0.25rem 0 0.75rem;
+  overflow-x: auto;
+}
+
+/* mini-calculadora: multiplicar x dividir */
+.calculadora {
+  margin-top: 3.5rem;
+  border: 1px solid var(--tinta);
+  background: var(--cartao);
+}
+.calculadora header { padding: 1.5rem 1.5rem 0; }
+.calculadora h3 {
+  font-family: var(--display);
+  font-stretch: 72%;
+  font-weight: 800;
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.calculadora header p { color: var(--grafite); max-width: 60ch; }
+.campos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem 1.5rem; padding: 1.5rem; }
+.campos label { display: grid; gap: 0.25rem; font-size: 0.88rem; color: var(--grafite); }
+.campos .entrada { display: flex; align-items: center; gap: 0.4rem; border-bottom: 1.5px solid var(--linha); }
+.campos .entrada:focus-within { border-bottom-color: var(--verde); }
+.campos input {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--tinta);
+  font-family: var(--mono);
+  font-size: max(16px, 1.2rem);
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  outline: none;
+}
+.campos .unidade { font-family: var(--mono); color: var(--grafite); font-size: 0.95rem; }
+.resultados { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--linha); }
+.resultado { padding: 1.4rem 1.5rem 1.6rem; display: grid; gap: 0.35rem; align-content: start; }
+.resultado + .resultado { border-left: 1px solid var(--linha); }
+.resultado .como { font-size: 0.9rem; color: var(--grafite); }
+.resultado .formula-curta { font-family: var(--mono); font-size: 0.82rem; color: var(--grafite); }
+.resultado .preco {
+  font-family: var(--display);
+  font-stretch: 70%;
+  font-weight: 900;
+  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.resultado .margem { font-size: 0.98rem; }
+.resultado.certo { background: var(--verde-suave); }
+.resultado.certo .preco { color: var(--verde); }
+.resultado.errado .margem strong { color: var(--prejuizo); }
+.calculadora .aviso-calc { padding: 0 1.5rem 1.5rem; color: var(--prejuizo); min-height: 0; }
+.calculadora .aviso-calc:empty { display: none; }
+
+/* ---------------- funcionalidades ---------------- */
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  border-top: 1px solid var(--linha);
+  border-left: 1px solid var(--linha);
+}
+/* bordas no próprio cartão: a última linha incompleta não deixa buraco cinza */
+.func {
+  background: var(--cartao);
+  border-right: 1px solid var(--linha);
+  border-bottom: 1px solid var(--linha);
+  padding: 1.5rem 1.4rem 1.6rem;
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+}
+.func .cod { font-family: var(--mono); font-size: 0.78rem; color: var(--grafite); letter-spacing: 0.05em; }
+.func h3 {
+  font-family: var(--display);
+  font-stretch: 75%;
+  font-weight: 800;
+  font-size: 1.65rem;
+  line-height: 1;
+}
+.func dl { margin: 0; display: grid; gap: 0.6rem; font-size: 0.96rem; }
+.func dt { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--grafite); }
+.func dd { margin: 0.1rem 0 0; }
+.func .ex { font-size: 0.9rem; color: var(--grafite); border-top: 1px dashed var(--linha); padding-top: 0.7rem; }
+
+.extras { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.extras span.chip {
+  border: 1px solid var(--linha);
+  background: var(--cartao);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.92rem;
+}
+.extras > strong { font-weight: 600; margin-right: 0.25rem; }
+
+/* ---------------- benefícios ---------------- */
+
+.beneficios-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: 2.25rem 2.5rem;
+}
+.beneficios-lista li { display: grid; gap: 0.5rem; align-content: start; border-top: 2px solid var(--tinta); padding-top: 1rem; }
+.beneficios-lista h3 { font-size: 1.15rem; font-weight: 600; line-height: 1.3; }
+.beneficios-lista p { color: var(--grafite); }
+.beneficios-lista .prova { font-family: var(--mono); font-size: 0.86rem; color: var(--tinta); background: var(--verde-suave); padding: 0.5rem 0.7rem; }
+
+.comparacao { margin-top: 4rem; }
+.comparacao h3 { font-family: var(--display); font-stretch: 72%; font-weight: 800; font-size: 2rem; line-height: 1; margin-bottom: 1.25rem; }
+.tabela { overflow-x: auto; border: 1px solid var(--linha); background: var(--cartao); }
+table { border-collapse: collapse; width: 100%; min-width: 36rem; font-size: 0.95rem; }
+th, td { text-align: left; padding: 0.8rem 1rem; border-bottom: 1px solid var(--linha); vertical-align: top; }
+thead th { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--grafite); font-weight: 500; }
+tbody th { font-weight: 600; width: 24%; }
+tbody td:last-child { color: var(--tinta); }
+tbody td:nth-child(2) { color: var(--grafite); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td.melhor { background: var(--verde-suave); }
+
+/* ---------------- acessar ---------------- */
+
+.acessar { border-bottom: 0; }
+.cartao-acesso {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: center;
+  border: 1px solid var(--tinta);
+  background: var(--cartao);
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+.cartao-acesso h2 { margin-bottom: 1rem; }
+.cartao-acesso p { color: var(--grafite); max-width: 52ch; }
+.cartao-acesso .botao { min-height: 56px; font-size: 1.08rem; padding: 0 1.8rem; }
+.endereco { font-family: var(--mono); font-size: 0.82rem; color: var(--grafite); overflow-wrap: anywhere; margin-top: 0.85rem; }
+.dicas { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+.dicas li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.75rem; align-items: start; font-size: 0.98rem; }
+.dicas li span.k { font-family: var(--mono); font-size: 0.8rem; color: var(--verde); border: 1px solid var(--verde); text-align: center; line-height: 1.9rem; height: 2rem; }
+
+/* ---------------- rodapé ---------------- */
+
+footer { padding: 3rem 0 4rem; color: var(--grafite); font-size: 0.92rem; }
+footer .miolo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem; }
+footer h2 { font-family: var(--mono); font-stretch: 100%; font-weight: 500; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; max-width: none; line-height: 1.4; color: var(--grafite); }
+footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; color: var(--tinta); }
+footer .mat { font-family: var(--mono); color: var(--grafite); font-size: 0.85rem; }
+
+/* ---------------- telas menores ---------------- */
+
+@media (max-width: 56rem) {
+  .inicio .miolo { grid-template-columns: 1fr; gap: 3.5rem; }
+  .vitrine { justify-items: start; padding-left: 2.6rem; }
+  .etapa { grid-template-columns: 3.6rem minmax(0, 1fr); }
+  .etapa .exemplo { grid-column: 2; }
+  .etapa .n { font-size: 2.6rem; }
+  .cartao-acesso { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 40rem) {
+  section { padding: 3.5rem 0; }
+  .inicio { padding-top: 3rem; }
+  .topo .botao.pequeno { display: none; }
+  .topo .miolo { gap: 1rem; }
+  .etapa { grid-template-columns: 1fr; gap: 1rem; padding: 1.75rem 0; }
+  .etapa .exemplo { grid-column: 1; }
+  .campos { grid-template-columns: 1fr; }
+  .resultados { grid-template-columns: 1fr; }
+  .resultado + .resultado { border-left: 0; border-top: 1px solid var(--linha); }
+  footer .miolo { grid-template-columns: 1fr; }
+  .acoes .botao { flex: 1 1 100%; }
+  /* a lista de seções rola de lado: o esmaecido mostra que tem mais */
+  .topo nav ul { -webkit-mask-image: linear-gradient(to right, #000 80%, transparent); mask-image: linear-gradient(to right, #000 80%, transparent); padding-right: 2rem; }
+  /* a etiqueta girada e o cordão não podem alargar a página no celular */
+  .inicio { overflow-x: hidden; }
+  .vitrine { padding-left: 1.75rem; }
+  .cordao { left: -1.6rem; top: -1.9rem; width: 3.2rem; height: 4.2rem; }
+  .tag { padding: 1.2rem 1rem 1.1rem 2.9rem; -webkit-clip-path: polygon(2.1rem 0, 100% 0, 100% 100%, 2.1rem 100%, 0 50%); clip-path: polygon(2.1rem 0, 100% 0, 100% 100%, 2.1rem 100%, 0 50%); }
+  .tag::before { left: 0.9rem; }
+  .tag dl div { flex-wrap: wrap; column-gap: 0.75rem; row-gap: 0; }
+  .tag dt { font-size: 0.86rem; min-width: 0; }
+  .tag dd { font-size: 1.95rem; }
+  /* tabela cabe na tela do celular, sem esconder a coluna do Etiqueta */
+  table { min-width: 0; font-size: 0.88rem; }
+  th, td { padding: 0.6rem 0.6rem; }
+  thead th { font-size: 0.68rem; }
+  tbody th { width: 28%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .tag { animation: none; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topo">
+  <div class="miolo">
+    <a class="marca" href="#inicio" aria-label="Etiqueta, voltar ao início">
+      <svg viewBox="0 0 26 16" aria-hidden="true"><path d="M6 1h19v14H6L1 8z" fill="#f4c542" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><circle cx="6.2" cy="8" r="1.6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+      Etiqueta
+    </a>
+    <nav aria-label="Seções">
+      <ul>
+        <li><a href="#inicio">Início</a></li>
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#funcionalidades">Funcionalidades</a></li>
+        <li><a href="#beneficios">Benefícios</a></li>
+        <li><a href="#acessar">Acessar</a></li>
+      </ul>
+    </nav>
+    <a class="botao pequeno" href="sistema.html">Abrir o sistema</a>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================ INÍCIO ============================ -->
+<section class="inicio" id="inicio">
+  <div class="miolo">
+    <div>
+      <span class="rotulo">Formação de preço de venda · MEI, ME e EPP</span>
+      <h1>Saiba quanto cobrar. <span>E quanto sobra.</span></h1>
+      <p class="lead">O Etiqueta é uma ferramenta gratuita, que roda no navegador, para o pequeno empresário formar o preço de venda a partir do custo real do que ele vende.</p>
+      <p>Ela soma insumos, o tempo de trabalho do próprio dono, embalagem, perdas, impostos e as taxas de cada canal de venda, e mostra quanto cobrar para ficar com a margem que se quer. Foi pensada para quem não tem formação em contabilidade: confeitarias, salões, eletricistas, costureiras, artesãos e pequenas lojas.</p>
+      <div class="acoes">
+        <a class="botao" href="#acessar">Acessar o sistema</a>
+        <a class="botao vazado" href="#como-funciona">Ver como funciona</a>
+      </div>
+      <div class="pergunta">
+        <strong>Objetivo</strong>
+        Responder, para cada produto ou serviço: quanto isto deve custar, e quanto sobra para mim quando eu vendo?
+      </div>
+    </div>
+
+    <figure class="vitrine" style="margin:0">
+      <div class="pendurada">
+        <svg class="cordao" viewBox="0 0 70 90" aria-hidden="true"><path d="M60 62 C 40 40, 30 20, 4 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <div class="tag">
+          <div class="produto">Bolo de pote · chocolate</div>
+          <dl>
+            <div><dt>Balcão (Pix)</dt><dd><small>R$</small>11,08</dd></div>
+            <div><dt>Aplicativo de entrega</dt><dd><small>R$</small>17,71</dd></div>
+          </dl>
+          <div class="rodape">custo R$ 7,76 · margem de 30% nos dois</div>
+        </div>
+      </div>
+      <figcaption>O mesmo pote, dois preços. No aplicativo, 26,2% de cada venda fica com a plataforma. Quem cobra R$ 12,00 lá fica com R$ 1,10 por pote, uma margem de 9,1%.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================ COMO FUNCIONA ============================ -->
+<section id="como-funciona">
+  <div class="miolo">
+    <div class="abertura">
+      <span class="rotulo">Como funciona</span>
+      <h2>Cinco etapas, do custo ao preço de cada canal</h2>
+      <p>As três primeiras etapas são feitas uma vez. As duas últimas são o uso do dia a dia, sempre que for preciso decidir um preço. Os exemplos abaixo são do caso da confeitaria que vem pronto no sistema.</p>
+    </div>
+
+    <ol class="etapas">
+      <li class="etapa">
+        <span class="n" aria-hidden="true">01</span>
+        <div class="texto">
+          <h3>Base do negócio</h3>
+          <span class="quando">uma vez · cerca de 10 minutos</span>
+          <p>O empresário informa se é <strong>MEI, ME ou EPP</strong>, as contas que paga todo mês, quanto quer retirar e quantas horas trabalha.</p>
+          <p>O sistema desconta as horas que não viram dinheiro (deslocamento, orçamentos que não fecham, compras e banco) e calcula o <strong>valor-hora do negócio</strong>.</p>
+        </div>
+        <div class="exemplo">
+          <div class="titulo-ex">Na confeitaria</div>
+          <div class="conta">
+            <div><span>Horas trabalhadas</span><span>132 h</span></div>
+            <div><span>Horas que não viram dinheiro</span><span>− 40 h</span></div>
+            <div><span>Horas faturáveis</span><span>92 h</span></div>
+            <div><span>Contas fixas + retirada</span><span>R$ 2.847,00</span></div>
+            <div class="total"><span>Valor-hora (2.847 ÷ 92)</span><span>R$ 30,95</span></div>
+          </div>
+        </div>
+      </li>
+
+      <li class="etapa">
+        <span class="n" aria-hidden="true">02</span>
+        <div class="texto">
+          <h3>Insumos</h3>
+          <span class="quando">uma vez · depois só atualiza o preço</span>
+          <p>Cada insumo é cadastrado <strong>como se compra</strong>: pela embalagem, com quantidade, preço pago e fornecedor.</p>
+          <p>Na receita, basta dizer quanto foi usado. O sistema converte a unidade e calcula o custo da porção.</p>
+        </div>
+        <div class="exemplo">
+          <div class="titulo-ex">Chocolate em pó</div>
+          <div class="conta">
+            <div><span>Embalagem</span><span>500 g</span></div>
+            <div><span>Preço pago</span><span>R$ 14,00</span></div>
+            <div><span>Usado na receita</span><span>200 g</span></div>
+            <div class="total"><span>Custo da porção</span><span>R$ 5,60</span></div>
+          </div>
+        </div>
+      </li>
+
+      <li class="etapa">
+        <span class="n" aria-hidden="true">03</span>
+        <div class="texto">
+          <h3>Ficha técnica</h3>
+          <span class="quando">uma por produto ou serviço · poucos minutos</span>
+          <p>A ficha junta os insumos usados, quantas unidades a receita rende, o tempo de produção, a embalagem e o índice de perda.</p>
+          <p>O resultado é o <strong>custo por unidade</strong>, com a conta aberta linha a linha. Serviços têm um modo próprio, com material aplicado no lugar de receita.</p>
+        </div>
+        <div class="exemplo">
+          <div class="titulo-ex">Bolo de pote · rende 20</div>
+          <div class="conta">
+            <div><span>Insumos (R$ 43,42 ÷ 20)</span><span>R$ 2,17</span></div>
+            <div><span>Embalagem</span><span>R$ 1,35</span></div>
+            <div><span>Trabalho: 7,5 min a R$ 30,95/h</span><span>R$ 3,87</span></div>
+            <div><span>Perda e quebra (5%)</span><span>R$ 0,37</span></div>
+            <div class="total"><span>Custo por pote</span><span>R$ 7,76</span></div>
+          </div>
+        </div>
+      </li>
+
+      <li class="etapa">
+        <span class="n" aria-hidden="true">04</span>
+        <div class="texto">
+          <h3>Preço por canal</h3>
+          <span class="quando">sempre que for precificar</span>
+          <p>Para cada lugar onde vende, o sistema calcula o preço que mantém a margem desejada, pela <strong>marcação divisor</strong>:</p>
+          <div class="formula">Preço = Custo ÷ [1 − (imposto + taxa do canal + comissão + margem)]</div>
+          <p>Cada canal mostra três números para negociar: o <strong>preço mínimo</strong> (sem lucro), o de <strong>equilíbrio</strong> (margem mínima aceitável) e o <strong>preço-alvo</strong>. Se o empresário informar quanto já cobra, um semáforo diz se o preço está saudável.</p>
+        </div>
+        <div class="exemplo">
+          <div class="titulo-ex">Preço-alvo com 30% de margem</div>
+          <div class="conta">
+            <div><span>Balcão (Pix, 0%)</span><span>R$ 11,08</span></div>
+            <div><span>Balcão (cartão, 3,5%)</span><span>R$ 11,67</span></div>
+            <div><span>Entrega própria (+ R$ 2,00 de motoboy)</span><span>R$ 13,94</span></div>
+            <div><span>Aplicativo (26,2%)</span><span>R$ 17,71</span></div>
+            <div class="total ruim"><span>Cobrando R$ 12,00 no aplicativo, sobra</span><span>R$ 1,10</span></div>
+          </div>
+        </div>
+      </li>
+
+      <li class="etapa">
+        <span class="n" aria-hidden="true">05</span>
+        <div class="texto">
+          <h3>Simular e acompanhar</h3>
+          <span class="quando">antes de cada decisão</span>
+          <p>O <strong>simulador</strong> responde, antes de a decisão ser tomada: e se eu der desconto? E se um insumo subir? E se eu entrar num canal novo? E se eu quiser retirar outro valor?</p>
+          <p>Quando o preço de um insumo muda, todas as fichas que o usam são recalculadas. O <strong>radar de defasagem</strong> avisa quando a alta acumulada dos insumos já comeu a margem.</p>
+        </div>
+        <div class="exemplo">
+          <div class="titulo-ex">Promoção de 20% no aplicativo</div>
+          <div class="conta">
+            <div><span>Preço de hoje</span><span>R$ 12,00</span></div>
+            <div><span>Preço na promoção</span><span>R$ 9,60</span></div>
+            <div><span>Você recebe (menos 26,2%)</span><span>R$ 7,08</span></div>
+            <div><span>Custo do pote</span><span>R$ 7,76</span></div>
+            <div class="total ruim"><span>Resultado de cada venda</span><span>− R$ 0,67</span></div>
+          </div>
+        </div>
+      </li>
+    </ol>
+
+    <!-- mini-calculadora -->
+    <div class="calculadora" id="calculadora">
+      <header>
+        <span class="rotulo">Experimente</span>
+        <h3>Por que dividir, e não multiplicar</h3>
+        <p>É o erro de preço mais comum. Quem quer 30% de margem costuma multiplicar o custo por 1,30. Só que a margem é uma parte do preço, e não do custo. Mude os números e compare.</p>
+      </header>
+      <div class="campos">
+        <label for="calc-custo">Custo do produto
+          <span class="entrada"><span class="unidade">R$</span><input id="calc-custo" inputmode="decimal" autocomplete="off" enterkeyhint="done" value="100,00" /></span>
+        </label>
+        <label for="calc-taxa">Impostos e taxas sobre a venda
+          <span class="entrada"><input id="calc-taxa" inputmode="decimal" autocomplete="off" enterkeyhint="done" value="0" /><span class="unidade">%</span></span>
+        </label>
+        <label for="calc-margem">Margem que você quer
+          <span class="entrada"><input id="calc-margem" inputmode="decimal" autocomplete="off" enterkeyhint="done" value="30" /><span class="unidade">%</span></span>
+        </label>
+      </div>
+      <div class="resultados" aria-live="polite">
+        <div class="resultado errado">
+          <span class="como">Multiplicando, o jeito comum</span>
+          <span class="formula-curta" id="calc-f1">custo × (1 + 0,30)</span>
+          <span class="preco" id="calc-p1">R$ 130,00</span>
+          <span class="margem" id="calc-m1">sobram R$ 30,00 · margem real de <strong>23,1%</strong></span>
+        </div>
+        <div class="resultado certo">
+          <span class="como">Dividindo, o jeito do Etiqueta</span>
+          <span class="formula-curta" id="calc-f2">custo ÷ (1 − 0,30)</span>
+          <span class="preco" id="calc-p2">R$ 142,86</span>
+          <span class="margem" id="calc-m2">sobram R$ 42,86 · margem real de <strong>30,0%</strong></span>
+        </div>
+      </div>
+      <p class="aviso-calc" id="calc-aviso" role="status"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FUNCIONALIDADES ============================ -->
+<section id="funcionalidades">
+  <div class="miolo">
+    <div class="abertura">
+      <span class="rotulo">Funcionalidades</span>
+      <h2>Tudo o que entra no preço, num só lugar</h2>
+      <p>Cada item abaixo é uma tela ou um campo do sistema. Eles não são módulos soltos: tudo alimenta a mesma ficha técnica, e é dela que saem os preços.</p>
+    </div>
+
+    <div class="grade">
+      <article class="func">
+        <span class="cod">01 · Insumos</span>
+        <h3>Cadastro de insumos</h3>
+        <dl>
+          <div><dt>Você informa</dt><dd>Nome, embalagem (g, kg, ml, l, un, m, cm), preço pago e fornecedor.</dd></div>
+          <div><dt>O sistema faz</dt><dd>Converte para a quantidade usada, guarda o histórico de preços e, quando um preço muda, mostra quais fichas foram afetadas e atualiza todas.</dd></div>
+        </dl>
+        <p class="ex">Aviso de preço antigo quando um insumo fica meses sem atualização.</p>
+      </article>
+
+      <article class="func">
+        <span class="cod">02 · Trabalho</span>
+        <h3>Mão de obra</h3>
+        <dl>
+          <div><dt>Você informa</dt><dd>Retirada mensal pretendida, horas trabalhadas e o tempo que cada produto ou serviço leva.</dd></div>
+          <div><dt>O sistema faz</dt><dd>Calcula o valor-hora sobre as horas faturáveis, e não sobre as 220 h do mês, e coloca o tempo de cada ficha no custo.</dd></div>
+        </dl>
+        <p class="ex">Valor-hora = (contas fixas + retirada) ÷ horas faturáveis.</p>
+      </article>
+
+      <article class="func">
+        <span class="cod">03 · Custos</span>
+        <h3>Custos adicionais</h3>
+        <dl>
+          <div><dt>Você informa</dt><dd>Contas fixas do mês (aluguel, internet, luz, DAS), embalagem por unidade, custo por pedido (motoboy) e material aplicado em serviços.</dd></div>
+          <div><dt>O sistema faz</dt><dd>Dilui as contas fixas no valor-hora, divide o custo do pedido pelos itens de cada entrega e aplica margem própria sobre material.</dd></div>
+        </dl>
+        <p class="ex">R$ 8,00 de motoboy com 4 potes por pedido entram como R$ 2,00 por pote.</p>
+      </article>
+
+      <article class="func">
+        <span class="cod">04 · Perdas</span>
+        <h3>Perdas e quebras</h3>
+        <dl>
+          <div><dt>Você informa</dt><dd>O percentual que costuma se perder na produção: massa que sobra, peça que quebra, produto que vence.</dd></div>
+          <div><dt>O sistema faz</dt><dd>Aplica o índice sobre o custo de cada unidade, para que a perda seja paga pelas unidades vendidas.</dd></div>
+        </dl>
+        <p class="ex">No bolo de pote, 5% de perda somam R$ 0,37 ao custo.</p>
+      </article>
+
+      <article class="func">
+        <span class="cod">05 · Tributos</span>
+        <h3>Impostos por porte</h3>
+        <dl>
+          <div><dt>Você informa</dt><dd>Se a empresa é MEI, ME ou EPP e, no Simples Nacional, a alíquota efetiva do seu PGDAS.</dd></div>
+          <div><dt>O sistema faz</dt><dd>No MEI, trata o DAS como conta fixa mensal. Na ME e na EPP, desconta a alíquota de cada venda. São cálculos diferentes, e o sistema não mistura os dois.</dd></div>
+        </dl>
+        <p class="ex">Calculadoras comuns aplicam percentual ao MEI e encarecem o preço sem motivo.</p>
+      </article>
+
+      <article class="func">
+        <span class="cod">06 · Canais</span>
+        <h3>Taxas de venda</h3>
+        <dl>
+          <div><dt>Você informa</dt><dd>Cada canal onde vende e quanto ele cobra: maquininha, aplicativo de entrega, marketplace. Também a comissão de vendedor, se houver.</dd></div>
+          <div><dt>O sistema faz</dt><dd>Gera um preço para cada canal a partir da mesma ficha e mostra quanto você recebe de fato em cada um.</dd></div>
+        </dl>
+        <p class="ex">Taxa real é a do extrato da plataforma: comissão mais taxa de pagamento.</p>
+      </article>
+
+      <article class="func">
+        <span class="cod">07 · Lucro</span>
+        <h3>Margem de lucro</h3>
+        <dl>
+          <div><dt>Você informa</dt><dd>A margem que quer, que pode ser diferente em cada ficha, e a mínima que aceita.</dd></div>
+          <div><dt>O sistema faz</dt><dd>Calcula preço mínimo, de equilíbrio e alvo, e pinta cada produto de verde, amarelo ou vermelho no painel conforme a margem real.</dd></div>
+        </dl>
+        <p class="ex">A margem é sobre o preço de venda, como a contabilidade a mede.</p>
+      </article>
+    </div>
+
+    <div class="extras">
+      <strong>E também:</strong>
+      <span class="chip">Simulador de cenários</span>
+      <span class="chip">Radar de defasagem</span>
+      <span class="chip">Painel com semáforo</span>
+      <span class="chip">Backup dos dados</span>
+      <span class="chip">Funciona no celular</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ BENEFÍCIOS ============================ -->
+<section id="beneficios">
+  <div class="miolo">
+    <div class="abertura">
+      <span class="rotulo">Benefícios</span>
+      <h2>Como o Etiqueta ajuda o pequeno negócio a cobrar certo</h2>
+      <p>Um preço errado não aparece como erro de preço. Aparece como falta de dinheiro no fim do mês, e o empresário costuma tratar o sintoma cortando despesa ou pegando empréstimo. Corrigir o preço vale para todas as vendas seguintes.</p>
+    </div>
+
+    <ul class="beneficios-lista">
+      <li>
+        <h3>A margem que sobra é a margem que se queria</h3>
+        <p>A conta por divisão garante que os 30% pretendidos sejam 30% do preço, depois de impostos e taxas.</p>
+        <p class="prova">Multiplicar R$ 7,76 por 1,30 dá R$ 10,09 e só 23,1% de margem.</p>
+      </li>
+      <li>
+        <h3>Um preço certo para cada canal</h3>
+        <p>O empresário vê quanto fica com ele no balcão, na entrega e no aplicativo, e para de vender com prejuízo sem perceber.</p>
+        <p class="prova">R$ 12,00 deixa R$ 4,24 no balcão e R$ 1,10 no aplicativo.</p>
+      </li>
+      <li>
+        <h3>O trabalho do dono entra no custo</h3>
+        <p>O valor-hora sobre horas faturáveis evita o erro de trabalhar de graça, comum em serviços e produção artesanal.</p>
+        <p class="prova">132 h trabalhadas viram 92 h cobráveis: R$ 30,95 por hora.</p>
+      </li>
+      <li>
+        <h3>Imposto calculado conforme o porte</h3>
+        <p>MEI e empresas do Simples Nacional têm lógicas opostas. O sistema aplica a certa para cada uma, sem inflar nem esconder tributo.</p>
+        <p class="prova">MEI: DAS fixo no custo. ME/EPP: alíquota sobre cada venda.</p>
+      </li>
+      <li>
+        <h3>Desconto e promoção com conta feita</h3>
+        <p>Antes de aceitar uma promoção, o simulador mostra quanto do lucro vai embora e quanto seria preciso vender a mais.</p>
+        <p class="prova">10% de desconto no balcão, a R$ 12,00, corta 28,3% do lucro do pote.</p>
+      </li>
+      <li>
+        <h3>Preço que acompanha o custo</h3>
+        <p>Atualizou o preço da farinha, todas as fichas que usam farinha mudam junto. O radar avisa quando é hora de reajustar.</p>
+        <p class="prova">Reajuste aos poucos, antes de virar um aumento grande.</p>
+      </li>
+      <li>
+        <h3>Simples de usar, no celular</h3>
+        <p>Abre no navegador do Android ou do iPhone, sem instalar, sem cadastro e sem pagar. Os dados ficam no aparelho de quem usa.</p>
+        <p class="prova">Linguagem do dia a dia, sem termo técnico na tela.</p>
+      </li>
+    </ul>
+
+    <div class="comparacao">
+      <h3>Planilha comum ou Etiqueta</h3>
+      <div class="tabela" tabindex="0" role="region" aria-label="Comparação entre planilha comum e Etiqueta">
+        <table>
+          <thead>
+            <tr><th scope="col">Ponto</th><th scope="col">Planilha ou calculadora comum</th><th scope="col">Etiqueta</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Custo do insumo</th><td>O usuário converte sozinho, e erra</td><td class="melhor">Converte pela embalagem</td></tr>
+            <tr><th scope="row">Insumo mais caro</th><td>Refazer todas as receitas</td><td class="melhor">Atualiza em um lugar, muda todas as fichas</td></tr>
+            <tr><th scope="row">Trabalho do dono</th><td>Ausente, ou dividido por 220 h</td><td class="melhor">Valor-hora sobre horas faturáveis</td></tr>
+            <tr><th scope="row">Método</th><td>Multiplica o custo pela margem</td><td class="melhor">Marcação divisor</td></tr>
+            <tr><th scope="row">Canais de venda</th><td>Um preço para todos</td><td class="melhor">Um preço por canal</td></tr>
+            <tr><th scope="row">Imposto</th><td>Igual para todos os portes</td><td class="melhor">DAS fixo no MEI, alíquota na ME/EPP</td></tr>
+            <tr><th scope="row">Negociação</th><td>Um número só</td><td class="melhor">Preço mínimo, de equilíbrio e alvo</td></tr>
+            <tr><th scope="row">Defasagem</th><td>Só aparece quando falta dinheiro</td><td class="melhor">Alerta automático</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ACESSAR ============================ -->
+<section class="acessar" id="acessar">
+  <div class="miolo">
+    <div class="cartao-acesso">
+      <div>
+        <span class="rotulo">Acessar o sistema</span>
+        <h2>Abra o Etiqueta e teste com o exemplo pronto</h2>
+        <p>O sistema abre direto no navegador do celular ou do computador. Na primeira tela, toque em <strong>Ver com o exemplo pronto</strong> para carregar o caso da confeitaria e navegar por todas as telas.</p>
+        <div class="acoes">
+          <a class="botao" href="sistema.html">
+            Abrir o sistema
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg>
+          </a>
+        </div>
+        <p class="endereco" id="endereco-sistema">sistema.html</p>
+      </div>
+      <ul class="dicas">
+        <li><span class="k" aria-hidden="true">1</span><span><strong>Funciona em Android e iPhone.</strong> Não precisa instalar nem criar conta.</span></li>
+        <li><span class="k" aria-hidden="true">2</span><span><strong>Comece pela Base.</strong> Depois Insumos, Fichas e Preços, na ordem da barra de baixo.</span></li>
+        <li><span class="k" aria-hidden="true">3</span><span><strong>Os dados ficam no aparelho.</strong> Nada é enviado para servidor. Para levar para outro aparelho, use o backup em Ajustes.</span></li>
+        <li><span class="k" aria-hidden="true">4</span><span><strong>Apoio gerencial.</strong> O Etiqueta ajuda a formar preço e não substitui o contador nem cumpre obrigação fiscal.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="miolo">
+    <div>
+      <h2>Projeto</h2>
+      <p>Etiqueta · formação de preço de venda para pequenos negócios. Trabalho da disciplina Extensão II, Ciências Contábeis, FURG, 2026.</p>
+    </div>
+    <div>
+      <h2>Equipe</h2>
+      <ul>
+        <li>Cintia <span class="mat">· 169040</span></li>
+        <li>Fabricio <span class="mat">· 168976</span></li>
+        <li>Felipe <span class="mat">· 168990</span></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* endereço completo do sistema, calculado a partir de onde a página está publicada */
+(function () {
+  var el = document.getElementById('endereco-sistema')
+  if (!el || location.protocol === 'file:') return
+  el.textContent = (location.host + location.pathname.replace(/[^/]*$/, '') + 'sistema.html')
+})();
+
+/* Mini-calculadora: mesma regra do motor do sistema.
+   Multiplicando: preço = custo × (1 + taxas + margem)
+   Dividindo:     preço = custo ÷ (1 − taxas − margem) */
+;(function () {
+  function numero (texto) {
+    var s = String(texto == null ? '' : texto).replace(/\s/g, '').replace(/^R\$/i, '')
+    if (s.indexOf(',') >= 0) s = s.replace(/\./g, '').replace(',', '.')
+    else if (/^-?[1-9]\d{0,2}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, '')
+    var n = Number(s)
+    return isFinite(n) ? n : 0
+  }
+  var moeda = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+  function pct (f) {
+    return (f * 100).toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%'
+  }
+  function fracaoTexto (f) {
+    return f.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 3 })
+  }
+  function $ (id) { return document.getElementById(id) }
+
+  function calcular () {
+    var custo = numero($('calc-custo').value)
+    var taxas = numero($('calc-taxa').value) / 100
+    var margem = numero($('calc-margem').value) / 100
+    var soma = taxas + margem
+    var aviso = $('calc-aviso')
+
+    var p1 = custo * (1 + soma)
+    var sobra1 = p1 * (1 - taxas) - custo
+    $('calc-f1').textContent = 'custo × (1 + ' + fracaoTexto(soma) + ')'
+    $('calc-p1').textContent = moeda.format(p1)
+    $('calc-m1').innerHTML = 'sobram ' + moeda.format(sobra1) +
+      ' · margem real de <strong>' + (p1 > 0 ? pct(sobra1 / p1) : '—') + '</strong>'
+
+    $('calc-f2').textContent = 'custo ÷ (1 − ' + fracaoTexto(soma) + ')'
+    if (soma >= 1) {
+      $('calc-p2').textContent = '—'
+      $('calc-m2').textContent = 'não existe preço possível'
+      aviso.textContent = 'Impostos, taxas e margem somam 100% ou mais. Nenhum preço cobre isso: reduza a margem ou procure um canal mais barato.'
+      return
+    }
+    aviso.textContent = ''
+    var p2 = custo / (1 - soma)
+    var sobra2 = p2 * (1 - taxas) - custo
+    $('calc-p2').textContent = moeda.format(p2)
+    $('calc-m2').innerHTML = 'sobram ' + moeda.format(sobra2) +
+      ' · margem real de <strong>' + (p2 > 0 ? pct(sobra2 / p2) : '—') + '</strong>'
+  }
+
+  ;['calc-custo', 'calc-taxa', 'calc-margem'].forEach(function (id) {
+    var el = $(id)
+    el.addEventListener('input', calcular)
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); el.blur() }
+    })
+  })
+  calcular()
+})()
+</script>
+</body>
+</html>

@@ -1,0 +1,2338 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Etiqueta — quanto cobrar e quanto sobra</title>
+<meta name="description" content="Formação de preço de venda para MEI, ME e EPP. Custo real, preço por canal e quanto sobra em cada venda." />
+<meta name="theme-color" content="#1B4332" />
+<meta name="color-scheme" content="light dark" />
+<!-- iOS transforma números longos em link de telefone; aqui todo número é valor -->
+<meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M9 5h20v22H9L2 16z' fill='%23f4c542' stroke='%2315181b' stroke-width='2' stroke-linejoin='round'/%3E%3Ccircle cx='9.5' cy='16' r='2.2' fill='none' stroke='%2315181b' stroke-width='1.8'/%3E%3C/svg%3E" />
+
+<style>
+:root {
+  --papel: #fbfaf7;
+  --cartao: #ffffff;
+  --tinta: #16191c;
+  --grafite: #5b6168;
+  --linha: #e4e1d9;
+  --verde: #1b4332;
+  --verde-claro: #2d6a4f;
+  --atencao: #b7791f;
+  --prejuizo: #9b2c2c;
+  --coluna: 42rem;
+  --nav: 56px;
+  box-sizing: border-box;
+  color-scheme: light dark;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* iPhone com entalhe/ilha e celular deitado */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --papel: #14171a;
+    --cartao: #1c2024;
+    --tinta: #eceae4;
+    --grafite: #9aa1a8;
+    --linha: #2c3237;
+    --verde: #5fae86;
+    --verde-claro: #7cc3a0;
+    --atencao: #d9a441;
+    --prejuizo: #e08585;
+  }
+}
+
+:root[data-theme="dark"] {
+  --papel: #14171a;
+  --cartao: #1c2024;
+  --tinta: #eceae4;
+  --grafite: #9aa1a8;
+  --linha: #2c3237;
+  --verde: #5fae86;
+  --verde-claro: #7cc3a0;
+  --atencao: #d9a441;
+  --prejuizo: #e08585;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+
+body {
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  /* espaço para a barra de navegação fixa não cobrir o rodapé */
+  padding-bottom: calc(var(--nav) + 1rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* números sempre alinhados: isto é uma ferramenta de conta */
+.num {
+  font-family: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+h1, h2, h3 { margin: 0; line-height: 1.2; letter-spacing: -0.015em; }
+p { margin: 0; }
+a { color: var(--verde); }
+:focus-visible { outline: 2px solid var(--verde); outline-offset: 2px; }
+
+#tela {
+  max-width: var(--coluna);
+  margin: 0 auto;
+  padding: 1.5rem 1rem 1rem;
+}
+
+/* ---------------- navegação ---------------- */
+
+nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--papel);
+  border-top: 1px solid var(--linha);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  z-index: 5;
+}
+
+/* Com o teclado aberto, a barra fixa flutua no meio da tela (iOS) ou cobre
+   o campo (Android). Some enquanto a pessoa digita. */
+@media (pointer: coarse) {
+  body.digitando nav { display: none; }
+}
+
+nav ul {
+  display: flex;
+  max-width: var(--coluna);
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+nav li { flex: 1; }
+
+nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--nav);
+  padding: 0 2px;
+  font-size: 0.78rem;
+  color: var(--grafite);
+  text-decoration: none;
+  text-align: center;
+  border-top: 2px solid transparent;
+  margin-top: -1px;
+}
+
+nav a.ativo { color: var(--verde); font-weight: 600; border-top-color: var(--verde); }
+
+/* ---------------- blocos ---------------- */
+
+header.titulo { margin-bottom: 1.5rem; }
+header.titulo h1 { font-size: 1.6rem; font-weight: 600; }
+header.titulo p { margin-top: 0.25rem; color: var(--grafite); font-size: 0.9rem; }
+
+.cartao {
+  background: var(--cartao);
+  border: 1px solid var(--linha);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.cartao h2 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+.cartao.alerta { border-color: var(--atencao); }
+.cartao.ruim { border-color: var(--prejuizo); }
+
+.linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.25rem 0;
+}
+
+.linha span:first-child { color: var(--grafite); min-width: 0; overflow-wrap: anywhere; }
+.linha span:last-child { text-align: right; }
+.linha.destaque {
+  border-top: 1px solid var(--linha);
+  margin-top: 0.4rem;
+  padding-top: 0.5rem;
+  font-weight: 600;
+}
+.linha.destaque span:first-child { color: var(--tinta); }
+.negativo { color: var(--prejuizo); }
+
+.apoio { color: var(--grafite); font-size: 0.9rem; }
+.apoio + .apoio { margin-top: 0.5rem; }
+
+/* ---------------- campos ---------------- */
+
+label.campo { display: block; padding: 0.5rem 0; }
+label.campo > span { display: block; font-size: 0.85rem; color: var(--grafite); }
+label.campo .ajuda { font-size: 0.78rem; margin-top: 0.25rem; }
+
+input, select, button, textarea { font: inherit; color: inherit; }
+
+/* Tira o visual nativo do Safari (cantos arredondados, sombra, botão azul)
+   e do Chrome Android, para a tela ficar igual nos dois. */
+button, select, textarea,
+input[type="text"], input[type="number"] {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  margin: 0;
+}
+
+button, a, label, select, input { touch-action: manipulation; }
+
+/* 16 px ou mais: abaixo disso o iPhone dá zoom ao tocar no campo */
+input[type="text"], input[type="number"], select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.35rem 0;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--linha);
+  font-size: max(16px, 1.05rem);
+}
+
+select {
+  padding-right: 1.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%238a9097' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.25rem center;
+  background-size: 0.75rem auto;
+  text-overflow: ellipsis;
+}
+
+input[type="radio"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  accent-color: var(--verde);
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  min-height: 8rem;
+  padding: 0.5rem;
+  background: transparent;
+  border: 1px solid var(--linha);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 16px;
+}
+
+input:focus, select:focus, textarea:focus { border-color: var(--linha); border-bottom-color: var(--verde); outline: none; }
+textarea:focus { border-color: var(--verde); }
+
+.com-sufixo { display: flex; align-items: center; gap: 0.5rem; }
+/* sem isto a regra "label.campo > span" vencia e o "%"/"h" caía para baixo do campo */
+label.campo > .com-sufixo { display: flex; font-size: inherit; color: inherit; }
+.com-sufixo .sufixo { color: var(--grafite); font-size: 0.85rem; white-space: nowrap; }
+
+fieldset { border: 0; margin: 0; padding: 0; }
+fieldset legend { font-size: 0.85rem; color: var(--grafite); padding: 0; }
+.opcoes { display: flex; gap: 1.25rem; padding: 0.6rem 0; }
+.opcoes label { display: flex; align-items: center; gap: 0.4rem; min-height: 44px; }
+
+button.acao {
+  min-height: 44px;
+  padding: 0 1rem;
+  background: var(--verde);
+  color: var(--papel);
+  border: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button.acao.secundaria {
+  background: transparent;
+  color: var(--tinta);
+  border: 1px solid var(--linha);
+  font-weight: 500;
+}
+
+button.acao:disabled { opacity: 0.4; cursor: default; }
+
+/* resposta ao toque: no celular não existe hover */
+button.acao:active { opacity: 0.8; }
+ul.lista button.item:active, .abas button:active, nav a:active { background: var(--linha); }
+.botoes { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+
+button.remover {
+  min-width: 44px;
+  min-height: 44px;
+  background: transparent;
+  border: 0;
+  color: var(--grafite);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* ---------------- listas ---------------- */
+
+ul.lista { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--linha); }
+ul.lista li { border-bottom: 1px solid var(--linha); }
+
+ul.lista button.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  width: 100%;
+  min-height: 56px;
+  padding: 0.6rem 0;
+  background: transparent;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sub { display: block; font-size: 0.78rem; color: var(--grafite); margin-top: 0.15rem; }
+
+.pontinho {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  margin-right: 0.45rem;
+  vertical-align: baseline;
+}
+
+.verde { background: var(--verde-claro); }
+.amarelo { background: var(--atencao); }
+.vermelho, .prejuizo { background: var(--prejuizo); }
+
+.vazio {
+  border: 1px dashed var(--linha);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  color: var(--grafite);
+  font-size: 0.9rem;
+}
+
+.abas { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+
+.abas button {
+  min-height: 44px;
+  padding: 0 0.8rem;
+  background: transparent;
+  border: 1px solid var(--linha);
+  color: var(--grafite);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.abas button[aria-pressed="true"] {
+  border-color: var(--verde);
+  color: var(--verde);
+  font-weight: 600;
+}
+
+.tabela-mini { width: 100%; overflow-x: auto; }
+
+/* linhas editáveis (contas fixas, insumos da ficha, materiais):
+   em tela estreita a descrição ocupa a linha toda e o resto desce */
+.linha-edita {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.3rem 0;
+}
+.linha-edita .cresce { flex: 1 1 8rem; min-width: 0; }
+.linha-edita .cresce-mais { flex: 1 1 12rem; min-width: 0; }
+.linha-edita .valor { width: 6rem; text-align: right; }
+.linha-edita .valor-curto { width: 5rem; text-align: right; }
+.linha-edita .valor-mini { width: 3.5rem; text-align: right; }
+.linha-edita .junto { display: flex; align-items: center; gap: 0.35rem; margin-left: auto; }
+.resumo:empty { display: none; }
+
+/* ---------------- diálogo e aviso (no lugar de alert/confirm) ---------------- */
+
+.dialogo-fundo {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem;
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 20;
+}
+
+.dialogo {
+  width: 100%;
+  max-width: 26rem;
+  background: var(--cartao);
+  border: 1px solid var(--linha);
+  padding: 1.25rem;
+}
+.dialogo h2 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; }
+
+@media (min-width: 40rem) {
+  .dialogo-fundo { align-items: center; }
+}
+
+#aviso {
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  bottom: calc(var(--nav) + 0.75rem + env(safe-area-inset-bottom, 0px));
+  max-width: 26rem;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  background: var(--tinta);
+  color: var(--papel);
+  font-size: 0.9rem;
+  z-index: 15;
+}
+#aviso[hidden] { display: none; }
+
+/* celulares pequenos (iPhone SE, Android de entrada) */
+@media (max-width: 360px) {
+  #tela { padding-left: 0.75rem; padding-right: 0.75rem; }
+  .cartao { padding: 0.85rem; }
+  nav a { font-size: 0.7rem; }
+  header.titulo h1 { font-size: 1.4rem; }
+}
+
+.rodape-aviso {
+  max-width: var(--coluna);
+  margin: 2rem auto 0;
+  padding: 0 1rem;
+  font-size: 0.8rem;
+  color: var(--grafite);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+
+<body>
+<main id="tela"></main>
+
+<nav aria-label="Telas">
+  <ul id="navegacao"></ul>
+</nav>
+
+<div id="camada"></div>
+<div id="aviso" role="status" aria-live="polite" hidden></div>
+
+<script>
+/* ==========================================================================
+   ETIQUETA — formação de preço de venda para MEI, ME e EPP
+   Arquivo único, sem dependências. Abre direto no navegador.
+
+   1. MOTOR      — as fórmulas, funções puras, isoladas da interface
+   2. FORMATO    — moeda, percentual, leitura de campo
+   3. DADOS      — estado e persistência no navegador
+   4. TELAS      — Painel, Base, Insumos, Fichas, Preços, Simulador, Ajustes
+   5. ROTEADOR   — navegação por #hash
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. MOTOR DE CÁLCULO
+   Convenção: percentual circula como fração (0,30 = 30%).
+   ========================================================================== */
+
+const UNIDADES = {
+  g:  { familia: 'massa',      fator: 1 },
+  kg: { familia: 'massa',      fator: 1000 },
+  ml: { familia: 'volume',     fator: 1 },
+  l:  { familia: 'volume',     fator: 1000 },
+  un: { familia: 'contagem',   fator: 1 },
+  cx: { familia: 'contagem',   fator: 1 },
+  m:  { familia: 'comprimento', fator: 1 },
+  cm: { familia: 'comprimento', fator: 0.01 },
+  h:  { familia: 'tempo',      fator: 1 },
+  min:{ familia: 'tempo',      fator: 1 / 60 }
+}
+
+const LISTA_UNIDADES = Object.keys(UNIDADES)
+
+/* Converte entre unidades da mesma família.
+   Lança erro em conversão impossível: melhor quebrar do que devolver
+   um custo silenciosamente errado. */
+function converter (quantidade, de, para) {
+  const a = UNIDADES[String(de).toLowerCase()]
+  const b = UNIDADES[String(para).toLowerCase()]
+  if (!a || !b) throw new Error('Unidade desconhecida')
+  if (a.familia !== b.familia) throw new Error('Não dá para converter ' + de + ' em ' + para)
+  return (quantidade * a.fator) / b.fator
+}
+
+/* Horas que dá para cobrar. O erro clássico é dividir a retirada por 220 h. */
+function horasFaturaveis (n) {
+  const nao = (n.deslocamento || 0) + (n.orcamentosNaoFechados || 0) +
+              (n.administracao || 0) + (n.outros || 0)
+  return Math.max(0, (n.horasTrabalhadas || 0) - nao)
+}
+
+/* (custos fixos + pró-labore) / horas faturáveis.
+   No MEI o DAS é valor fixo e entra aqui, nunca como percentual sobre a venda. */
+function valorHora (custosFixosMensais, proLabore, horas) {
+  if (!horas || horas <= 0) return 0
+  return (custosFixosMensais + proLabore) / horas
+}
+
+function custosFixosMensais (negocio) {
+  return (negocio.custosFixos || []).reduce((s, c) => s + (Number(c.valor) || 0), 0)
+}
+
+function valorHoraDoNegocio (negocio) {
+  return valorHora(custosFixosMensais(negocio), negocio.proLabore || 0, horasFaturaveis(negocio))
+}
+
+/* MEI: zero. ME/EPP no Simples: alíquota efetiva sobre a receita. */
+function tributoSobreVenda (negocio) {
+  return negocio.porte === 'MEI' ? 0 : (negocio.aliquotaSimples || 0)
+}
+
+/* "Pacote de 500 g por R$ 14,00, usei 200 g" => R$ 5,60 */
+function custoInsumo (insumo, quantidadeUsada, unidadeUsada) {
+  if (!insumo || !insumo.quantidadeEmbalagem) return 0
+  const naUnidadeDeCompra = converter(
+    quantidadeUsada, unidadeUsada || insumo.unidade, insumo.unidade
+  )
+  return (insumo.precoEmbalagem / insumo.quantidadeEmbalagem) * naUnidadeDeCompra
+}
+
+function variacao (antigo, novo) {
+  if (!antigo) return 0
+  return (novo - antigo) / antigo
+}
+
+/* Custo unitário da Ficha, com o detalhamento linha a linha —
+   o app precisa mostrar a conta, não só o resultado. */
+function custoFicha (ficha, insumosPorId, opcoes) {
+  opcoes = opcoes || {}
+  const vh = opcoes.valorHora || 0
+  const metodoMaterial = opcoes.metodoMargemMaterial || 'divisor'
+  const rend = ficha.rendimento > 0 ? ficha.rendimento : 1
+
+  const linhasInsumos = (ficha.itens || []).map(item => {
+    const insumo = insumosPorId[item.insumoId]
+    let custo = 0
+    let erro = null
+    try {
+      custo = insumo ? custoInsumo(insumo, item.quantidade, item.unidade) : 0
+    } catch (e) { erro = e.message }
+    return {
+      insumoId: item.insumoId,
+      nome: insumo ? insumo.nome : '(insumo removido)',
+      quantidade: item.quantidade,
+      unidade: item.unidade || (insumo && insumo.unidade),
+      custo: custo,
+      erro: erro
+    }
+  })
+
+  const custoInsumosLote = linhasInsumos.reduce((s, l) => s + l.custo, 0)
+  const custoInsumosUnitario = custoInsumosLote / rend
+
+  const linhasMateriais = (ficha.materiais || []).map(m => {
+    const margem = m.margem || 0
+    const comMargem = metodoMaterial === 'multiplicador'
+      ? m.custo * (1 + margem)
+      : m.custo / (1 - margem)
+    return Object.assign({}, m, { custoComMargem: comMargem })
+  })
+  const custoMateriais = linhasMateriais.reduce((s, m) => s + m.custoComMargem, 0) / rend
+
+  const horasPorUnidade = (ficha.tempoProducaoHoras || 0) / rend
+  const custoMaoDeObra = horasPorUnidade * vh
+  const embalagem = ficha.custoEmbalagemUnitario || 0
+
+  const subtotal = custoInsumosUnitario + embalagem + custoMateriais + custoMaoDeObra
+  const perda = subtotal * (ficha.indicePerda || 0)
+
+  return {
+    linhasInsumos: linhasInsumos,
+    linhasMateriais: linhasMateriais,
+    custoInsumosLote: custoInsumosLote,
+    custoInsumosUnitario: custoInsumosUnitario,
+    custoEmbalagemUnitario: embalagem,
+    custoMateriais: custoMateriais,
+    horasPorUnidade: horasPorUnidade,
+    custoMaoDeObra: custoMaoDeObra,
+    subtotal: subtotal,
+    perda: perda,
+    custoUnitario: subtotal + perda
+  }
+}
+
+function custoDoCanalPorUnidade (canal) {
+  const itens = canal.itensPorPedido || 1
+  return itens > 0 ? (canal.custoFixoPorPedido || 0) / itens : (canal.custoFixoPorPedido || 0)
+}
+
+function somaPercentuais (p) {
+  return (p.tributo || 0) + (p.taxaCanal || 0) + (p.comissao || 0)
+}
+
+/* A fórmula central: dividir, nunca multiplicar.
+   preço = custo / (1 − tributo − taxa − comissão − margem) */
+function precoPorMarcacaoDivisor (custo, percentuais, margem) {
+  const soma = somaPercentuais(percentuais || {}) + (margem || 0)
+  if (soma >= 1) throw new Error('Tributos, taxas, comissão e margem somam 100% ou mais — não existe preço possível.')
+  return custo / (1 - soma)
+}
+
+function sobraLiquida (preco, custoNoCanal, percentuais) {
+  return preco * (1 - somaPercentuais(percentuais || {})) - custoNoCanal
+}
+
+function ganhoPorHora (sobra, horasPorUnidade) {
+  if (!horasPorUnidade) return null
+  return sobra / horasPorUnidade
+}
+
+function classificarMargem (margemReal, margemDesejada, margemMinima) {
+  if (margemReal < 0) return 'prejuizo'
+  if (margemReal < (margemMinima || 0)) return 'vermelho'
+  if (margemReal < margemDesejada) return 'amarelo'
+  return 'verde'
+}
+
+/* Tudo o que a tela Preços mostra para um canal. */
+function precificarCanal (e) {
+  const tributo = tributoSobreVenda(e.negocio || {})
+  const taxaCanal = e.canal.taxa || 0
+  const comissao = e.comissao || 0
+  const custoCanal = custoDoCanalPorUnidade(e.canal)
+  const custoNoCanal = e.custoUnitario + custoCanal
+  const percentuais = { tributo: tributo, taxaCanal: taxaCanal, comissao: comissao }
+
+  const r = {
+    canalId: e.canal.id,
+    canalNome: e.canal.nome,
+    tributo: tributo,
+    taxaCanal: taxaCanal,
+    comissao: comissao,
+    percentuais: percentuais,
+    custoCanal: custoCanal,
+    custoNoCanal: custoNoCanal,
+    precoMinimo: precoPorMarcacaoDivisor(custoNoCanal, percentuais, 0),
+    precoEquilibrio: precoPorMarcacaoDivisor(custoNoCanal, percentuais, e.margemMinima || 0),
+    precoAlvo: precoPorMarcacaoDivisor(custoNoCanal, percentuais, e.margemDesejada || 0)
+  }
+  r.sobraNoAlvo = sobraLiquida(r.precoAlvo, custoNoCanal, percentuais)
+
+  if (e.precoPraticado != null && e.precoPraticado !== '') {
+    r.precoPraticado = Number(e.precoPraticado)
+    r.recebido = r.precoPraticado * (1 - somaPercentuais(percentuais))
+    r.sobra = sobraLiquida(r.precoPraticado, custoNoCanal, percentuais)
+    r.margemReal = r.precoPraticado > 0 ? r.sobra / r.precoPraticado : 0
+    r.semaforo = classificarMargem(r.margemReal, e.margemDesejada || 0, e.margemMinima || 0)
+  }
+  return r
+}
+
+/* "E se eu der X% de desconto?" — o desconto sai inteiro da margem. */
+function simularDesconto (e) {
+  const precoComDesconto = e.precoAtual * (1 - e.desconto)
+  const antes = sobraLiquida(e.precoAtual, e.custoNoCanal, e.percentuais)
+  const depois = sobraLiquida(precoComDesconto, e.custoNoCanal, e.percentuais)
+  return {
+    precoComDesconto: precoComDesconto,
+    sobraAntes: antes,
+    sobraDepois: depois,
+    quedaDaSobra: antes > 0 ? (antes - depois) / antes : null,
+    volumeNecessario: depois > 0 ? antes / depois - 1 : null,
+    viraPrejuizo: depois < 0
+  }
+}
+
+/* Radar: compara o custo congelado no último reajuste com o de hoje. */
+function defasagem (e) {
+  const sobra = sobraLiquida(e.precoPraticado, e.custoAtual, e.percentuais)
+  const margemAtual = e.precoPraticado > 0 ? sobra / e.precoPraticado : 0
+  return {
+    altaAcumulada: variacao(e.custoNoUltimoReajuste, e.custoAtual),
+    margemAtual: margemAtual,
+    margemDesejada: e.margemDesejada,
+    precoParaRecompor: precoPorMarcacaoDivisor(e.custoAtual, e.percentuais, e.margemDesejada),
+    defasado: margemAtual < e.margemDesejada
+  }
+}
+
+
+/* ==========================================================================
+   2. FORMATO
+   ========================================================================== */
+
+const fmtMoeda = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+
+function moeda (v) {
+  if (v == null || isNaN(v)) return '—'
+  return fmtMoeda.format(v)
+}
+
+function percentual (fracao, casas) {
+  if (fracao == null || isNaN(fracao)) return '—'
+  return (fracao * 100).toLocaleString('pt-BR', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: casas == null ? 1 : casas
+  }) + '%'
+}
+
+/* "1.234,56" => 1234.56
+   Teclado numérico de celular nem sempre tem vírgula: em muitos Android e
+   iPhones em inglês sai ponto ("1.5"). Então o ponto só é separador de
+   milhar quando separa grupos de três ("1.500"); fora isso, é decimal. */
+function numeroDeCampo (texto) {
+  let s = String(texto == null ? '' : texto).replace(/\s/g, '').replace(/^R\$/i, '')
+  if (s.indexOf(',') >= 0) s = s.replace(/\./g, '').replace(',', '.')
+  else if (/^-?[1-9]\d{0,2}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, '')
+  const n = Number(s)
+  return isFinite(n) ? n : 0
+}
+
+/* 6.2 => "6,2" para mostrar dentro de campo (sem separador de milhar) */
+function numBR (v) {
+  if (typeof v !== 'number') return v == null ? '' : String(v)
+  return v.toLocaleString('pt-BR', { maximumFractionDigits: 4, useGrouping: false })
+}
+
+/* "30" no campo => 0,30 no motor */
+function fracaoDeCampo (texto) {
+  return numeroDeCampo(texto) / 100
+}
+
+function campoDeFracao (f) {
+  return String(Math.round((f || 0) * 1000) / 10).replace('.', ',')
+}
+
+function duracao (horas) {
+  if (!horas) return '0 min'
+  const total = Math.round(horas * 60)
+  const h = Math.floor(total / 60)
+  const min = total % 60
+  if (!h) return min + ' min'
+  return min ? h + ' h ' + String(min).padStart(2, '0') : h + ' h'
+}
+
+function dataCurta (iso) {
+  if (!iso) return 'sem data'
+  return new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })
+}
+
+/* Escapa texto vindo do usuário antes de entrar no HTML. */
+function esc (s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;')
+}
+
+
+/* ==========================================================================
+   3. DADOS — estado e persistência
+   Tudo fica no navegador. Sem servidor, sem cadastro.
+   ========================================================================== */
+
+const CHAVE = 'etiqueta:dados'
+
+const NEGOCIO_PADRAO = {
+  porte: 'MEI',
+  aliquotaSimples: 0,
+  custosFixos: [],
+  proLabore: 0,
+  horasTrabalhadas: 0,
+  deslocamento: 0,
+  orcamentosNaoFechados: 0,
+  administracao: 0,
+  outros: 0,
+  margemPadrao: 0.3,
+  margemMinima: 0.1,
+  configurado: false
+}
+
+/* Modo privado e bloqueio de cookies podem impedir o navegador de guardar.
+   Melhor avisar do que deixar a pessoa perder o cadastro. */
+const armazenamentoOk = (function () {
+  try {
+    localStorage.setItem('etiqueta:teste', '1')
+    localStorage.removeItem('etiqueta:teste')
+    return true
+  } catch (e) { return false }
+})()
+
+let dados = carregar()
+let ui = { fichaAberta: null, insumoAberto: null, cenario: 'desconto', simFicha: null, pergunta: null }
+
+function carregar () {
+  try {
+    const bruto = localStorage.getItem(CHAVE)
+    if (bruto) {
+      const d = JSON.parse(bruto)
+      d.negocio = Object.assign({}, NEGOCIO_PADRAO, d.negocio)
+      d.canais = d.canais || []
+      d.insumos = d.insumos || []
+      d.fichas = d.fichas || []
+      return d
+    }
+  } catch (e) {
+    console.warn('Não foi possível ler os dados salvos:', e)
+  }
+  return { negocio: Object.assign({}, NEGOCIO_PADRAO), canais: [], insumos: [], fichas: [] }
+}
+
+function salvar () {
+  try {
+    localStorage.setItem(CHAVE, JSON.stringify(dados))
+  } catch (e) {
+    console.warn('Não foi possível salvar:', e)
+  }
+}
+
+function novoId () {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7)
+}
+
+function insumosPorId () {
+  const mapa = {}
+  dados.insumos.forEach(i => { mapa[i.id] = i })
+  return mapa
+}
+
+function calcularFicha (ficha, substituicoes) {
+  const mapa = insumosPorId()
+  if (substituicoes) Object.assign(mapa, substituicoes)
+  return custoFicha(ficha, mapa, { valorHora: valorHoraDoNegocio(dados.negocio) })
+}
+
+function precosDaFicha (ficha, custoUnitario) {
+  return dados.canais.map(canal => precificarCanal({
+    custoUnitario: custoUnitario,
+    canal: canal,
+    negocio: dados.negocio,
+    margemDesejada: ficha.margemDesejada != null ? ficha.margemDesejada : dados.negocio.margemPadrao,
+    margemMinima: dados.negocio.margemMinima,
+    comissao: ficha.comissao || 0,
+    precoPraticado: (ficha.precosPraticados || {})[canal.id]
+  }))
+}
+
+/* Caso da confeitaria, para demonstrar sem 15 minutos de digitação. */
+function carregarExemplo () {
+  const agora = new Date().toISOString()
+  const insumos = [
+    ['Farinha de trigo', 'kg', 1, 6.2, 'Atacado'],
+    ['Açúcar', 'kg', 1, 4.8, 'Atacado'],
+    ['Ovos', 'un', 12, 12, 'Feira'],
+    ['Leite condensado', 'un', 1, 6.5, 'Atacado'],
+    ['Creme de leite', 'un', 1, 4.2, 'Atacado'],
+    ['Chocolate em pó', 'g', 500, 14, 'Atacado'],
+    ['Manteiga', 'g', 500, 18, 'Mercado']
+  ].map(x => ({
+    id: novoId(), nome: x[0], unidade: x[1], quantidadeEmbalagem: x[2],
+    precoEmbalagem: x[3], fornecedor: x[4], atualizadoEm: agora,
+    historico: [{ preco: x[3], data: agora }]
+  }))
+
+  const canais = [
+    { id: novoId(), nome: 'Balcão (Pix)', taxa: 0, custoFixoPorPedido: 0, itensPorPedido: 1 },
+    { id: novoId(), nome: 'Balcão (cartão)', taxa: 0.035, custoFixoPorPedido: 0, itensPorPedido: 1 },
+    { id: novoId(), nome: 'Entrega própria', taxa: 0, custoFixoPorPedido: 8, itensPorPedido: 4 },
+    { id: novoId(), nome: 'Aplicativo de entrega', taxa: 0.262, custoFixoPorPedido: 0, itensPorPedido: 1 }
+  ]
+
+  const precosPraticados = {}
+  precosPraticados[canais[0].id] = 12
+  precosPraticados[canais[3].id] = 12
+
+  dados = {
+    negocio: {
+      porte: 'MEI',
+      aliquotaSimples: 0,
+      custosFixos: [
+        { descricao: 'DAS', valor: 87 },
+        { descricao: 'Internet', valor: 110 },
+        { descricao: 'Água, luz e gás', valor: 310 },
+        { descricao: 'Utensílios', valor: 60 },
+        { descricao: 'Impulsionamento', valor: 80 }
+      ],
+      proLabore: 2200,
+      horasTrabalhadas: 132,
+      deslocamento: 18,
+      orcamentosNaoFechados: 10,
+      administracao: 12,
+      outros: 0,
+      margemPadrao: 0.3,
+      margemMinima: 0.1,
+      configurado: true
+    },
+    canais: canais,
+    insumos: insumos,
+    fichas: [{
+      id: novoId(),
+      nome: 'Bolo de pote — chocolate',
+      tipo: 'produto',
+      rendimento: 20,
+      tempoProducaoHoras: 2.5,
+      indicePerda: 0.05,
+      custoEmbalagemUnitario: 1.35,
+      margemDesejada: 0.3,
+      comissao: 0,
+      materiais: [],
+      itens: [
+        { insumoId: insumos[0].id, quantidade: 500, unidade: 'g' },
+        { insumoId: insumos[1].id, quantidade: 400, unidade: 'g' },
+        { insumoId: insumos[2].id, quantidade: 6, unidade: 'un' },
+        { insumoId: insumos[3].id, quantidade: 2, unidade: 'un' },
+        { insumoId: insumos[4].id, quantidade: 2, unidade: 'un' },
+        { insumoId: insumos[5].id, quantidade: 200, unidade: 'g' },
+        { insumoId: insumos[6].id, quantidade: 150, unidade: 'g' }
+      ],
+      precosPraticados: precosPraticados
+    }]
+  }
+  salvar()
+}
+
+
+/* ==========================================================================
+   4. TELAS
+   Cada tela devolve HTML. Os eventos são resolvidos por delegação,
+   com data-acao no elemento.
+   ========================================================================== */
+
+const TELAS = [
+  { rota: 'painel', rotulo: 'Painel' },
+  { rota: 'base', rotulo: 'Base' },
+  { rota: 'insumos', rotulo: 'Insumos' },
+  { rota: 'fichas', rotulo: 'Fichas' },
+  { rota: 'precos', rotulo: 'Preços' },
+  { rota: 'simulador', rotulo: 'Simular' }
+]
+
+function titulo (texto, apoio) {
+  return '<header class="titulo"><h1>' + esc(texto) + '</h1>' +
+    (apoio ? '<p>' + esc(apoio) + '</p>' : '') + '</header>'
+}
+
+function linha (rotulo, valor, opcoes) {
+  opcoes = opcoes || {}
+  return '<div class="linha' + (opcoes.destaque ? ' destaque' : '') + '">' +
+    '<span>' + esc(rotulo) + '</span>' +
+    '<span class="num' + (opcoes.negativo ? ' negativo' : '') + '">' + esc(valor) + '</span></div>'
+}
+
+/* atributos comuns a todo campo digitável: tecla "OK" no teclado do
+   celular, sem autopreenchimento de nome/endereço do Chrome */
+const ATR_CAMPO = 'autocomplete="off" enterkeyhint="done" '
+
+function campo (o) {
+  const id = o.foco || ''
+  const texto = o.inputmode === 'text'
+  /* zero vira campo vazio com "0" de dica: no celular, apagar o zero antes de digitar é chato */
+  const vazio = o.valor === 0 && !texto
+  const input = '<input type="' + (o.tipo || 'text') + '" ' + ATR_CAMPO +
+    'data-acao="' + o.acao + '" ' +
+    (o.indice != null ? 'data-indice="' + o.indice + '" ' : '') +
+    (o.chave ? 'data-chave="' + esc(o.chave) + '" ' : '') +
+    'data-foco="' + esc(id) + '" ' +
+    (o.inputmode ? 'inputmode="' + o.inputmode + '" ' : 'inputmode="decimal" ') +
+    (texto ? 'autocapitalize="sentences" ' : '') +
+    (o.placeholder ? 'placeholder="' + esc(o.placeholder) + '" ' : (vazio ? 'placeholder="0" ' : '')) +
+    'value="' + esc(vazio ? '' : numBR(o.valor)) + '" />'
+
+  return '<label class="campo"><span>' + esc(o.rotulo) + '</span>' +
+    (o.sufixo
+      ? '<span class="com-sufixo">' + input + '<span class="sufixo">' + esc(o.sufixo) + '</span></span>'
+      : input) +
+    (o.ajuda ? '<span class="ajuda apoio">' + esc(o.ajuda) + '</span>' : '') +
+    '</label>'
+}
+
+function semaforo (estado) {
+  return '<span class="pontinho ' + estado + '"></span>'
+}
+
+const LEGENDA = {
+  verde: 'Preço saudável',
+  amarelo: 'Revisar: abaixo da margem que você quer',
+  vermelho: 'Margem abaixo do mínimo aceitável',
+  prejuizo: 'Vendendo com prejuízo'
+}
+
+
+/* ----------------------------- PAINEL ----------------------------- */
+
+function avisoArmazenamento () {
+  if (armazenamentoOk) return ''
+  return '<div class="cartao alerta"><h2>Este navegador não está guardando os dados</h2>' +
+    '<p class="apoio">Acontece em aba anônima ou com cookies bloqueados. Dá para usar, mas ' +
+    'tudo some ao fechar. Abra numa aba normal ou faça um <a href="#ajustes">backup</a> antes de sair.</p></div>'
+}
+
+function telaPainel () {
+  if (!dados.fichas.length) {
+    return titulo('Etiqueta', 'Saiba quanto cobrar. E quanto sobra.') + avisoArmazenamento() +
+      '<div class="vazio">Comece pela base do negócio: dez minutos, uma vez só.' +
+      '<div class="botoes" style="justify-content:center">' +
+      '<button class="acao" data-acao="ir" data-chave="base">Configurar a base</button>' +
+      '<button class="acao secundaria" data-acao="exemplo">Ver com o exemplo pronto</button>' +
+      '</div></div>'
+  }
+
+  const ordem = { prejuizo: 0, vermelho: 1, amarelo: 2, verde: 3, sem: 4 }
+  const linhas = dados.fichas.map(f => {
+    const custo = calcularFicha(f)
+    const precos = precosDaFicha(f, custo.custoUnitario)
+    const comPreco = precos.filter(p => p.precoPraticado != null)
+      .sort((a, b) => a.margemReal - b.margemReal)
+    return { ficha: f, custo: custo, pior: comPreco[0], estado: comPreco[0] ? comPreco[0].semaforo : 'sem' }
+  }).sort((a, b) => ordem[a.estado] - ordem[b.estado])
+
+  let html = titulo('Etiqueta', 'Saiba quanto cobrar. E quanto sobra.') + avisoArmazenamento()
+
+  /* radar de defasagem */
+  dados.fichas.forEach(f => {
+    if (!f.custoNoUltimoReajuste) return
+    const custo = calcularFicha(f)
+    const precos = precosDaFicha(f, custo.custoUnitario)
+    const canal = precos.filter(p => p.precoPraticado != null)[0]
+    if (!canal) return
+    const d = defasagem({
+      custoNoUltimoReajuste: f.custoNoUltimoReajuste,
+      custoAtual: custo.custoUnitario,
+      precoPraticado: canal.precoPraticado,
+      percentuais: canal.percentuais,
+      margemDesejada: f.margemDesejada != null ? f.margemDesejada : dados.negocio.margemPadrao
+    })
+    if (!d.defasado || d.altaAcumulada <= 0) return
+    html += '<div class="cartao alerta"><h2>Seus preços estão ficando para trás</h2>' +
+      '<p>Desde o último reajuste, os insumos de ' + esc(f.nome) + ' subiram ' +
+      percentual(d.altaAcumulada) + '. Em ' + esc(canal.canalNome) + ' sua margem caiu para ' +
+      percentual(d.margemAtual) + '. Para voltar aos ' + percentual(d.margemDesejada) +
+      ', o preço precisaria ser ' + moeda(d.precoParaRecompor) + '.</p></div>'
+  })
+
+  const antigos = insumosDesatualizados()
+  if (antigos.length) {
+    html += '<p class="apoio" style="margin-bottom:1rem">' +
+      (antigos.length === 1
+        ? 'Você não atualiza o preço de ' + esc(antigos[0].nome) + ' há um tempo. '
+        : antigos.length + ' insumos estão com preço antigo. ') +
+      '<a href="#insumos">Conferir</a></p>'
+  }
+
+  html += '<ul class="lista">'
+  linhas.forEach(l => {
+    html += '<li><button class="item" data-acao="abrir-precos" data-chave="' + l.ficha.id + '">' +
+      '<span>' + semaforo(l.estado) + esc(l.ficha.nome) +
+      '<span class="sub">' + (l.pior
+        ? esc(l.pior.canalNome) + ': cobra ' + moeda(l.pior.precoPraticado) +
+          ', sobra ' + moeda(l.pior.sobra) + ' — margem de ' + percentual(l.pior.margemReal)
+        : 'Sem preço praticado cadastrado') +
+      '</span></span>' +
+      '<span class="num">' + moeda(l.custo.custoUnitario) + '</span></button></li>'
+  })
+  html += '</ul>'
+
+  html += '<div class="botoes"><button class="acao secundaria" data-acao="ir" data-chave="ajustes">' +
+    'Backup e ajustes</button></div>'
+  return html
+}
+
+function insumosDesatualizados (dias) {
+  const limite = Date.now() - (dias || 120) * 86400000
+  return dados.insumos.filter(i => !i.atualizadoEm || Date.parse(i.atualizadoEm) < limite)
+}
+
+
+/* ------------------------------ BASE ------------------------------ */
+
+function telaBase () {
+  const n = dados.negocio
+  const fixos = custosFixosMensais(n)
+  const horas = horasFaturaveis(n)
+  const vh = valorHora(fixos, n.proLabore || 0, horas)
+
+  let html = titulo('Base do negócio', 'Você preenche uma vez. Depois é só usar.')
+
+  /* 1. porte */
+  html += '<div class="cartao"><h2>1. Como o seu negócio está formalizado</h2>' +
+    '<div class="opcoes">' +
+    ['MEI', 'ME', 'EPP'].map(p =>
+      '<label><input type="radio" name="porte" data-acao="porte" data-chave="' + p + '"' +
+      (n.porte === p ? ' checked' : '') + ' /> ' + p + '</label>').join('') +
+    '</div>'
+
+  if (n.porte === 'MEI') {
+    html += '<p class="apoio">No MEI o DAS é um valor fixo por mês. Ele entra como conta fixa ' +
+      'logo abaixo e não desconta nada de cada venda.</p>'
+  } else {
+    html += campo({
+      rotulo: 'Alíquota efetiva do Simples Nacional', sufixo: '%',
+      valor: campoDeFracao(n.aliquotaSimples), acao: 'aliquota', foco: 'aliquota',
+      ajuda: 'Está no seu PGDAS ou com o seu contador. Aqui ela desconta de cada venda.'
+    })
+  }
+  html += '</div>'
+
+  /* 2. contas fixas */
+  html += '<div class="cartao"><h2>2. Contas que você paga todo mês</h2>' +
+    '<p class="apoio">Vendendo ou não vendendo.</p><ul class="lista" style="border:0">'
+  ;(n.custosFixos || []).forEach((c, i) => {
+    html += '<li class="linha-edita">' +
+      '<input type="text" class="cresce" ' + ATR_CAMPO + 'autocapitalize="sentences" ' +
+      'data-acao="fixo-desc" data-indice="' + i + '" data-foco="fd' + i + '" ' +
+      'aria-label="Descrição da conta" placeholder="Internet, aluguel, DAS…" value="' + esc(c.descricao) + '" />' +
+      '<span class="junto">' +
+      '<input type="text" inputmode="decimal" ' + ATR_CAMPO + 'data-acao="fixo-valor" data-indice="' + i + '" ' +
+      'data-foco="fv' + i + '" aria-label="Valor por mês" placeholder="0,00" ' +
+      'value="' + esc(c.valor ? numBR(c.valor) : '') + '" class="num valor-curto" />' +
+      '<button class="remover" data-acao="fixo-remover" data-indice="' + i + '" ' +
+      'aria-label="Remover conta">×</button></span></li>'
+  })
+  html += '</ul><div class="botoes">' +
+    '<button class="acao secundaria" data-acao="fixo-novo">Adicionar conta</button></div>' +
+    linha('Custo fixo mensal', moeda(fixos), { destaque: true }) + '</div>'
+
+  /* 3. retirada e horas */
+  html += '<div class="cartao"><h2>3. Quanto você quer tirar, e quanto consegue cobrar</h2>' +
+    campo({ rotulo: 'Retirada pretendida por mês', valor: n.proLabore, acao: 'prolabore', foco: 'prolabore' }) +
+    '<p class="apoio" style="margin-top:.75rem">Ninguém fatura todas as horas que trabalha. ' +
+    'Desconte o que não vira dinheiro.</p>' +
+    campo({ rotulo: 'Horas trabalhadas por mês', sufixo: 'h', valor: n.horasTrabalhadas, acao: 'horas', foco: 'horas' }) +
+    campo({ rotulo: 'Deslocamento entre trabalhos', sufixo: 'h', valor: n.deslocamento, acao: 'deslocamento', foco: 'deslocamento' }) +
+    campo({ rotulo: 'Orçamentos que não fecham', sufixo: 'h', valor: n.orcamentosNaoFechados, acao: 'orcamentos', foco: 'orcamentos' }) +
+    campo({ rotulo: 'Compras, banco, administração', sufixo: 'h', valor: n.administracao, acao: 'administracao', foco: 'administracao' }) +
+    linha('Horas que você consegue cobrar', numBR(horas) + ' h', { destaque: true }) +
+    linha('Valor-hora do seu negócio', moeda(vh), { destaque: true })
+
+  if (n.horasTrabalhadas > 0) {
+    html += '<p class="apoio">Você trabalha ' + numBR(n.horasTrabalhadas) + ' h, mas só pode cobrar por ' +
+      numBR(horas) + '. Todo o resto precisa estar embutido nessas ' + numBR(horas) + ' horas.</p>'
+  }
+  html += '</div>'
+
+  /* 4. canais */
+  html += '<div class="cartao"><h2>4. Onde você vende</h2>' +
+    '<p class="apoio">A taxa real está no extrato da plataforma: some comissão e taxa de pagamento.</p>' +
+    '<ul class="lista">'
+  dados.canais.forEach(c => {
+    html += '<li style="display:flex;justify-content:space-between;align-items:center;padding:.6rem 0">' +
+      '<span>' + esc(c.nome) + '<span class="sub num">' + percentual(c.taxa) +
+      (c.custoFixoPorPedido ? ' + ' + moeda(c.custoFixoPorPedido) + ' por pedido, ' +
+        (c.itensPorPedido || 1) + ' itens' : '') + '</span></span>' +
+      '<button class="remover" data-acao="canal-remover" data-chave="' + c.id + '" ' +
+      'aria-label="Remover canal">×</button></li>'
+  })
+  html += '</ul>' +
+    campo({ rotulo: 'Nome do canal', valor: ui.canalNome || '', acao: 'canal-nome', foco: 'canal-nome', inputmode: 'text', placeholder: 'Balcão, cartão, aplicativo…' }) +
+    campo({ rotulo: 'Taxa sobre a venda', sufixo: '%', valor: ui.canalTaxa || '', acao: 'canal-taxa', foco: 'canal-taxa' }) +
+    campo({ rotulo: 'Custo fixo por pedido', valor: ui.canalFixo || '', acao: 'canal-fixo', foco: 'canal-fixo', ajuda: 'Motoboy, embalagem de entrega. Zero se não tiver.' }) +
+    campo({ rotulo: 'Itens por pedido, em média', valor: ui.canalItens || '1', acao: 'canal-itens', foco: 'canal-itens', ajuda: 'Para dividir o custo do pedido entre as unidades.' }) +
+    '<div class="botoes"><button class="acao secundaria" data-acao="canal-novo">Adicionar canal</button></div></div>'
+
+  /* margens padrão */
+  html += '<div class="cartao"><h2>Margens</h2>' +
+    campo({ rotulo: 'Margem que você quer', sufixo: '%', valor: campoDeFracao(n.margemPadrao), acao: 'margem-padrao', foco: 'margem-padrao' }) +
+    campo({ rotulo: 'Margem mínima aceitável', sufixo: '%', valor: campoDeFracao(n.margemMinima), acao: 'margem-minima', foco: 'margem-minima',
+      ajuda: 'Abaixo disso o produto fica vermelho no painel.' }) + '</div>'
+
+  return html
+}
+
+
+/* ----------------------------- INSUMOS ----------------------------- */
+
+function telaInsumos () {
+  let html = titulo('Insumos', 'Cadastre como você compra: pela embalagem.')
+
+  if (ui.impacto) {
+    const i = ui.impacto
+    html += '<div class="cartao alerta"><h2>' + esc(i.nome) + ' ' +
+      (i.variacao >= 0 ? 'subiu' : 'caiu') + ' ' + percentual(Math.abs(i.variacao)) + '</h2>' +
+      '<p class="apoio">Isso muda o custo de ' + i.fichas.length +
+      (i.fichas.length === 1 ? ' ficha:' : ' fichas:') + '</p>'
+    i.fichas.forEach(f => {
+      html += linha(f.nome, moeda(f.antes) + ' → ' + moeda(f.depois))
+    })
+    html += '<div class="botoes">' +
+      '<button class="acao" data-acao="impacto-confirmar">Atualizar preço</button>' +
+      '<button class="acao secundaria" data-acao="impacto-cancelar">Cancelar</button></div></div>'
+    return html
+  }
+
+  if (ui.insumoAberto) {
+    return html + formularioInsumo(ui.insumoAberto)
+  }
+
+  if (!dados.insumos.length) {
+    html += '<div class="vazio">Nada cadastrado ainda. Comece pelo que você mais compra.' +
+      '<div class="botoes" style="justify-content:center">' +
+      '<button class="acao" data-acao="insumo-novo">Cadastrar o primeiro insumo</button></div></div>'
+    return html
+  }
+
+  html += '<ul class="lista">'
+  dados.insumos.slice().sort((a, b) => a.nome.localeCompare(b.nome)).forEach(i => {
+    html += '<li><button class="item" data-acao="insumo-abrir" data-chave="' + i.id + '">' +
+      '<span>' + esc(i.nome) + '<span class="sub">' + esc(numBR(i.quantidadeEmbalagem) + ' ' + i.unidade) +
+      ' · ' + esc(i.fornecedor || 'sem fornecedor') + ' · ' + dataCurta(i.atualizadoEm) +
+      '</span></span><span class="num">' + moeda(i.precoEmbalagem) + '</span></button></li>'
+  })
+  html += '</ul><div class="botoes"><button class="acao" data-acao="insumo-novo">Novo insumo</button></div>'
+  return html
+}
+
+function formularioInsumo (f) {
+  let exemplo = ''
+  if (f.quantidadeEmbalagem > 0 && f.precoEmbalagem > 0) {
+    const parte = f.quantidadeEmbalagem / 5
+    exemplo = '<p class="apoio">Um quinto da embalagem (' + numBR(parte) + ' ' + esc(f.unidade) +
+      ') custa ' + moeda(custoInsumo(f, parte, f.unidade)) + '.</p>'
+  }
+
+  return '<div class="cartao">' +
+    campo({ rotulo: 'Nome', valor: f.nome, acao: 'ins-nome', foco: 'ins-nome', inputmode: 'text' }) +
+    '<div style="display:flex;gap:1rem">' +
+    '<div style="flex:1">' + campo({ rotulo: 'Quantidade da embalagem', valor: f.quantidadeEmbalagem, acao: 'ins-qtd', foco: 'ins-qtd' }) + '</div>' +
+    '<label class="campo" style="min-width:5.5rem"><span>Unidade</span><select data-acao="ins-unidade" data-foco="ins-unidade">' +
+    LISTA_UNIDADES.map(u => '<option value="' + u + '"' + (f.unidade === u ? ' selected' : '') + '>' + u + '</option>').join('') +
+    '</select></label></div>' +
+    campo({ rotulo: 'Preço pago pela embalagem', valor: f.precoEmbalagem, acao: 'ins-preco', foco: 'ins-preco' }) +
+    campo({ rotulo: 'Fornecedor', valor: f.fornecedor || '', acao: 'ins-fornecedor', foco: 'ins-fornecedor', inputmode: 'text' }) +
+    exemplo +
+    historicoDoInsumo(f) +
+    '<div class="botoes"><button class="acao" data-acao="insumo-salvar">Salvar</button>' +
+    '<button class="acao secundaria" data-acao="insumo-fechar">Cancelar</button>' +
+    (f.id ? '<button class="acao secundaria" data-acao="insumo-excluir">Excluir</button>' : '') +
+    '</div></div>'
+}
+
+function historicoDoInsumo (f) {
+  if (!f.historico || f.historico.length < 2) return ''
+  let html = '<h2 style="margin-top:1rem">Histórico</h2>'
+  const h = f.historico.slice(-6)
+  h.forEach((r, i) => {
+    const antes = i > 0 ? h[i - 1].preco : null
+    html += linha(dataCurta(r.data), moeda(r.preco) +
+      (antes ? '  (' + (r.preco >= antes ? '+' : '') + percentual(variacao(antes, r.preco)) + ')' : ''))
+  })
+  return html
+}
+
+
+/* ------------------------------ FICHAS ------------------------------ */
+
+function fichaVazia () {
+  return {
+    id: null, nome: '', tipo: 'produto', rendimento: 1, tempoProducaoHoras: 0,
+    indicePerda: 0.05, custoEmbalagemUnitario: 0,
+    margemDesejada: dados.negocio.margemPadrao, comissao: 0,
+    itens: [], materiais: [], precosPraticados: {}
+  }
+}
+
+function telaFichas () {
+  if (ui.fichaAberta) return editorFicha(ui.fichaAberta)
+
+  let html = titulo('Fichas', 'Uma ficha por produto ou serviço. É daqui que sai todo o resto.')
+
+  if (!dados.fichas.length) {
+    return html + '<div class="vazio">Comece por um produto só — o que você mais vende.' +
+      '<div class="botoes" style="justify-content:center">' +
+      '<button class="acao" data-acao="ficha-nova">Criar a primeira ficha</button></div></div>'
+  }
+
+  html += '<ul class="lista">'
+  dados.fichas.forEach(f => {
+    const c = calcularFicha(f)
+    html += '<li><button class="item" data-acao="ficha-abrir" data-chave="' + f.id + '">' +
+      '<span>' + esc(f.nome || '(sem nome)') + '<span class="sub">' +
+      (f.tipo === 'servico' ? 'serviço' : 'rende ' + f.rendimento) +
+      ' · margem ' + percentual(f.margemDesejada) + '</span></span>' +
+      '<span class="num">' + moeda(c.custoUnitario) + '</span></button></li>'
+  })
+  html += '</ul><div class="botoes"><button class="acao" data-acao="ficha-nova">Nova ficha</button></div>'
+  return html
+}
+
+function editorFicha (f) {
+  const c = calcularFicha(f)
+  const vh = valorHoraDoNegocio(dados.negocio)
+
+  let html = titulo(f.nome || 'Nova ficha', f.tipo === 'servico' ? 'Modo serviço' : 'Modo produto')
+
+  html += '<div class="cartao">' +
+    campo({ rotulo: 'Nome', valor: f.nome, acao: 'fic-nome', foco: 'fic-nome', inputmode: 'text' }) +
+    '<div class="opcoes">' +
+    '<label><input type="radio" name="tipo" data-acao="fic-tipo" data-chave="produto"' +
+    (f.tipo === 'produto' ? ' checked' : '') + ' /> Produto</label>' +
+    '<label><input type="radio" name="tipo" data-acao="fic-tipo" data-chave="servico"' +
+    (f.tipo === 'servico' ? ' checked' : '') + ' /> Serviço</label></div>'
+
+  if (f.tipo === 'produto') {
+    html += campo({ rotulo: 'Rendimento', sufixo: 'unidades', valor: f.rendimento, acao: 'fic-rendimento', foco: 'fic-rendimento', ajuda: 'Quantas unidades saem de uma produção.' }) +
+      campo({ rotulo: 'Embalagem por unidade', valor: f.custoEmbalagemUnitario, acao: 'fic-embalagem', foco: 'fic-embalagem' }) +
+      campo({ rotulo: 'Perda e quebra', sufixo: '%', valor: campoDeFracao(f.indicePerda), acao: 'fic-perda', foco: 'fic-perda' })
+  }
+
+  html += campo({
+    rotulo: f.tipo === 'servico' ? 'Tempo de execução' : 'Tempo de produção',
+    sufixo: 'horas', valor: f.tempoProducaoHoras, acao: 'fic-tempo', foco: 'fic-tempo',
+    ajuda: '1 h 30 se escreve 1,5.'
+  }) +
+    campo({ rotulo: 'Margem desejada', sufixo: '%', valor: campoDeFracao(f.margemDesejada), acao: 'fic-margem', foco: 'fic-margem' }) +
+    '</div>'
+
+  /* insumos ou materiais */
+  if (f.tipo === 'produto') {
+    html += '<div class="cartao"><h2>Insumos usados</h2>'
+    if (!f.itens.length) html += '<p class="apoio">Nenhum insumo nesta ficha ainda.</p>'
+    html += '<ul class="lista">'
+    f.itens.forEach((it, i) => {
+      const insumo = insumosPorId()[it.insumoId]
+      html += '<li class="linha-edita" style="justify-content:space-between">' +
+        '<span class="cresce">' + esc(insumo ? insumo.nome : '(removido)') + '</span>' +
+        '<span class="junto"><input type="text" inputmode="decimal" ' + ATR_CAMPO + 'class="num valor-curto" ' +
+        'aria-label="Quantidade de ' + esc(insumo ? insumo.nome : 'insumo') + '" ' +
+        'data-acao="item-qtd" data-indice="' + i + '" data-foco="iq' + i + '" value="' + esc(numBR(it.quantidade)) + '" /> ' +
+        esc(it.unidade) +
+        '<button class="remover" data-acao="item-remover" data-indice="' + i + '" aria-label="Remover">×</button></span></li>'
+    })
+    html += '</ul>'
+
+    if (dados.insumos.length) {
+      const escolhido = insumosPorId()[ui.itemInsumo]
+      html += '<div class="linha-edita" style="align-items:flex-end;margin-top:.75rem">' +
+        '<label class="campo cresce-mais"><span>Insumo</span>' +
+        '<select data-acao="item-escolher" data-foco="item-escolher"><option value="">escolher…</option>' +
+        dados.insumos.map(i => '<option value="' + i.id + '"' +
+          (ui.itemInsumo === i.id ? ' selected' : '') + '>' + esc(i.nome) + '</option>').join('') +
+        '</select></label>' +
+        '<span class="junto" style="padding-bottom:.5rem">' +
+        '<input type="text" inputmode="decimal" ' + ATR_CAMPO + 'class="num valor-curto" ' +
+        'placeholder="qtd" aria-label="Quantidade usada" ' +
+        'data-acao="item-quantidade" data-foco="item-quantidade" value="' + esc(ui.itemQtd || '') + '" />' +
+        '<span class="sufixo apoio">' + esc(escolhido ? escolhido.unidade : '') + '</span>' +
+        '<button class="acao secundaria" data-acao="item-adicionar">Adicionar</button></span></div>'
+    } else {
+      html += '<p class="apoio">Cadastre insumos primeiro, em <a href="#insumos">Insumos</a>.</p>'
+    }
+    html += '</div>'
+  } else {
+    html += '<div class="cartao"><h2>Material aplicado</h2><ul class="lista">'
+    ;(f.materiais || []).forEach((m, i) => {
+      html += '<li class="linha-edita">' +
+        '<input type="text" class="cresce" ' + ATR_CAMPO + 'autocapitalize="sentences" ' +
+        'data-acao="mat-desc" data-indice="' + i + '" data-foco="md' + i + '" ' +
+        'aria-label="Material" placeholder="disjuntor, cabo…" value="' + esc(m.descricao) + '" />' +
+        '<span class="junto">' +
+        '<input type="text" inputmode="decimal" ' + ATR_CAMPO + 'class="num valor-curto" ' +
+        'aria-label="Custo do material" placeholder="custo" ' +
+        'data-acao="mat-custo" data-indice="' + i + '" data-foco="mc' + i + '" value="' + esc(m.custo ? numBR(m.custo) : '') + '" />' +
+        '<input type="text" inputmode="decimal" ' + ATR_CAMPO + 'class="num valor-mini" ' +
+        'aria-label="Margem sobre o material, em %" ' +
+        'data-acao="mat-margem" data-indice="' + i + '" data-foco="mm' + i + '" value="' + esc(campoDeFracao(m.margem)) + '" />' +
+        '<span class="sufixo">%</span>' +
+        '<button class="remover" data-acao="mat-remover" data-indice="' + i + '" aria-label="Remover">×</button></span></li>'
+    })
+    html += '</ul><div class="botoes">' +
+      '<button class="acao secundaria" data-acao="mat-novo">Adicionar material</button></div></div>'
+  }
+
+  /* a conta */
+  html += '<div class="cartao"><h2>A conta</h2>'
+  c.linhasInsumos.forEach(l => {
+    html += linha(l.nome + ' · ' + numBR(l.quantidade) + ' ' + l.unidade,
+      l.erro ? l.erro : moeda(l.custo), { negativo: Boolean(l.erro) })
+  })
+  if (c.custoInsumosLote > 0) {
+    html += linha('Insumos por unidade (de ' + moeda(c.custoInsumosLote) + ')', moeda(c.custoInsumosUnitario))
+  }
+  if (c.custoMateriais > 0) html += linha('Material aplicado, com margem', moeda(c.custoMateriais))
+  if (f.tipo === 'produto') html += linha('Embalagem', moeda(c.custoEmbalagemUnitario))
+  html += linha('Seu trabalho · ' + duracao(c.horasPorUnidade) + ' a ' + moeda(vh) + '/h', moeda(c.custoMaoDeObra))
+  if (c.perda > 0) html += linha('Perda e quebra (' + percentual(f.indicePerda) + ')', moeda(c.perda))
+  html += linha('Custo por unidade', moeda(c.custoUnitario), { destaque: true })
+
+  if (vh === 0) {
+    html += '<p class="apoio" style="color:var(--atencao)">O seu valor-hora está zerado. ' +
+      'Preencha a <a href="#base">Base do negócio</a> para o seu trabalho entrar no custo.</p>'
+  }
+  html += '</div>'
+
+  html += '<div class="botoes">' +
+    '<button class="acao" data-acao="ficha-salvar">Salvar ficha</button>' +
+    '<button class="acao secundaria" data-acao="ficha-fechar">Voltar</button>' +
+    (f.id ? '<button class="acao secundaria" data-acao="ficha-excluir">Excluir</button>' : '') +
+    '</div>'
+  return html
+}
+
+
+/* ------------------------------ PREÇOS ------------------------------ */
+
+function telaPrecos () {
+  if (!dados.fichas.length) {
+    return titulo('Preços') + '<div class="vazio">Crie uma ficha para ver os preços por canal.</div>'
+  }
+
+  if (!ui.fichaPreco || !dados.fichas.some(f => f.id === ui.fichaPreco)) {
+    ui.fichaPreco = dados.fichas[0].id
+  }
+  const f = dados.fichas.filter(x => x.id === ui.fichaPreco)[0]
+  const c = calcularFicha(f)
+  const precos = precosDaFicha(f, c.custoUnitario)
+
+  let html = titulo('Preços', 'O que cobrar em cada lugar para manter a mesma margem.')
+
+  html += '<label class="campo"><span>Ficha</span><select data-acao="preco-ficha" data-foco="preco-ficha">' +
+    dados.fichas.map(x => '<option value="' + x.id + '"' +
+      (x.id === f.id ? ' selected' : '') + '>' + esc(x.nome) + '</option>').join('') +
+    '</select></label>'
+
+  html += '<div class="linha destaque"><span>Custo por unidade</span>' +
+    '<span class="num" style="font-size:1.25rem">' + moeda(c.custoUnitario) + '</span></div>'
+
+  if (!dados.canais.length) {
+    return html + '<div class="vazio">Nenhum canal cadastrado. Vá em <a href="#base">Base</a> ' +
+      'e diga onde você vende.</div>'
+  }
+
+  /* resumo: quem abre no balcão precisa da resposta antes de rolar a página */
+  /* a lista existe sempre (vazia some pelo CSS): assim a tela não muda de
+     estrutura acima do campo enquanto a pessoa digita o preço */
+  const comPreco = precos.filter(p => p.precoPraticado != null)
+  html += '<ul class="lista resumo" style="margin-bottom:1rem">'
+  comPreco.forEach(p => {
+    html += '<li style="display:flex;justify-content:space-between;align-items:center;gap:.75rem;padding:.6rem 0">' +
+      '<span>' + semaforo(p.semaforo) + esc(p.canalNome) + '</span>' +
+      '<span class="num" style="text-align:right">' + moeda(p.precoPraticado) + ' · sobra ' + moeda(p.sobra) + '</span></li>'
+  })
+  html += '</ul>'
+
+  precos.forEach(p => {
+    html += '<div class="cartao' + (p.semaforo && p.semaforo !== 'verde' ? ' ruim' : '') + '">' +
+      '<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;column-gap:1rem">' +
+      '<h2>' + esc(p.canalNome) + '</h2>' +
+      '<span class="apoio num">' + percentual(somaPercentuais(p.percentuais)) + ' sai da venda</span></div>' +
+      linha('Preço mínimo — sem lucro nenhum', moeda(p.precoMinimo)) +
+      linha('Preço de equilíbrio — margem mínima', moeda(p.precoEquilibrio)) +
+      linha('Preço-alvo — a praticar', moeda(p.precoAlvo), { destaque: true }) +
+      linha('Sobra para você no preço-alvo', moeda(p.sobraNoAlvo)) +
+      '<div style="border-top:1px solid var(--linha);margin-top:.75rem;padding-top:.5rem">' +
+      '<label style="display:flex;justify-content:space-between;align-items:center;gap:1rem">' +
+      '<span class="apoio">Preço que você cobra hoje</span>' +
+      '<input type="text" inputmode="decimal" ' + ATR_CAMPO + 'class="num" style="width:7rem;text-align:right" ' +
+      'placeholder="0,00" ' +
+      'data-acao="preco-praticado" data-chave="' + p.canalId + '" data-foco="pp' + p.canalId + '" ' +
+      'value="' + esc(p.precoPraticado != null ? numBR(p.precoPraticado) : '') + '" /></label>'
+
+    if (p.precoPraticado != null) {
+      html += '<p class="apoio" style="margin-top:.5rem">' + semaforo(p.semaforo) +
+        esc(LEGENDA[p.semaforo]) + '</p>' +
+        linha('Você recebe', moeda(p.recebido)) +
+        linha('Custo', moeda(p.custoNoCanal)) +
+        linha('Sobra · margem de ' + percentual(p.margemReal), moeda(p.sobra),
+          { destaque: true, negativo: p.sobra < 0 })
+      if (c.horasPorUnidade > 0) {
+        html += '<p class="apoio">São ' + moeda(ganhoPorHora(p.sobra, c.horasPorUnidade)) +
+          ' por hora de trabalho neste canal.</p>'
+      }
+      if (p.semaforo !== 'verde') {
+        html += '<p class="apoio" style="color:var(--prejuizo)">Preço mínimo aqui: ' +
+          moeda(p.precoMinimo) + '. Para a margem que você definiu: ' + moeda(p.precoAlvo) + '.</p>'
+      }
+    }
+    html += '</div></div>'
+  })
+
+  html += '<div class="botoes"><button class="acao secundaria" data-acao="reajustado">' +
+    'Marcar como reajustado hoje</button></div>' +
+    '<p class="apoio" style="margin-top:.5rem">Congela o custo de hoje. O radar compara a alta ' +
+    'dos insumos com esta data.</p>'
+  return html
+}
+
+
+/* ---------------------------- SIMULADOR ---------------------------- */
+
+function telaSimulador () {
+  if (!dados.fichas.length) {
+    return titulo('Simulador') + '<div class="vazio">Crie uma ficha para simular cenários.</div>'
+  }
+  if (!ui.simFicha || !dados.fichas.some(f => f.id === ui.simFicha)) ui.simFicha = dados.fichas[0].id
+
+  const f = dados.fichas.filter(x => x.id === ui.simFicha)[0]
+  const c = calcularFicha(f)
+  const precos = precosDaFicha(f, c.custoUnitario)
+
+  let html = titulo('Simulador', 'Teste a decisão antes de tomar.')
+
+  html += '<label class="campo"><span>Ficha</span><select data-acao="sim-ficha" data-foco="sim-ficha">' +
+    dados.fichas.map(x => '<option value="' + x.id + '"' +
+      (x.id === f.id ? ' selected' : '') + '>' + esc(x.nome) + '</option>').join('') +
+    '</select></label>'
+
+  const cenarios = [
+    ['desconto', 'E se eu der um desconto?'],
+    ['insumo', 'E se um insumo subir?'],
+    ['canal', 'E se eu entrar em um canal novo?'],
+    ['retirada', 'E se eu quisesse tirar outro valor?']
+  ]
+  html += '<div class="abas">' + cenarios.map(x =>
+    '<button data-acao="cenario" data-chave="' + x[0] + '" aria-pressed="' +
+    (ui.cenario === x[0]) + '">' + x[1] + '</button>').join('') + '</div>'
+
+  if (ui.cenario === 'desconto') html += simDesconto(f, c, precos)
+  if (ui.cenario === 'insumo') html += simInsumo(f, c)
+  if (ui.cenario === 'canal') html += simCanal(f, c, precos)
+  if (ui.cenario === 'retirada') html += simRetirada(f, c)
+  return html
+}
+
+function seletorCanal (precos, selecionado) {
+  return '<label class="campo"><span>Canal</span><select data-acao="sim-canal" data-foco="sim-canal">' +
+    precos.map(p => '<option value="' + p.canalId + '"' +
+      (p.canalId === selecionado ? ' selected' : '') + '>' + esc(p.canalNome) + '</option>').join('') +
+    '</select></label>'
+}
+
+function simDesconto (f, c, precos) {
+  if (!precos.length) return '<div class="vazio">Cadastre um canal em <a href="#base">Base</a>.</div>'
+  if (!ui.simCanal || !precos.some(p => p.canalId === ui.simCanal)) ui.simCanal = precos[0].canalId
+  const p = precos.filter(x => x.canalId === ui.simCanal)[0]
+  const precoAtual = p.precoPraticado != null ? p.precoPraticado : p.precoAlvo
+  const s = simularDesconto({
+    precoAtual: precoAtual,
+    desconto: fracaoDeCampo(ui.desconto == null ? '10' : ui.desconto),
+    custoNoCanal: p.custoNoCanal,
+    percentuais: p.percentuais
+  })
+
+  return '<div class="cartao">' + seletorCanal(precos, ui.simCanal) +
+    campo({ rotulo: 'Desconto', sufixo: '%', valor: ui.desconto == null ? '10' : ui.desconto, acao: 'sim-desconto', foco: 'sim-desconto' }) +
+    linha('Preço hoje', moeda(precoAtual)) +
+    linha('Preço com desconto', moeda(s.precoComDesconto)) +
+    linha('Sobra hoje', moeda(s.sobraAntes)) +
+    linha('Sobra com desconto', moeda(s.sobraDepois), { destaque: true, negativo: s.sobraDepois < 0 }) +
+    '<p class="apoio" style="margin-top:.75rem">' +
+    (s.viraPrejuizo
+      ? 'Nesse preço você perde ' + moeda(Math.abs(s.sobraDepois)) +
+        ' por venda. Quanto mais vender, mais perde.'
+      : 'O lucro da venda cai ' + percentual(s.quedaDaSobra) +
+        '. Para ganhar o mesmo em reais, você precisaria vender ' +
+        percentual(s.volumeNecessario) + ' a mais.') +
+    '</p></div>'
+}
+
+function simInsumo (f, c) {
+  if (!c.linhasInsumos.length) return '<div class="vazio">Esta ficha não usa insumos cadastrados.</div>'
+  if (!ui.simInsumo || !c.linhasInsumos.some(l => l.insumoId === ui.simInsumo)) {
+    ui.simInsumo = c.linhasInsumos[0].insumoId
+  }
+  const alta = fracaoDeCampo(ui.alta == null ? '10' : ui.alta)
+  const insumo = insumosPorId()[ui.simInsumo]
+  const sub = {}
+  if (insumo) sub[insumo.id] = Object.assign({}, insumo, { precoEmbalagem: insumo.precoEmbalagem * (1 + alta) })
+  const depois = calcularFicha(f, sub)
+
+  return '<div class="cartao">' +
+    '<label class="campo"><span>Insumo</span><select data-acao="sim-insumo" data-foco="sim-insumo">' +
+    c.linhasInsumos.map(l => '<option value="' + l.insumoId + '"' +
+      (l.insumoId === ui.simInsumo ? ' selected' : '') + '>' + esc(l.nome) + '</option>').join('') +
+    '</select></label>' +
+    campo({ rotulo: 'Alta', sufixo: '%', valor: ui.alta == null ? '10' : ui.alta, acao: 'sim-alta', foco: 'sim-alta' }) +
+    linha('Custo hoje', moeda(c.custoUnitario)) +
+    linha('Custo depois da alta', moeda(depois.custoUnitario), { destaque: true }) +
+    '<p class="apoio">O custo da unidade sobe ' +
+    percentual(variacao(c.custoUnitario, depois.custoUnitario)) + '.</p></div>'
+}
+
+function simCanal (f, c, precos) {
+  const taxa = fracaoDeCampo(ui.novaTaxa == null ? '26,2' : ui.novaTaxa)
+  const margem = f.margemDesejada != null ? f.margemDesejada : dados.negocio.margemPadrao
+
+  /* o campo fica sempre na tela, mesmo quando a conta não fecha:
+     senão a pessoa não consegue corrigir a taxa */
+  let html = '<div class="cartao">' +
+    campo({ rotulo: 'Quanto a plataforma cobra de você', sufixo: '%',
+      valor: ui.novaTaxa == null ? '26,2' : ui.novaTaxa, acao: 'sim-taxa', foco: 'sim-taxa',
+      ajuda: 'Some comissão e taxa de pagamento. Confira no extrato.' })
+
+  let p
+  try {
+    p = precificarCanal({
+      custoUnitario: c.custoUnitario,
+      canal: { nome: 'Canal novo', taxa: taxa },
+      negocio: dados.negocio,
+      margemDesejada: margem,
+      margemMinima: dados.negocio.margemMinima
+    })
+  } catch (e) {
+    return html + '<p class="apoio" style="color:var(--prejuizo);margin-top:.5rem">' + esc(e.message) + '</p></div>'
+  }
+
+  html += linha('Preço mínimo neste canal', moeda(p.precoMinimo)) +
+    linha('Preço para manter ' + percentual(margem), moeda(p.precoAlvo), { destaque: true })
+
+  if (precos.length) {
+    const base = precos[0]
+    const sobra = base.precoAlvo * (1 - taxa) - c.custoUnitario
+    html += '<p class="apoio" style="margin-top:.75rem">Cadastrar lá o mesmo preço de ' +
+      esc(base.canalNome) + ' (' + moeda(base.precoAlvo) + ') deixaria ' + moeda(sobra) +
+      ' por venda.</p>'
+  }
+  return html + '</div>'
+}
+
+function simRetirada (f, c) {
+  const retirada = numeroDeCampo(ui.retirada == null ? String(dados.negocio.proLabore) : ui.retirada)
+  const vhNovo = valorHora(custosFixosMensais(dados.negocio), retirada, horasFaturaveis(dados.negocio))
+  const delta = (vhNovo - valorHoraDoNegocio(dados.negocio)) * c.horasPorUnidade
+  const novoCusto = (c.subtotal + delta) * (1 + (f.indicePerda || 0))
+  const precos = precosDaFicha(f, novoCusto)
+  const margem = f.margemDesejada != null ? f.margemDesejada : dados.negocio.margemPadrao
+
+  let html = '<div class="cartao">' +
+    campo({ rotulo: 'Quanto você quer tirar por mês', placeholder: '0,00',
+      valor: ui.retirada == null ? dados.negocio.proLabore : ui.retirada,
+      acao: 'sim-retirada', foco: 'sim-retirada' }) +
+    linha('Valor-hora necessário', moeda(vhNovo) + '/h') +
+    linha('Custo por unidade', moeda(novoCusto))
+  precos.forEach(p => {
+    html += linha('Preço em ' + p.canalNome, moeda(p.precoAlvo), { destaque: true })
+  })
+  if (!precos.length) html += '<p class="apoio">Cadastre um canal para ver o preço.</p>'
+  return html + '</div>'
+}
+
+
+/* ----------------------------- AJUSTES ----------------------------- */
+
+function telaAjustes () {
+  return titulo('Ajustes') + avisoArmazenamento() +
+    '<div class="cartao"><h2>Backup</h2>' +
+    '<p class="apoio">Seus dados ficam guardados neste navegador. Ninguém mais os vê — e ninguém ' +
+    'os recupera se você limpar o histórico ou trocar de aparelho. Faça uma cópia de vez em ' +
+    'quando.</p>' +
+    '<p class="apoio">Celular e computador não se enxergam: cada aparelho guarda os seus dados. ' +
+    'Para levar tudo de um para o outro, faça o backup num e restaure no outro.</p>' +
+    '<div class="botoes">' +
+    (podeBaixar() ? '<button class="acao" data-acao="backup-baixar">Baixar backup</button>' : '') +
+    '<button class="acao' + (podeBaixar() ? ' secundaria' : '') + '" data-acao="backup-copiar">Copiar backup</button>' +
+    '</div>' +
+    '<div class="botoes" style="margin-top:.5rem">' +
+    '<button class="acao secundaria" data-acao="backup-restaurar">Restaurar de um arquivo</button>' +
+    '<button class="acao secundaria" data-acao="backup-colar">Restaurar colando o texto</button>' +
+    '<input type="file" accept=".json,application/json,text/plain" id="arquivo-backup" hidden />' +
+    '</div>' +
+    (ui.mensagem ? '<p class="apoio" role="status" style="margin-top:.75rem">' + esc(ui.mensagem) + '</p>' : '') +
+    (ui.mostrarBackup
+      ? '<p class="apoio" style="margin-top:.75rem">Selecione o texto abaixo, copie e guarde ' +
+        '(no e-mail, no WhatsApp para você mesmo ou nas Notas).</p>' +
+        '<textarea readonly data-foco="backup-mostrar" aria-label="Texto do backup">' +
+        esc(textoDoBackup()) + '</textarea>'
+      : '') +
+    (ui.colando
+      ? '<p class="apoio" style="margin-top:.75rem">Cole aqui o texto de um backup do Etiqueta. ' +
+        'Ele substitui o que estiver cadastrado neste aparelho.</p>' +
+        '<textarea data-acao="backup-texto" data-foco="backup-texto" autocomplete="off" ' +
+        'autocapitalize="off" spellcheck="false" aria-label="Texto do backup">' + esc(ui.textoColado || '') + '</textarea>' +
+        '<div class="botoes"><button class="acao" data-acao="backup-colar-ok">Restaurar</button>' +
+        '<button class="acao secundaria" data-acao="backup-colar-cancelar">Cancelar</button></div>'
+      : '') +
+    '</div>' +
+
+    '<div class="cartao"><h2>Demonstração</h2>' +
+    '<p class="apoio">Carrega o caso da confeitaria usado na proposta. Isto apaga o que estiver cadastrado.</p>' +
+    '<div class="botoes"><button class="acao secundaria" data-acao="exemplo">Carregar exemplo</button>' +
+    '<button class="acao secundaria" data-acao="apagar">Apagar tudo</button></div></div>' +
+
+    '<div class="cartao"><h2>Sobre os cálculos</h2>' +
+    '<p class="apoio">O preço é calculado pela marcação divisor: custo dividido por ' +
+    '(1 − tributos − taxa do canal − comissão − margem). Multiplicar o custo pela margem, ' +
+    'que é o erro mais comum, devolve sempre uma margem menor do que a pretendida.</p>' +
+    '<p class="apoio">No MEI o DAS é tratado como custo fixo mensal, diluído no valor-hora, e não ' +
+    'como percentual sobre a venda. Nas ME e EPP do Simples, o contrário.</p>' +
+    '<p class="apoio">O Etiqueta é uma ferramenta de apoio gerencial. Ele ajuda a formar preço, ' +
+    'não substitui o seu contador nem cumpre obrigação fiscal.</p></div>'
+}
+
+
+/* ==========================================================================
+   5. ROTEADOR E EVENTOS
+   ========================================================================== */
+
+function rotaAtual () {
+  const r = (location.hash || '#painel').slice(1)
+  return r || 'painel'
+}
+
+/* --------------------------------------------------------------------------
+   Atualização da tela no lugar.
+   Antes a tela inteira era trocada (innerHTML) a cada tecla. No celular isso
+   quebra a digitação: o iPhone fecha o teclado quando o campo em foco some, e
+   o teclado do Android (que monta a palavra enquanto você digita) perde ou
+   duplica letras. Agora o HTML novo é comparado com o que está na tela e só o
+   que mudou é alterado. O campo em que a pessoa está digitando nunca é
+   substituído nem tem o valor reescrito.
+   -------------------------------------------------------------------------- */
+
+function atualizar (alvo, html) {
+  const molde = document.createElement(alvo.tagName)
+  molde.innerHTML = html
+  morfarFilhos(alvo, molde)
+}
+
+function morfarFilhos (de, para) {
+  const novos = Array.prototype.slice.call(para.childNodes)
+  const velhos = Array.prototype.slice.call(de.childNodes)
+  novos.forEach(function (n, i) {
+    if (velhos[i]) morfar(velhos[i], n)
+    else de.appendChild(n)
+  })
+  for (let i = novos.length; i < velhos.length; i++) de.removeChild(velhos[i])
+}
+
+function morfar (de, para) {
+  const elemento = de.nodeType === 1
+  if (de.nodeType !== para.nodeType || de.nodeName !== para.nodeName ||
+      (elemento && de.getAttribute('type') !== para.getAttribute('type'))) {
+    de.parentNode.replaceChild(para, de)
+    return
+  }
+  if (!elemento) {
+    if (de.nodeValue !== para.nodeValue) de.nodeValue = para.nodeValue
+    return
+  }
+
+  const emFoco = de === document.activeElement
+  Array.prototype.slice.call(de.attributes).forEach(function (a) {
+    if (!para.hasAttribute(a.name)) de.removeAttribute(a.name)
+  })
+  Array.prototype.slice.call(para.attributes).forEach(function (a) {
+    if (emFoco && a.name === 'value') return
+    if (de.getAttribute(a.name) !== a.value) de.setAttribute(a.name, a.value)
+  })
+
+  if (de.nodeName === 'INPUT') {
+    if (de.type === 'radio' || de.type === 'checkbox') {
+      de.checked = para.hasAttribute('checked')
+    } else if (de.type !== 'file' && !emFoco) {
+      const v = para.getAttribute('value') || ''
+      if (de.value !== v) de.value = v
+    }
+    return
+  }
+  if (de.nodeName === 'TEXTAREA') {
+    if (!emFoco && de.value !== para.value) de.value = para.value
+    return
+  }
+
+  let escolhido = null
+  if (de.nodeName === 'SELECT') {
+    const op = para.querySelector('option[selected]') || para.querySelector('option')
+    escolhido = op ? op.getAttribute('value') : null
+  }
+  morfarFilhos(de, para)
+  if (escolhido != null && de.value !== escolhido) de.value = escolhido
+}
+
+const TELAS_FUNCOES = {
+  painel: telaPainel, base: telaBase, insumos: telaInsumos,
+  fichas: telaFichas, precos: telaPrecos, simulador: telaSimulador, ajustes: telaAjustes
+}
+
+let telaAnterior = null
+let perguntaAberta = false
+
+function render () {
+  const ativo = document.activeElement
+  const foco = ativo && ativo.dataset ? ativo.dataset.foco : null
+  let inicio = null
+  try { inicio = ativo && ativo.selectionStart != null ? ativo.selectionStart : null } catch (e) { /* select */ }
+
+  const rota = rotaAtual()
+  let html
+  try {
+    html = (TELAS_FUNCOES[rota] || telaPainel)()
+  } catch (erro) {
+    /* ex.: taxas + margem somando 100% ou mais. Melhor explicar do que tela branca. */
+    console.error(erro)
+    html = titulo('A conta não fecha') +
+      '<div class="cartao ruim"><p>' + esc(erro.message) + '</p>' +
+      '<p class="apoio" style="margin-top:.5rem">Confira margens e taxas dos canais em ' +
+      '<a href="#base">Base</a>.</p></div>'
+  }
+  atualizar(document.getElementById('tela'), html)
+
+  atualizar(document.getElementById('navegacao'), TELAS.map(t =>
+    '<li><a href="#' + t.rota + '"' + (t.rota === rota ? ' class="ativo" aria-current="page"' : '') + '>' +
+    t.rotulo + '</a></li>').join(''))
+
+  atualizar(document.getElementById('camada'), dialogoHtml())
+
+  /* trocou de tela: volta para o topo (no celular a rolagem ficava no meio) */
+  const chaveTela = rota + '|' + (ui.fichaAberta ? 'f' + (ui.fichaAberta.id || 'nova') : '') +
+    '|' + (ui.insumoAberto ? 'i' + (ui.insumoAberto.id || 'novo') : '') + '|' + (ui.impacto ? 'x' : '')
+  if (telaAnterior !== null && chaveTela !== telaAnterior) window.scrollTo(0, 0)
+  telaAnterior = chaveTela
+
+  /* diálogo acabou de abrir: foco nele, para leitor de tela e teclado */
+  if (ui.pergunta && !perguntaAberta) {
+    const b = document.querySelector('.dialogo button')
+    if (b) b.focus()
+  }
+  perguntaAberta = Boolean(ui.pergunta)
+
+  /* se, numa mudança grande de estrutura, o campo em foco foi substituído, devolve o foco */
+  if (foco && ativo && !document.body.contains(ativo)) {
+    const alvo = document.querySelector('[data-foco="' + foco + '"]')
+    if (alvo) {
+      alvo.focus()
+      if (inicio != null && alvo.setSelectionRange) {
+        try { alvo.setSelectionRange(inicio, inicio) } catch (e) { /* select não tem cursor */ }
+      }
+    }
+  }
+}
+
+/* ---- diálogo de confirmação e aviso rápido ----
+   alert() e confirm() não funcionam quando o site está aberto dentro do
+   Claude (no app de celular, por exemplo), e no celular são feios e
+   bloqueiam a tela. Estes fazem o mesmo papel dentro da página. */
+
+function perguntar (titulo, texto, botaoSim, acaoSim) {
+  ui.pergunta = { titulo: titulo, texto: texto, sim: botaoSim, acao: acaoSim }
+}
+
+function dialogoHtml () {
+  const p = ui.pergunta
+  if (!p) return ''
+  return '<div class="dialogo-fundo" data-acao="pergunta-cancelar">' +
+    '<div class="dialogo" role="alertdialog" aria-modal="true" aria-labelledby="dialogo-titulo" data-acao="nada">' +
+    '<h2 id="dialogo-titulo">' + esc(p.titulo) + '</h2>' +
+    '<p class="apoio">' + esc(p.texto) + '</p>' +
+    '<div class="botoes">' +
+    '<button class="acao" data-acao="' + esc(p.acao) + '">' + esc(p.sim) + '</button>' +
+    '<button class="acao secundaria" data-acao="pergunta-cancelar">Cancelar</button>' +
+    '</div></div></div>'
+}
+
+let avisoTempo = null
+function avisar (texto) {
+  const el = document.getElementById('aviso')
+  el.textContent = texto
+  el.hidden = false
+  clearTimeout(avisoTempo)
+  avisoTempo = setTimeout(function () { el.hidden = true }, 3500)
+}
+
+function focar (chave) {
+  const el = document.querySelector('[data-foco="' + chave + '"]')
+  if (el) el.focus()
+}
+
+function fichaEmEdicao () { return ui.fichaAberta }
+
+/* ---- entradas de texto ---- */
+
+document.addEventListener('input', function (e) {
+  const el = e.target
+  const acao = el.dataset.acao
+  if (!acao) return
+  const i = el.dataset.indice
+  const n = dados.negocio
+  const f = fichaEmEdicao()
+  const ins = ui.insumoAberto
+  let redesenhar = true
+
+  switch (acao) {
+    case 'aliquota': n.aliquotaSimples = fracaoDeCampo(el.value); break
+    case 'prolabore': n.proLabore = numeroDeCampo(el.value); break
+    case 'horas': n.horasTrabalhadas = numeroDeCampo(el.value); break
+    case 'deslocamento': n.deslocamento = numeroDeCampo(el.value); break
+    case 'orcamentos': n.orcamentosNaoFechados = numeroDeCampo(el.value); break
+    case 'administracao': n.administracao = numeroDeCampo(el.value); break
+    case 'margem-padrao': n.margemPadrao = fracaoDeCampo(el.value); break
+    case 'margem-minima': n.margemMinima = fracaoDeCampo(el.value); break
+    case 'fixo-desc': n.custosFixos[i].descricao = el.value; break
+    case 'fixo-valor': n.custosFixos[i].valor = numeroDeCampo(el.value); break
+
+    case 'canal-nome': ui.canalNome = el.value; redesenhar = false; break
+    case 'canal-taxa': ui.canalTaxa = el.value; redesenhar = false; break
+    case 'canal-fixo': ui.canalFixo = el.value; redesenhar = false; break
+    case 'canal-itens': ui.canalItens = el.value; redesenhar = false; break
+
+    case 'ins-nome': ins.nome = el.value; redesenhar = false; break
+    case 'ins-qtd': ins.quantidadeEmbalagem = numeroDeCampo(el.value); break
+    case 'ins-preco': ins.precoEmbalagem = numeroDeCampo(el.value); break
+    case 'ins-fornecedor': ins.fornecedor = el.value; redesenhar = false; break
+
+    case 'fic-nome': f.nome = el.value; redesenhar = false; break
+    case 'fic-rendimento': f.rendimento = numeroDeCampo(el.value) || 1; break
+    case 'fic-embalagem': f.custoEmbalagemUnitario = numeroDeCampo(el.value); break
+    case 'fic-perda': f.indicePerda = fracaoDeCampo(el.value); break
+    case 'fic-tempo': f.tempoProducaoHoras = numeroDeCampo(el.value); break
+    case 'fic-margem': f.margemDesejada = fracaoDeCampo(el.value); break
+    case 'item-qtd': f.itens[i].quantidade = numeroDeCampo(el.value); break
+    case 'item-quantidade': ui.itemQtd = el.value; redesenhar = false; break
+    case 'mat-desc': f.materiais[i].descricao = el.value; redesenhar = false; break
+    case 'mat-custo': f.materiais[i].custo = numeroDeCampo(el.value); break
+    case 'mat-margem': f.materiais[i].margem = fracaoDeCampo(el.value); break
+
+    case 'preco-praticado': {
+      const ficha = dados.fichas.filter(x => x.id === ui.fichaPreco)[0]
+      ficha.precosPraticados = ficha.precosPraticados || {}
+      if (el.value.trim() === '') delete ficha.precosPraticados[el.dataset.chave]
+      else ficha.precosPraticados[el.dataset.chave] = numeroDeCampo(el.value)
+      salvar()
+      break
+    }
+
+    case 'sim-desconto': ui.desconto = el.value; break
+    case 'sim-alta': ui.alta = el.value; break
+    case 'sim-taxa': ui.novaTaxa = el.value; break
+    case 'sim-retirada': ui.retirada = el.value; break
+
+    case 'backup-texto': ui.textoColado = el.value; redesenhar = false; break
+
+    default: redesenhar = false
+  }
+
+  if (['aliquota','prolabore','horas','deslocamento','orcamentos','administracao',
+       'margem-padrao','margem-minima','fixo-desc','fixo-valor'].indexOf(acao) >= 0) salvar()
+
+  if (redesenhar) render()
+})
+
+/* ---- selects e rádios ---- */
+
+document.addEventListener('change', function (e) {
+  const el = e.target
+  const acao = el.dataset.acao
+  if (!acao) return
+
+  switch (acao) {
+    case 'porte':
+      dados.negocio.porte = el.dataset.chave
+      salvar(); render(); break
+    case 'ins-unidade': ui.insumoAberto.unidade = el.value; render(); break
+    case 'fic-tipo': ui.fichaAberta.tipo = el.dataset.chave; render(); break
+    case 'item-escolher': ui.itemInsumo = el.value; render(); break
+    case 'preco-ficha': ui.fichaPreco = el.value; render(); break
+    case 'sim-ficha': ui.simFicha = el.value; ui.simCanal = null; ui.simInsumo = null; render(); break
+    case 'sim-canal': ui.simCanal = el.value; render(); break
+    case 'sim-insumo': ui.simInsumo = el.value; render(); break
+  }
+})
+
+/* ---- botões ---- */
+
+document.addEventListener('click', function (e) {
+  const el = e.target.closest('[data-acao]')
+  if (!el || el.tagName === 'INPUT' || el.tagName === 'SELECT') return
+  const acao = el.dataset.acao
+  const chave = el.dataset.chave
+  const i = el.dataset.indice
+  const n = dados.negocio
+  const f = fichaEmEdicao()
+
+  switch (acao) {
+    case 'ir': location.hash = chave; return
+
+    /* base */
+    case 'fixo-novo': n.custosFixos.push({ descricao: '', valor: 0 }); break
+    case 'fixo-remover': n.custosFixos.splice(i, 1); break
+    case 'canal-novo': {
+      if (!ui.canalNome) { avisar('Dê um nome para o canal.'); focar('canal-nome'); return }
+      dados.canais.push({
+        id: novoId(), nome: ui.canalNome,
+        taxa: fracaoDeCampo(ui.canalTaxa || '0'),
+        custoFixoPorPedido: numeroDeCampo(ui.canalFixo || '0'),
+        itensPorPedido: numeroDeCampo(ui.canalItens || '1') || 1
+      })
+      ui.canalNome = ''; ui.canalTaxa = ''; ui.canalFixo = ''; ui.canalItens = '1'
+      break
+    }
+    case 'canal-remover': dados.canais = dados.canais.filter(c => c.id !== chave); break
+
+    /* insumos */
+    case 'insumo-novo':
+      ui.insumoAberto = { id: null, nome: '', unidade: 'g', quantidadeEmbalagem: 0, precoEmbalagem: 0, fornecedor: '', historico: [] }
+      break
+    case 'insumo-abrir':
+      ui.insumoAberto = JSON.parse(JSON.stringify(dados.insumos.filter(x => x.id === chave)[0]))
+      break
+    case 'insumo-fechar': ui.insumoAberto = null; break
+    case 'insumo-excluir':
+      perguntar('Excluir ' + (ui.insumoAberto.nome || 'este insumo') + '?',
+        'Ele também sai de todas as fichas que o usam.', 'Excluir', 'insumo-excluir-sim')
+      break
+    case 'insumo-excluir-sim':
+      ui.pergunta = null
+      dados.insumos = dados.insumos.filter(x => x.id !== ui.insumoAberto.id)
+      dados.fichas.forEach(fi => {
+        fi.itens = (fi.itens || []).filter(it => it.insumoId !== ui.insumoAberto.id)
+      })
+      ui.insumoAberto = null
+      break
+    case 'insumo-salvar': {
+      const novo = ui.insumoAberto
+      if (!novo.nome) { avisar('Dê um nome para o insumo.'); focar('ins-nome'); return }
+      const antigo = novo.id ? dados.insumos.filter(x => x.id === novo.id)[0] : null
+      if (antigo && antigo.precoEmbalagem !== novo.precoEmbalagem) {
+        const afetadas = fichasAfetadas(novo.id, novo.precoEmbalagem)
+        if (afetadas.length) {
+          ui.impacto = {
+            nome: novo.nome,
+            variacao: variacao(antigo.precoEmbalagem, novo.precoEmbalagem),
+            fichas: afetadas
+          }
+          break
+        }
+      }
+      gravarInsumo(novo)
+      ui.insumoAberto = null
+      break
+    }
+    case 'impacto-confirmar':
+      gravarInsumo(ui.insumoAberto)
+      ui.impacto = null; ui.insumoAberto = null
+      break
+    case 'impacto-cancelar': ui.impacto = null; break
+
+    /* fichas */
+    case 'ficha-nova': ui.fichaAberta = fichaVazia(); break
+    case 'ficha-abrir':
+      ui.fichaAberta = JSON.parse(JSON.stringify(dados.fichas.filter(x => x.id === chave)[0]))
+      break
+    case 'ficha-fechar': ui.fichaAberta = null; break
+    case 'ficha-excluir':
+      perguntar('Excluir ' + (ui.fichaAberta.nome || 'esta ficha') + '?',
+        'A ficha e os preços cadastrados nela serão apagados.', 'Excluir', 'ficha-excluir-sim')
+      break
+    case 'ficha-excluir-sim':
+      ui.pergunta = null
+      dados.fichas = dados.fichas.filter(x => x.id !== ui.fichaAberta.id)
+      ui.fichaAberta = null
+      break
+    case 'ficha-salvar': {
+      if (!f.nome) { avisar('Dê um nome para a ficha.'); focar('fic-nome'); return }
+      if (f.id) {
+        dados.fichas = dados.fichas.map(x => x.id === f.id ? f : x)
+      } else {
+        f.id = novoId()
+        dados.fichas.push(f)
+      }
+      ui.fichaAberta = null
+      break
+    }
+    case 'item-adicionar': {
+      if (!ui.itemInsumo) { avisar('Escolha o insumo na lista.'); return }
+      const insumo = insumosPorId()[ui.itemInsumo]
+      f.itens.push({ insumoId: insumo.id, quantidade: numeroDeCampo(ui.itemQtd || '0'), unidade: insumo.unidade })
+      ui.itemInsumo = ''; ui.itemQtd = ''
+      break
+    }
+    case 'item-remover': f.itens.splice(i, 1); break
+    case 'mat-novo': f.materiais.push({ descricao: '', custo: 0, margem: 0.2 }); break
+    case 'mat-remover': f.materiais.splice(i, 1); break
+
+    /* preços */
+    case 'abrir-precos': ui.fichaPreco = chave; location.hash = 'precos'; return
+    case 'reajustado': {
+      const ficha = dados.fichas.filter(x => x.id === ui.fichaPreco)[0]
+      ficha.custoNoUltimoReajuste = calcularFicha(ficha).custoUnitario
+      ficha.ultimoReajuste = new Date().toISOString()
+      break
+    }
+
+    /* simulador */
+    case 'cenario': ui.cenario = chave; break
+
+    /* ajustes */
+    case 'exemplo':
+      if (dados.fichas.length || dados.insumos.length) {
+        perguntar('Carregar o exemplo?', 'Isto apaga o que está cadastrado neste aparelho.',
+          'Carregar exemplo', 'exemplo-sim')
+        break
+      }
+      carregarExemplo()
+      avisar('Exemplo carregado.')
+      location.hash = 'painel'
+      break
+    case 'exemplo-sim':
+      ui.pergunta = null
+      carregarExemplo()
+      avisar('Exemplo carregado.')
+      location.hash = 'painel'
+      break
+    case 'apagar':
+      perguntar('Apagar tudo?', 'Base, canais, insumos e fichas deste aparelho serão apagados. ' +
+        'Se quiser guardar, faça um backup antes.', 'Apagar tudo', 'apagar-sim')
+      break
+    case 'apagar-sim':
+      ui.pergunta = null
+      dados = { negocio: Object.assign({}, NEGOCIO_PADRAO), canais: [], insumos: [], fichas: [] }
+      ui.mensagem = 'Tudo apagado.'
+      break
+    case 'pergunta-cancelar': ui.pergunta = null; break
+
+    case 'backup-baixar': baixarBackup(); return
+    case 'backup-copiar': copiarBackup(); return
+    case 'backup-restaurar': document.getElementById('arquivo-backup').click(); return
+    case 'backup-colar': ui.colando = true; ui.mostrarBackup = false; ui.mensagem = null; render(); focar('backup-texto'); return
+    case 'backup-colar-cancelar': ui.colando = false; ui.textoColado = ''; break
+    case 'backup-colar-ok':
+      if (!(ui.textoColado || '').trim()) { avisar('Cole o texto do backup primeiro.'); focar('backup-texto'); return }
+      if (restaurarDeTexto(ui.textoColado)) { ui.colando = false; ui.textoColado = '' }
+      render()
+      return
+
+    default: return
+  }
+
+  salvar()
+  render()
+})
+
+/* ---- propagação automática de preço ---- */
+
+function fichasAfetadas (insumoId, novoPreco) {
+  const insumo = insumosPorId()[insumoId]
+  if (!insumo) return []
+  const sub = {}
+  sub[insumoId] = Object.assign({}, insumo, { precoEmbalagem: novoPreco })
+  return dados.fichas
+    .filter(f => (f.itens || []).some(it => it.insumoId === insumoId))
+    .map(f => ({
+      nome: f.nome,
+      antes: calcularFicha(f).custoUnitario,
+      depois: calcularFicha(f, sub).custoUnitario
+    }))
+}
+
+function gravarInsumo (novo) {
+  const agora = new Date().toISOString()
+  novo.atualizadoEm = agora
+  novo.historico = novo.historico || []
+  if (novo.id) {
+    const antigo = dados.insumos.filter(x => x.id === novo.id)[0]
+    if (antigo && antigo.precoEmbalagem !== novo.precoEmbalagem) {
+      novo.historico.push({ preco: novo.precoEmbalagem, data: agora })
+    }
+    dados.insumos = dados.insumos.map(x => x.id === novo.id ? novo : x)
+  } else {
+    novo.id = novoId()
+    novo.historico.push({ preco: novo.precoEmbalagem, data: agora })
+    dados.insumos.push(novo)
+  }
+}
+
+/* ---- backup ---- */
+
+/* Dentro do Claude (navegador ou app de celular) o download comum é
+   bloqueado; o recurso "downloads" do Claude faz o papel: no iPhone abre a
+   folha de compartilhar, no Android grava o arquivo. Fora do Claude, vale o
+   download normal do navegador. Copiar o texto funciona em todos. */
+let downloads = null
+let downloadsPedido = false
+function iniciarDownloads () {
+  if (downloadsPedido) return
+  try {
+    if (window.claude && typeof window.claude.use === 'function') {
+      downloadsPedido = true
+      window.claude.use('downloads').then(function (d) {
+        downloads = d
+        if (rotaAtual() === 'ajustes') render()
+      }).catch(function () { /* sem o recurso: fica o copiar/colar */ })
+    }
+  } catch (e) { /* idem */ }
+}
+iniciarDownloads()
+window.addEventListener('load', iniciarDownloads)
+
+function dentroDeMoldura () {
+  try { return window.self !== window.top } catch (e) { return true }
+}
+
+function podeBaixar () {
+  return Boolean(downloads) || !dentroDeMoldura()
+}
+
+function nomeDoBackup () {
+  return 'etiqueta-backup-' + new Date().toISOString().slice(0, 10) + '.json'
+}
+
+function textoDoBackup () {
+  return JSON.stringify({
+    aplicativo: 'etiqueta', versao: 1,
+    geradoEm: new Date().toISOString(), dados: dados
+  }, null, 2)
+}
+
+function baixarBackup () {
+  const texto = textoDoBackup()
+  const nome = nomeDoBackup()
+
+  if (downloads) {
+    downloads.save({ filename: nome, data: texto }).then(function () {
+      ui.mensagem = 'Backup salvo: ' + nome + '.'
+      render()
+    }, function (erro) {
+      ui.mensagem = erro && erro.code === 'declined'
+        ? 'Backup não salvo.'
+        : 'Não deu para baixar aqui. Use "Copiar backup".'
+      render()
+    })
+    return
+  }
+
+  try {
+    const url = URL.createObjectURL(new Blob([texto], { type: 'application/json' }))
+    const a = document.createElement('a')
+    a.href = url
+    a.download = nome
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+    /* o Safari do iPhone ainda lê a URL depois do clique: não revogar na hora */
+    setTimeout(function () { URL.revokeObjectURL(url) }, 60000)
+    ui.mensagem = 'Backup baixado: ' + nome + '.'
+  } catch (e) {
+    ui.mensagem = 'Não deu para baixar aqui. Use "Copiar backup".'
+  }
+  render()
+}
+
+function copiarBackup () {
+  const texto = textoDoBackup()
+  const mostrar = function () {
+    ui.mostrarBackup = true
+    ui.colando = false
+    ui.mensagem = null
+    render()
+    const campo = document.querySelector('[data-foco="backup-mostrar"]')
+    if (campo) {
+      try { campo.focus(); campo.setSelectionRange(0, campo.value.length) } catch (e) { /* ok */ }
+    }
+  }
+  try {
+    if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('sem área de transferência')
+    navigator.clipboard.writeText(texto).then(function () {
+      ui.mostrarBackup = false
+      ui.mensagem = 'Backup copiado. Cole num e-mail, no WhatsApp para você mesmo ou nas Notas para guardar.'
+      render()
+    }, mostrar)
+  } catch (e) {
+    mostrar()
+  }
+}
+
+function restaurarDeTexto (texto) {
+  try {
+    let backup
+    try { backup = JSON.parse(String(texto).trim()) } catch (e) {
+      throw new Error('Isto não parece um backup do Etiqueta. Confira se copiou o texto inteiro.')
+    }
+    if (!backup || backup.aplicativo !== 'etiqueta' || !backup.dados) {
+      throw new Error('Este arquivo não é um backup do Etiqueta.')
+    }
+    const d = backup.dados
+    d.negocio = Object.assign({}, NEGOCIO_PADRAO, d.negocio)
+    d.canais = d.canais || []
+    d.insumos = d.insumos || []
+    d.fichas = d.fichas || []
+    dados = d
+    salvar()
+    ui.mensagem = 'Backup restaurado.'
+    return true
+  } catch (erro) {
+    ui.mensagem = erro.message
+    return false
+  }
+}
+
+document.addEventListener('change', function (e) {
+  if (e.target.id !== 'arquivo-backup') return
+  const arquivo = e.target.files[0]
+  if (!arquivo) return
+  const leitor = new FileReader()
+  leitor.onload = function () {
+    restaurarDeTexto(leitor.result)
+    e.target.value = ''
+    render()
+  }
+  leitor.onerror = function () {
+    ui.mensagem = 'Não foi possível ler o arquivo.'
+    render()
+  }
+  leitor.readAsText(arquivo)
+})
+
+/* ---- teclado do celular ---- */
+
+function ehCampoDeDigitar (el) {
+  if (!el) return false
+  if (el.tagName === 'TEXTAREA') return true
+  return el.tagName === 'INPUT' && ['text', 'number', 'search', 'email', 'tel'].indexOf(el.type) >= 0
+}
+
+/* esconde a barra de baixo enquanto o teclado está aberto (ver CSS) */
+document.addEventListener('focusin', function (e) {
+  if (ehCampoDeDigitar(e.target)) document.body.classList.add('digitando')
+})
+document.addEventListener('focusout', function () {
+  setTimeout(function () {
+    if (!ehCampoDeDigitar(document.activeElement)) document.body.classList.remove('digitando')
+  }, 60)
+})
+
+/* "OK"/"Concluído" do teclado fecha o teclado; Esc fecha o diálogo */
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && ui.pergunta) { ui.pergunta = null; render(); return }
+  if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type === 'text' && !e.isComposing) {
+    e.preventDefault()
+    e.target.blur()
+  }
+})
+
+window.addEventListener('hashchange', function () {
+  ui.fichaAberta = null
+  ui.insumoAberto = null
+  ui.impacto = null
+  ui.mensagem = null
+  ui.pergunta = null
+  ui.colando = false
+  ui.mostrarBackup = false
+  render()
+})
+
+render()
+</script>
+
+<p class="rodape-aviso">
+  Ferramenta de apoio gerencial. Não substitui a contabilidade nem cumpre obrigação fiscal.
+  Seus dados ficam guardados apenas neste navegador.
+  <a href="index.html">Sobre o projeto</a>
+</p>
+</body>
+</html>
