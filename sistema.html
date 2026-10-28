@@ -1117,9 +1117,11 @@ function telaBase () {
     'Desconte o que não vira dinheiro.</p>' +
     campo({ rotulo: 'Horas trabalhadas por mês', sufixo: 'h', valor: n.horasTrabalhadas, acao: 'horas', foco: 'horas' }) +
     campo({ rotulo: 'Deslocamento entre trabalhos', sufixo: 'h', valor: n.deslocamento, acao: 'deslocamento', foco: 'deslocamento' }) +
-    campo({ rotulo: 'Orçamentos que não fecham', sufixo: 'h', valor: n.orcamentosNaoFechados, acao: 'orcamentos', foco: 'orcamentos' }) +
-    campo({ rotulo: 'Compras, banco, administração', sufixo: 'h', valor: n.administracao, acao: 'administracao', foco: 'administracao' }) +
-    linha('Horas que você consegue cobrar', numBR(horas) + ' h', { destaque: true }) +
+    campo({ rotulo: 'Orçamentos que o cliente não aceitou', sufixo: 'h', valor: n.orcamentosNaoFechados, acao: 'orcamentos', foco: 'orcamentos',
+      ajuda: 'Horas gastas visitando, medindo ou conversando com quem pediu preço e não comprou.' }) +
+    campo({ rotulo: 'Compras, banco e contas do negócio', sufixo: 'h', valor: n.administracao, acao: 'administracao', foco: 'administracao',
+      ajuda: 'Horas gastas comprando material, indo ao banco, pagando contas e respondendo mensagens.' }) +
+    linha('Horas que você consegue cobrar', numBR(horas) + '\u00a0h', { destaque: true }) +
     linha('Valor-hora do seu negócio', moeda(vh), { destaque: true })
 
   if (n.horasTrabalhadas > 0) {
