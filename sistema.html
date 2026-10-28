@@ -1115,17 +1115,21 @@ function telaBase () {
     campo({ rotulo: 'Retirada pretendida por mês', valor: n.proLabore, acao: 'prolabore', foco: 'prolabore' }) +
     '<p class="apoio" style="margin-top:.75rem">Ninguém fatura todas as horas que trabalha. ' +
     'Desconte o que não vira dinheiro.</p>' +
-    campo({ rotulo: 'Horas trabalhadas por mês', sufixo: 'h', valor: n.horasTrabalhadas, acao: 'horas', foco: 'horas' }) +
-    campo({ rotulo: 'Deslocamento entre trabalhos', sufixo: 'h', valor: n.deslocamento, acao: 'deslocamento', foco: 'deslocamento' }) +
-    campo({ rotulo: 'Orçamentos que o cliente não aceitou', sufixo: 'h', valor: n.orcamentosNaoFechados, acao: 'orcamentos', foco: 'orcamentos',
-      ajuda: 'Horas gastas visitando, medindo ou conversando com quem pediu preço e não comprou.' }) +
-    campo({ rotulo: 'Compras, banco e contas do negócio', sufixo: 'h', valor: n.administracao, acao: 'administracao', foco: 'administracao',
-      ajuda: 'Horas gastas comprando material, indo ao banco, pagando contas e respondendo mensagens.' }) +
-    linha('Horas que você consegue cobrar', numBR(horas) + '\u00a0h', { destaque: true }) +
+    '<p class="apoio"><strong>Todas as horas aqui são do mês inteiro.</strong> Se você pensa por dia, ' +
+    'multiplique pelos dias que trabalha no mês: 1 h por dia em 22 dias = 22 h no mês.</p>' +
+    campo({ rotulo: 'Horas trabalhadas', sufixo: 'h por mês', valor: n.horasTrabalhadas, acao: 'horas', foco: 'horas',
+      ajuda: 'Some o mês todo. Ex.: 6 h por dia em 22 dias = 132 h.' }) +
+    campo({ rotulo: 'Deslocamento entre trabalhos', sufixo: 'h por mês', valor: n.deslocamento, acao: 'deslocamento', foco: 'deslocamento',
+      ajuda: 'Tempo no trânsito de um cliente para outro. Ex.: 50 min por dia em 22 dias ≈ 18 h.' }) +
+    campo({ rotulo: 'Orçamentos que o cliente não aceitou', sufixo: 'h por mês', valor: n.orcamentosNaoFechados, acao: 'orcamentos', foco: 'orcamentos',
+      ajuda: 'Horas gastas visitando, medindo ou conversando com quem pediu preço e não comprou. Ex.: meia hora por dia em 22 dias = 11 h.' }) +
+    campo({ rotulo: 'Compras, banco e contas do negócio', sufixo: 'h por mês', valor: n.administracao, acao: 'administracao', foco: 'administracao',
+      ajuda: 'Horas gastas comprando material, indo ao banco, pagando contas e respondendo mensagens. Ex.: 35 min por dia em 22 dias ≈ 13 h.' }) +
+    linha('Horas que você consegue cobrar no mês', numBR(horas) + '\u00a0h', { destaque: true }) +
     linha('Valor-hora do seu negócio', moeda(vh), { destaque: true })
 
   if (n.horasTrabalhadas > 0) {
-    html += '<p class="apoio">Você trabalha ' + numBR(n.horasTrabalhadas) + ' h, mas só pode cobrar por ' +
+    html += '<p class="apoio">Você trabalha ' + numBR(n.horasTrabalhadas) + ' h no mês, mas só pode cobrar por ' +
       numBR(horas) + '. Todo o resto precisa estar embutido nessas ' + numBR(horas) + ' horas.</p>'
   }
   html += '</div>'
