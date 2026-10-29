@@ -2,13 +2,14 @@
 
 Formação de preço de venda para MEI, ME e EPP. Projeto da disciplina Extensão II.
 
-O site tem dois arquivos, que precisam ficar juntos na mesma pasta:
+O site tem dois arquivos e uma pasta, que precisam ficar juntos:
 
 | Arquivo | O que é |
 | --- | --- |
 | `index.html` | Página de apresentação do projeto (início, como funciona, funcionalidades, benefícios e botão de acesso) |
 | `sistema.html` | O sistema de precificação Etiqueta |
 | `.nojekyll` | Arquivo vazio que diz ao GitHub Pages para publicar os arquivos como estão |
+| `midia/` | Tutorial em vídeo (MP4), a capa e a legenda (VTT), mostrados na apresentação |
 
 Não há servidor, banco de dados nem instalação. Cada arquivo é HTML puro, com o CSS e o JavaScript dentro dele. Os dados que cada pessoa digita no sistema ficam guardados só no navegador dela.
 

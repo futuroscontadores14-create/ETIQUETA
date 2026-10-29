@@ -513,6 +513,26 @@ td.melhor { background: var(--verde-suave); }
 .qr p { font-size: 0.92rem; margin: 0; }
 /* no próprio celular não dá para ler o QR da tela: só aparece em telas maiores */
 @media (max-width: 40rem) { .qr { display: none; } }
+/* ---------------- tutorial em vídeo ---------------- */
+
+.video-quadro { margin-top: 2.5rem; border: 1px solid var(--tinta); background: #15181b; }
+.video-quadro video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #15181b; }
+.capitulos { margin-top: 1.5rem; }
+.capitulos h3 { font-family: var(--mono); font-stretch: 100%; font-weight: 500; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grafite); margin: 0 0 0.75rem; }
+.capitulos ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.5rem; }
+.capitulos button {
+  width: 100%; min-height: 48px; display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.5rem 0.75rem; text-align: left; cursor: pointer;
+  background: var(--cartao); color: var(--tinta); border: 1px solid var(--linha);
+  font-family: var(--texto); font-size: 0.95rem; touch-action: manipulation;
+}
+.capitulos button:hover, .capitulos button:focus-visible { border-color: var(--verde); }
+.capitulos button.agora { border-color: var(--verde); background: var(--verde-suave); }
+.capitulos .t { font-family: var(--mono); font-size: 0.82rem; color: var(--verde); min-width: 2.6rem; }
+.video-nota { margin-top: 1rem; font-size: 0.9rem; color: var(--grafite); }
+.link-video { margin-top: 1rem; font-size: 0.98rem; }
+@media (max-width: 56rem) { .capitulos ol { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
 .dicas { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
 .dicas li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.75rem; align-items: start; font-size: 0.98rem; }
 .dicas li span.k { font-family: var(--mono); font-size: 0.8rem; color: var(--verde); border: 1px solid var(--verde); text-align: center; line-height: 1.9rem; height: 2rem; }
@@ -586,6 +606,7 @@ footer .orientacao { margin-top: 0.75rem; }
       <ul>
         <li><a href="#inicio">Início</a></li>
         <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#tutorial">Vídeo</a></li>
         <li><a href="#funcionalidades">Funcionalidades</a></li>
         <li><a href="#beneficios">Benefícios</a></li>
         <li><a href="#acessar">Acessar</a></li>
@@ -609,6 +630,7 @@ footer .orientacao { margin-top: 0.75rem; }
         <a class="botao" href="#acessar">Acessar o sistema</a>
         <a class="botao vazado" href="#como-funciona">Ver como funciona</a>
       </div>
+      <p class="link-video"><a href="#tutorial">Ou assista ao tutorial em vídeo, com 5 minutos</a></p>
       <div class="pergunta">
         <strong>Objetivo</strong>
         Responder, para cada produto ou serviço: quanto isto deve custar, e quanto sobra para mim quando eu vendo?
@@ -777,6 +799,40 @@ footer .orientacao { margin-top: 0.75rem; }
       </div>
       <p class="aviso-calc" id="calc-aviso" role="status"></p>
     </div>
+  </div>
+</section>
+
+<!-- ============================ TUTORIAL EM VÍDEO ============================ -->
+<section id="tutorial">
+  <div class="miolo">
+    <div class="abertura">
+      <span class="rotulo">Tutorial em vídeo</span>
+      <h2>O Etiqueta em uso, do começo ao fim, em 5 minutos</h2>
+      <p>Uma confeitaria cadastrada do zero: a base do negócio, os insumos, a ficha do bolo de pote, os preços por canal, o simulador e a tabela de preços para os clientes. Com narração e legenda.</p>
+    </div>
+
+    <div class="video-quadro">
+      <video id="video-tutorial" controls playsinline preload="metadata" poster="midia/etiqueta-tutorial-capa.jpg">
+        <source src="midia/etiqueta-tutorial.mp4" type="video/mp4" />
+        <track kind="captions" src="midia/etiqueta-tutorial.vtt" srclang="pt-BR" label="Português" />
+        Seu navegador não mostra o vídeo aqui. <a href="midia/etiqueta-tutorial.mp4">Baixe o tutorial em MP4</a>.
+      </video>
+    </div>
+
+    <div class="capitulos">
+      <h3>Ir direto para</h3>
+      <ol>
+          <li><button type="button" data-t="0"><span class="t">0:00</span>Início</button></li>
+          <li><button type="button" data-t="44"><span class="t">0:44</span>Base do negócio</button></li>
+          <li><button type="button" data-t="136"><span class="t">2:16</span>Insumos</button></li>
+          <li><button type="button" data-t="153"><span class="t">2:33</span>Ficha técnica</button></li>
+          <li><button type="button" data-t="200"><span class="t">3:20</span>Preços</button></li>
+          <li><button type="button" data-t="233"><span class="t">3:53</span>Simulador</button></li>
+          <li><button type="button" data-t="247"><span class="t">4:07</span>Tabela de preços</button></li>
+          <li><button type="button" data-t="261"><span class="t">4:21</span>Dia a dia</button></li>
+      </ol>
+    </div>
+    <p class="video-nota">Os números do vídeo são de uma confeitaria fictícia. A legenda pode ser ligada nas opções do player. <a href="midia/etiqueta-tutorial.mp4" download>Baixar o vídeo (MP4, 17 MB)</a>.</p>
   </div>
 </section>
 
@@ -1000,6 +1056,29 @@ footer .orientacao { margin-top: 0.75rem; }
   var el = document.getElementById('endereco-sistema')
   if (!el || location.protocol === 'file:') return
   el.textContent = (location.host + location.pathname.replace(/[^/]*$/, '') + 'sistema.html')
+})();
+
+/* capítulos do vídeo: pulam para o trecho e marcam o trecho que está passando */
+;(function () {
+  var video = document.getElementById('video-tutorial')
+  if (!video) return
+  var botoes = Array.prototype.slice.call(document.querySelectorAll('.capitulos button'))
+  botoes.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = Number(b.dataset.t)
+      // no celular o vídeo pode ainda não ter carregado: pula assim que souber a duração
+      if (video.readyState >= 1) video.currentTime = t
+      else video.addEventListener('loadedmetadata', function () { video.currentTime = t }, { once: true })
+      var p = video.play(); if (p && p.catch) p.catch(function () {})
+      var r = video.getBoundingClientRect()
+      if (r.top < 0 || r.bottom > window.innerHeight) video.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    })
+  })
+  video.addEventListener('timeupdate', function () {
+    var t = video.currentTime, atual = 0
+    botoes.forEach(function (b, i) { if (t >= Number(b.dataset.t)) atual = i })
+    botoes.forEach(function (b, i) { b.classList.toggle('agora', i === atual && t > 0) })
+  })
 })();
 
 /* Mini-calculadora: mesma regra do motor do sistema.
