@@ -500,6 +500,19 @@ td.melhor { background: var(--verde-suave); }
 .cartao-acesso p { color: var(--grafite); max-width: 52ch; }
 .cartao-acesso .botao { min-height: 56px; font-size: 1.08rem; padding: 0 1.8rem; }
 .endereco { font-family: var(--mono); font-size: 0.82rem; color: var(--grafite); overflow-wrap: anywhere; margin-top: 0.85rem; }
+.qr {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--linha);
+}
+.qr-codigo { width: 7.5rem; height: 7.5rem; display: block; border: 1px solid var(--linha); }
+.qr p { font-size: 0.92rem; margin: 0; }
+/* no próprio celular não dá para ler o QR da tela: só aparece em telas maiores */
+@media (max-width: 40rem) { .qr { display: none; } }
 .dicas { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
 .dicas li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.75rem; align-items: start; font-size: 0.98rem; }
 .dicas li span.k { font-family: var(--mono); font-size: 0.8rem; color: var(--verde); border: 1px solid var(--verde); text-align: center; line-height: 1.9rem; height: 2rem; }
@@ -510,7 +523,8 @@ footer { padding: 3rem 0 4rem; color: var(--grafite); font-size: 0.92rem; }
 footer .miolo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem; }
 footer h2 { font-family: var(--mono); font-stretch: 100%; font-weight: 500; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; max-width: none; line-height: 1.4; color: var(--grafite); }
 footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; color: var(--tinta); }
-footer .mat { font-family: var(--mono); color: var(--grafite); font-size: 0.85rem; }
+footer .mat { font-family: var(--mono); color: var(--grafite); font-size: 0.85rem; white-space: nowrap; }
+footer .orientacao { margin-top: 0.75rem; }
 
 /* ---------------- telas menores ---------------- */
 
@@ -624,7 +638,7 @@ footer .mat { font-family: var(--mono); color: var(--grafite); font-size: 0.85re
     <div class="abertura">
       <span class="rotulo">Como funciona</span>
       <h2>Cinco etapas, do custo ao preço de cada canal</h2>
-      <p>As três primeiras etapas são feitas uma vez. As duas últimas são o uso do dia a dia, sempre que for preciso decidir um preço. Os exemplos abaixo são do caso da confeitaria que vem pronto no sistema.</p>
+      <p>As três primeiras etapas são feitas uma vez. As duas últimas são o uso do dia a dia, sempre que for preciso decidir um preço. Os exemplos abaixo são do modelo da confeitaria, um dos que vêm prontos no sistema.</p>
     </div>
 
     <ol class="etapas">
@@ -849,6 +863,8 @@ footer .mat { font-family: var(--mono); color: var(--grafite); font-size: 0.85re
 
     <div class="extras">
       <strong>E também:</strong>
+      <span class="chip">Modelos prontos por ramo</span>
+      <span class="chip">Tabela de preços para o WhatsApp</span>
       <span class="chip">Simulador de cenários</span>
       <span class="chip">Radar de defasagem</span>
       <span class="chip">Painel com semáforo</span>
@@ -934,8 +950,8 @@ footer .mat { font-family: var(--mono); color: var(--grafite); font-size: 0.85re
     <div class="cartao-acesso">
       <div>
         <span class="rotulo">Acessar o sistema</span>
-        <h2>Abra o Etiqueta e teste com o exemplo pronto</h2>
-        <p>O sistema abre direto no navegador do celular ou do computador. Na primeira tela, toque em <strong>Começar com os meus dados</strong> para cadastrar o seu negócio, ou em <strong>Ver com o exemplo pronto</strong> para conhecer o caso da confeitaria. Enquanto o exemplo estiver carregado, um botão no topo de cada tela limpa tudo para o seu cadastro.</p>
+        <h2>Abra o Etiqueta e teste com um modelo pronto</h2>
+        <p>O sistema abre direto no navegador do celular ou do computador. Na primeira tela, toque em <strong>Começar com os meus dados</strong> para cadastrar o seu negócio, ou em <strong>Usar um modelo pronto</strong> para escolher entre confeitaria, eletricista e loja de roupas. Com um modelo carregado, um aviso no topo de cada tela deixa começar em branco ou adaptar o modelo ao seu negócio.</p>
         <div class="acoes">
           <a class="botao" href="sistema.html">
             Abrir o sistema
@@ -943,10 +959,14 @@ footer .mat { font-family: var(--mono); color: var(--grafite); font-size: 0.85re
           </a>
         </div>
         <p class="endereco" id="endereco-sistema">sistema.html</p>
+        <div class="qr">
+          <svg class="qr-codigo" viewBox="0 0 41 41" role="img" aria-label="QR code que abre o sistema Etiqueta" shape-rendering="crispEdges"><rect width="41" height="41" fill="#fff"/><path fill="#15181b" d="M4 4h7v1h-7zM13 4h1v1h-1zM17 4h1v1h-1zM20 4h5v1h-5zM27 4h2v1h-2zM30 4h7v1h-7zM4 5h1v1h-1zM10 5h1v1h-1zM12 5h2v1h-2zM15 5h2v1h-2zM18 5h4v1h-4zM24 5h3v1h-3zM28 5h1v1h-1zM30 5h1v1h-1zM36 5h1v1h-1zM4 6h1v1h-1zM6 6h3v1h-3zM10 6h1v1h-1zM13 6h3v1h-3zM18 6h3v1h-3zM25 6h2v1h-2zM30 6h1v1h-1zM32 6h3v1h-3zM36 6h1v1h-1zM4 7h1v1h-1zM6 7h3v1h-3zM10 7h1v1h-1zM12 7h2v1h-2zM15 7h1v1h-1zM17 7h3v1h-3zM21 7h3v1h-3zM26 7h1v1h-1zM30 7h1v1h-1zM32 7h3v1h-3zM36 7h1v1h-1zM4 8h1v1h-1zM6 8h3v1h-3zM10 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM20 8h6v1h-6zM27 8h2v1h-2zM30 8h1v1h-1zM32 8h3v1h-3zM36 8h1v1h-1zM4 9h1v1h-1zM10 9h1v1h-1zM12 9h1v1h-1zM14 9h1v1h-1zM19 9h1v1h-1zM21 9h1v1h-1zM30 9h1v1h-1zM36 9h1v1h-1zM4 10h7v1h-7zM12 10h1v1h-1zM14 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM26 10h1v1h-1zM28 10h1v1h-1zM30 10h7v1h-7zM16 11h1v1h-1zM18 11h3v1h-3zM23 11h4v1h-4zM28 11h1v1h-1zM4 12h5v1h-5zM10 12h5v1h-5zM16 12h2v1h-2zM19 12h3v1h-3zM23 12h1v1h-1zM26 12h1v1h-1zM29 12h1v1h-1zM31 12h1v1h-1zM33 12h1v1h-1zM35 12h1v1h-1zM4 13h1v1h-1zM6 13h1v1h-1zM8 13h1v1h-1zM13 13h1v1h-1zM17 13h1v1h-1zM20 13h1v1h-1zM22 13h2v1h-2zM25 13h4v1h-4zM30 13h1v1h-1zM34 13h3v1h-3zM6 14h1v1h-1zM9 14h5v1h-5zM15 14h6v1h-6zM32 14h2v1h-2zM35 14h1v1h-1zM4 15h1v1h-1zM6 15h3v1h-3zM11 15h1v1h-1zM13 15h3v1h-3zM23 15h1v1h-1zM25 15h1v1h-1zM27 15h5v1h-5zM34 15h1v1h-1zM5 16h6v1h-6zM12 16h2v1h-2zM15 16h1v1h-1zM17 16h5v1h-5zM26 16h1v1h-1zM29 16h1v1h-1zM32 16h2v1h-2zM4 17h2v1h-2zM13 17h2v1h-2zM16 17h2v1h-2zM20 17h1v1h-1zM23 17h3v1h-3zM27 17h1v1h-1zM30 17h1v1h-1zM35 17h2v1h-2zM5 18h1v1h-1zM7 18h2v1h-2zM10 18h1v1h-1zM12 18h1v1h-1zM14 18h1v1h-1zM19 18h2v1h-2zM24 18h3v1h-3zM29 18h2v1h-2zM32 18h1v1h-1zM35 18h1v1h-1zM4 19h1v1h-1zM6 19h1v1h-1zM8 19h2v1h-2zM11 19h1v1h-1zM14 19h1v1h-1zM16 19h1v1h-1zM19 19h1v1h-1zM22 19h1v1h-1zM24 19h3v1h-3zM29 19h2v1h-2zM32 19h1v1h-1zM34 19h1v1h-1zM4 20h3v1h-3zM9 20h6v1h-6zM16 20h3v1h-3zM21 20h1v1h-1zM24 20h1v1h-1zM26 20h1v1h-1zM28 20h2v1h-2zM31 20h2v1h-2zM35 20h1v1h-1zM5 21h1v1h-1zM8 21h2v1h-2zM14 21h1v1h-1zM18 21h1v1h-1zM20 21h6v1h-6zM27 21h1v1h-1zM30 21h1v1h-1zM33 21h1v1h-1zM35 21h2v1h-2zM4 22h2v1h-2zM9 22h2v1h-2zM13 22h4v1h-4zM18 22h3v1h-3zM22 22h1v1h-1zM25 22h1v1h-1zM28 22h6v1h-6zM35 22h1v1h-1zM6 23h3v1h-3zM13 23h3v1h-3zM25 23h4v1h-4zM30 23h2v1h-2zM34 23h1v1h-1zM8 24h1v1h-1zM10 24h2v1h-2zM13 24h1v1h-1zM15 24h1v1h-1zM17 24h5v1h-5zM23 24h1v1h-1zM26 24h1v1h-1zM29 24h1v1h-1zM32 24h1v1h-1zM35 24h1v1h-1zM4 25h1v1h-1zM6 25h1v1h-1zM12 25h3v1h-3zM16 25h2v1h-2zM20 25h1v1h-1zM23 25h5v1h-5zM29 25h2v1h-2zM33 25h1v1h-1zM35 25h2v1h-2zM4 26h1v1h-1zM7 26h2v1h-2zM10 26h1v1h-1zM14 26h1v1h-1zM18 26h3v1h-3zM22 26h1v1h-1zM25 26h2v1h-2zM29 26h1v1h-1zM33 26h1v1h-1zM35 26h1v1h-1zM4 27h1v1h-1zM8 27h2v1h-2zM11 27h3v1h-3zM16 27h1v1h-1zM18 27h1v1h-1zM20 27h1v1h-1zM24 27h2v1h-2zM27 27h1v1h-1zM33 27h2v1h-2zM4 28h7v1h-7zM12 28h2v1h-2zM16 28h3v1h-3zM21 28h1v1h-1zM24 28h1v1h-1zM26 28h7v1h-7zM36 28h1v1h-1zM12 29h1v1h-1zM14 29h1v1h-1zM17 29h1v1h-1zM23 29h3v1h-3zM28 29h1v1h-1zM32 29h3v1h-3zM36 29h1v1h-1zM4 30h7v1h-7zM12 30h1v1h-1zM14 30h3v1h-3zM18 30h3v1h-3zM24 30h5v1h-5zM30 30h1v1h-1zM32 30h1v1h-1zM35 30h1v1h-1zM4 31h1v1h-1zM10 31h1v1h-1zM13 31h1v1h-1zM15 31h1v1h-1zM19 31h1v1h-1zM25 31h4v1h-4zM32 31h3v1h-3zM36 31h1v1h-1zM4 32h1v1h-1zM6 32h3v1h-3zM10 32h1v1h-1zM12 32h1v1h-1zM14 32h2v1h-2zM19 32h1v1h-1zM21 32h1v1h-1zM23 32h1v1h-1zM28 32h6v1h-6zM4 33h1v1h-1zM6 33h3v1h-3zM10 33h1v1h-1zM12 33h2v1h-2zM16 33h2v1h-2zM20 33h1v1h-1zM22 33h3v1h-3zM28 33h2v1h-2zM32 33h3v1h-3zM4 34h1v1h-1zM6 34h3v1h-3zM10 34h1v1h-1zM12 34h2v1h-2zM17 34h3v1h-3zM24 34h1v1h-1zM26 34h3v1h-3zM30 34h1v1h-1zM33 34h3v1h-3zM4 35h1v1h-1zM10 35h1v1h-1zM12 35h3v1h-3zM16 35h2v1h-2zM19 35h2v1h-2zM23 35h3v1h-3zM31 35h1v1h-1zM33 35h2v1h-2zM4 36h7v1h-7zM12 36h2v1h-2zM16 36h1v1h-1zM18 36h4v1h-4zM26 36h4v1h-4zM33 36h1v1h-1zM35 36h1v1h-1z"/></svg>
+          <p><strong>Pelo celular:</strong> aponte a câmera para o código e o sistema abre no navegador.</p>
+        </div>
       </div>
       <ul class="dicas">
         <li><span class="k" aria-hidden="true">1</span><span><strong>Funciona em Android e iPhone.</strong> Não precisa instalar nem criar conta.</span></li>
-        <li><span class="k" aria-hidden="true">2</span><span><strong>Comece pela Base.</strong> Depois Insumos, Fichas e Preços, na ordem da barra de baixo.</span></li>
+        <li><span class="k" aria-hidden="true">2</span><span><strong>Comece pela Base.</strong> No fim de cada tela, o botão <em>Próximo passo</em> mostra o que vem depois.</span></li>
         <li><span class="k" aria-hidden="true">3</span><span><strong>Os dados ficam no aparelho.</strong> Nada é enviado para servidor. Para levar para outro aparelho, use o backup em Ajustes.</span></li>
         <li><span class="k" aria-hidden="true">4</span><span><strong>Apoio gerencial.</strong> O Etiqueta ajuda a formar preço e não substitui o contador nem cumpre obrigação fiscal.</span></li>
       </ul>
@@ -961,13 +981,14 @@ footer .mat { font-family: var(--mono); color: var(--grafite); font-size: 0.85re
     <div>
       <h2>Projeto</h2>
       <p>Etiqueta · formação de preço de venda para pequenos negócios. Trabalho da disciplina Extensão II, Ciências Contábeis, FURG, 2026.</p>
+      <p class="orientacao">Professor: Marco Aurelio Gomes Barbosa</p>
     </div>
     <div>
       <h2>Equipe</h2>
       <ul>
-        <li>Cintia <span class="mat">· 169040</span></li>
-        <li>Fabricio <span class="mat">· 168976</span></li>
-        <li>Felipe <span class="mat">· 168990</span></li>
+        <li>Cintia Rafaela dos Santos <span class="mat">· 169040</span></li>
+        <li>Fabricio Teixeira Contreira <span class="mat">· 168076</span></li>
+        <li>Felipe de Souza Antiqueira <span class="mat">· 168990</span></li>
       </ul>
     </div>
   </div>

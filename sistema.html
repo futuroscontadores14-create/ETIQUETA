@@ -6,6 +6,9 @@
 <title>Etiqueta — quanto cobrar e quanto sobra</title>
 <meta name="description" content="Formação de preço de venda para MEI, ME e EPP. Custo real, preço por canal e quanto sobra em cada venda." />
 <meta name="theme-color" content="#1B4332" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,600..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" />
 <meta name="color-scheme" content="light dark" />
 <!-- iOS transforma números longos em link de telefone; aqui todo número é valor -->
 <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
@@ -13,17 +16,23 @@
 
 <style>
 :root {
-  --papel: #fbfaf7;
+  /* mesma identidade da página de apresentação: papel, verde e a etiqueta amarela */
+  --papel: #f6f4ee;
   --cartao: #ffffff;
-  --tinta: #16191c;
-  --grafite: #5b6168;
-  --linha: #e4e1d9;
+  --tinta: #15181b;
+  --grafite: #575e66;
+  --linha: #dedad0;
   --verde: #1b4332;
   --verde-claro: #2d6a4f;
+  --verde-suave: #e6eee9;
+  --etiqueta: #f4c542;
   --atencao: #b7791f;
   --prejuizo: #9b2c2c;
+  --display: "Archivo", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --texto: "IBM Plex Sans", Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --coluna: 42rem;
-  --nav: 56px;
+  --nav: 62px;
   box-sizing: border-box;
   color-scheme: light dark;
   -webkit-text-size-adjust: 100%;
@@ -36,26 +45,28 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --papel: #14171a;
-    --cartao: #1c2024;
-    --tinta: #eceae4;
-    --grafite: #9aa1a8;
-    --linha: #2c3237;
-    --verde: #5fae86;
+    --papel: #111412;
+    --cartao: #191d1a;
+    --tinta: #ecebe5;
+    --grafite: #a3aaa4;
+    --linha: #2c322e;
+    --verde: #7cc3a0;
     --verde-claro: #7cc3a0;
+    --verde-suave: #1c2a22;
     --atencao: #d9a441;
     --prejuizo: #e08585;
   }
 }
 
 :root[data-theme="dark"] {
-  --papel: #14171a;
-  --cartao: #1c2024;
-  --tinta: #eceae4;
-  --grafite: #9aa1a8;
-  --linha: #2c3237;
-  --verde: #5fae86;
+  --papel: #111412;
+  --cartao: #191d1a;
+  --tinta: #ecebe5;
+  --grafite: #a3aaa4;
+  --linha: #2c322e;
+  --verde: #7cc3a0;
   --verde-claro: #7cc3a0;
+  --verde-suave: #1c2a22;
   --atencao: #d9a441;
   --prejuizo: #e08585;
 }
@@ -66,7 +77,7 @@ html, body { height: 100%; margin: 0; }
 body {
   background: var(--papel);
   color: var(--tinta);
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--texto);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
@@ -76,7 +87,7 @@ body {
 
 /* números sempre alinhados: isto é uma ferramenta de conta */
 .num {
-  font-family: ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, monospace;
+  font-family: var(--mono);
   font-variant-numeric: tabular-nums;
 }
 
@@ -124,11 +135,13 @@ nav li { flex: 1; }
 
 nav a {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 3px;
   min-height: var(--nav);
   padding: 0 2px;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   color: var(--grafite);
   text-decoration: none;
   text-align: center;
@@ -137,11 +150,37 @@ nav a {
 }
 
 nav a.ativo { color: var(--verde); font-weight: 600; border-top-color: var(--verde); }
+nav a svg { width: 22px; height: 22px; flex-shrink: 0; }
 
 /* ---------------- blocos ---------------- */
 
 header.titulo { margin-bottom: 1.5rem; }
-header.titulo h1 { font-size: 1.6rem; font-weight: 600; }
+header.titulo h1 {
+  font-family: var(--display);
+  font-stretch: 72%;
+  font-weight: 800;
+  font-size: 2.1rem;
+  line-height: 1;
+  letter-spacing: -0.005em;
+}
+
+/* barra do topo com a marca, igual à apresentação */
+.barra {
+  max-width: var(--coluna);
+  margin: 0 auto;
+  padding: 0.75rem 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.barra .marca {
+  display: flex; align-items: center; gap: 0.5rem;
+  color: var(--tinta); text-decoration: none;
+  font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: 1.35rem;
+}
+.barra .marca svg { width: 1.6rem; height: 1rem; }
+.barra .sobre { font-size: 0.85rem; color: var(--grafite); }
 header.titulo p { margin-top: 0.25rem; color: var(--grafite); font-size: 0.9rem; }
 
 .cartao {
@@ -248,7 +287,11 @@ fieldset legend { font-size: 0.85rem; color: var(--grafite); padding: 0; }
 .opcoes { display: flex; gap: 1.25rem; padding: 0.6rem 0; }
 .opcoes label { display: flex; align-items: center; gap: 0.4rem; min-height: 44px; }
 
-button.acao {
+button.acao, a.acao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   min-height: 44px;
   padding: 0 1rem;
   background: var(--verde);
@@ -259,7 +302,7 @@ button.acao {
   cursor: pointer;
 }
 
-button.acao.secundaria {
+button.acao.secundaria, a.acao.secundaria {
   background: transparent;
   color: var(--tinta);
   border: 1px solid var(--linha);
@@ -362,6 +405,70 @@ ul.lista button.item {
 .linha-edita .junto { display: flex; align-items: center; gap: 0.35rem; margin-left: auto; }
 .resumo:empty { display: none; }
 
+/* sinal maior no painel */
+.pontinho { width: 0.75rem !important; height: 0.75rem !important; }
+
+/* resumo do painel: quantos produtos em cada sinal */
+.resumo-painel {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+.resumo-item {
+  background: var(--cartao);
+  border: 1px solid var(--linha);
+  padding: 0.6rem 0.7rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 0.4rem;
+}
+.resumo-item strong { font-size: 1.6rem; line-height: 1.1; font-weight: 600; }
+.resumo-item span:last-child { grid-column: 1 / -1; font-size: 0.78rem; color: var(--grafite); }
+.resumo-item.zerado { opacity: 0.45; }
+@media (max-width: 30rem) { .resumo-painel { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.sobra-venda { text-align: right; white-space: nowrap; padding-left: 0.5rem; }
+.sobra-venda small { display: block; font-size: 0.7rem; color: var(--grafite); font-family: var(--texto); white-space: normal; }
+
+/* botão de próximo passo no fim das telas */
+.proximo {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding: 0.85rem 1rem;
+  background: var(--verde-suave);
+  border: 1px solid var(--verde);
+  color: var(--tinta);
+  text-decoration: none;
+}
+.proximo-rotulo { grid-column: 1; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--verde); font-family: var(--mono); }
+.proximo-texto { grid-column: 1; font-weight: 600; }
+.proximo-seta { grid-column: 2; grid-row: 1 / span 2; font-size: 1.4rem; color: var(--verde); padding-left: 0.75rem; }
+.proximo:active { opacity: 0.8; }
+
+/* R$ antes dos campos de dinheiro */
+.prefixo { color: var(--grafite); font-size: 0.9rem; white-space: nowrap; }
+
+/* tabela de preços para o WhatsApp */
+.previa {
+  white-space: pre-wrap;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  background: var(--papel);
+  border: 1px dashed var(--linha);
+  padding: 0.85rem 1rem;
+  user-select: text;
+  -webkit-user-select: text;
+  overflow-wrap: anywhere;
+}
+
+/* modelos prontos */
+.cartao.modelo h2 { font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: 1.4rem; }
+.cartao.modelo .etiq-ramo { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--grafite); display: block; margin-bottom: 0.25rem; }
+
 /* faixa que aparece enquanto os dados são os do exemplo */
 .faixa-exemplo {
   display: flex;
@@ -442,6 +549,13 @@ ul.lista button.item {
 </head>
 
 <body>
+<header class="barra">
+  <a class="marca" href="#painel" aria-label="Etiqueta, ir para o painel">
+    <svg viewBox="0 0 26 16" aria-hidden="true"><path d="M6 1h19v14H6L1 8z" fill="#f4c542" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><circle cx="6.2" cy="8" r="1.6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+    Etiqueta
+  </a>
+  <a class="sobre" href="index.html">Sobre o projeto</a>
+</header>
 <main id="tela"></main>
 
 <nav aria-label="Telas">
@@ -767,6 +881,7 @@ function esc (s) {
 const CHAVE = 'etiqueta:dados'
 
 const NEGOCIO_PADRAO = {
+  nome: '',
   porte: 'MEI',
   aliquotaSimples: 0,
   custosFixos: [],
@@ -804,6 +919,7 @@ function carregar () {
       d.insumos = d.insumos || []
       d.fichas = d.fichas || []
       if (d.exemplo === undefined) d.exemplo = pareceExemplo(d)
+      if (d.exemplo && !d.modelo) d.modelo = 'confeitaria'
       return d
     }
   } catch (e) {
@@ -813,6 +929,7 @@ function carregar () {
 }
 
 /* dados salvos antes da marca "exemplo" existir: reconhece o caso da confeitaria */
+/* (a marca "modelo" diz qual dos modelos prontos está carregado) */
 function pareceExemplo (d) {
   return (d.fichas || []).some(f => f.nome === 'Bolo de pote — chocolate') &&
     (d.insumos || []).some(i => i.nome === 'Chocolate em pó')
@@ -854,8 +971,134 @@ function precosDaFicha (ficha, custoUnitario) {
   }))
 }
 
-/* Caso da confeitaria, para demonstrar sem 15 minutos de digitação. */
-function carregarExemplo () {
+/* Modelos prontos por ramo. Servem para mostrar o caminho sem 15 minutos de
+   digitação e para o empresário adaptar ao próprio negócio. Números fictícios. */
+const MODELOS = {
+  confeitaria: {
+    titulo: 'Confeitaria caseira', ramo: 'Produto feito à mão', porte: 'MEI',
+    descricao: 'Bolo de pote vendido no balcão, com entrega própria e por aplicativo. ' +
+      'Mostra insumos comprados por embalagem e o peso da taxa do aplicativo.',
+    montar: modeloConfeitaria
+  },
+  eletricista: {
+    titulo: 'Eletricista', ramo: 'Serviço por hora', porte: 'MEI',
+    descricao: 'Serviços cobrados pelo tempo, com material à parte e horas perdidas em ' +
+      'deslocamento e orçamento. Mostra um serviço cobrado abaixo do custo.',
+    montar: modeloEletricista
+  },
+  loja: {
+    titulo: 'Loja de roupas', ramo: 'Revenda', porte: 'ME no Simples',
+    descricao: 'Peças compradas prontas e revendidas na loja e pelo Instagram. ' +
+      'Mostra o imposto do Simples e a taxa do cartão entrando no preço.',
+    montar: modeloLoja
+  }
+}
+
+function carregarModelo (chave) {
+  const m = MODELOS[chave] || MODELOS.confeitaria
+  dados = m.montar()
+  dados.exemplo = true
+  dados.modelo = MODELOS[chave] ? chave : 'confeitaria'
+  salvar()
+}
+
+function carregarExemplo () { carregarModelo('confeitaria') }
+
+function insumosDoModelo (lista) {
+  const agora = new Date().toISOString()
+  return lista.map(x => ({
+    id: novoId(), nome: x[0], unidade: x[1], quantidadeEmbalagem: x[2],
+    precoEmbalagem: x[3], fornecedor: x[4], atualizadoEm: agora,
+    historico: [{ preco: x[3], data: agora }]
+  }))
+}
+
+function modeloEletricista () {
+  const canais = [
+    { id: novoId(), nome: 'Pix ou dinheiro', taxa: 0, custoFixoPorPedido: 0, itensPorPedido: 1 },
+    { id: novoId(), nome: 'Cartão de crédito', taxa: 0.04, custoFixoPorPedido: 0, itensPorPedido: 1 }
+  ]
+  const praticado = v => { const o = {}; canais.forEach(c => { o[c.id] = v }); return o }
+  const servico = (nome, horas, materiais, preco) => ({
+    id: novoId(), nome: nome, tipo: 'servico', rendimento: 1, tempoProducaoHoras: horas,
+    indicePerda: 0, custoEmbalagemUnitario: 0, margemDesejada: 0.3, comissao: 0,
+    itens: [], materiais: materiais, precosPraticados: praticado(preco)
+  })
+  return {
+    negocio: {
+      nome: 'Carlos Eletricista', porte: 'MEI', aliquotaSimples: 0,
+      custosFixos: [
+        { descricao: 'DAS', valor: 87 },
+        { descricao: 'Combustível e manutenção do carro', valor: 620 },
+        { descricao: 'Ferramentas e EPI', valor: 90 },
+        { descricao: 'Celular e internet', valor: 80 },
+        { descricao: 'Seguro do carro', valor: 70 }
+      ],
+      proLabore: 4000, horasTrabalhadas: 176,
+      deslocamento: 35, orcamentosNaoFechados: 26, administracao: 19, outros: 0,
+      margemPadrao: 0.3, margemMinima: 0.1, configurado: true
+    },
+    canais: canais,
+    insumos: [],
+    fichas: [
+      servico('Instalação de chuveiro', 1.5,
+        [{ descricao: 'Disjuntor, cabo e conectores', custo: 42, margem: 0.2 }], 100),
+      servico('Troca de tomada', 0.5,
+        [{ descricao: 'Tomada e espelho', custo: 12, margem: 0.2 }], 60)
+    ]
+  }
+}
+
+function modeloLoja () {
+  const insumos = insumosDoModelo([
+    ['Camiseta básica (compra)', 'un', 1, 28, 'Fornecedor do Brás'],
+    ['Calça jeans (compra)', 'un', 1, 62, 'Fornecedor do Brás'],
+    ['Sacola personalizada', 'un', 100, 80, 'Gráfica']
+  ])
+  const canais = [
+    { id: novoId(), nome: 'Loja (Pix ou dinheiro)', taxa: 0, custoFixoPorPedido: 0, itensPorPedido: 1 },
+    { id: novoId(), nome: 'Loja (cartão)', taxa: 0.032, custoFixoPorPedido: 0, itensPorPedido: 1 },
+    { id: novoId(), nome: 'Instagram com entrega', taxa: 0, custoFixoPorPedido: 10, itensPorPedido: 2 }
+  ]
+  const peca = (nome, insumo, preco) => {
+    const pp = {}
+    pp[canais[0].id] = preco
+    pp[canais[1].id] = preco
+    return {
+      id: novoId(), nome: nome, tipo: 'produto', rendimento: 1, tempoProducaoHoras: 0.1,
+      indicePerda: 0.02, custoEmbalagemUnitario: 0, margemDesejada: 0.25, comissao: 0,
+      materiais: [],
+      itens: [
+        { insumoId: insumo.id, quantidade: 1, unidade: 'un' },
+        { insumoId: insumos[2].id, quantidade: 1, unidade: 'un' }
+      ],
+      precosPraticados: pp
+    }
+  }
+  return {
+    negocio: {
+      nome: 'Loja Estilo', porte: 'ME', aliquotaSimples: 0.04,
+      custosFixos: [
+        { descricao: 'Aluguel', valor: 1800 },
+        { descricao: 'Energia', valor: 250 },
+        { descricao: 'Internet e telefone', valor: 120 },
+        { descricao: 'Contador', valor: 400 }
+      ],
+      proLabore: 3500, horasTrabalhadas: 200,
+      deslocamento: 0, orcamentosNaoFechados: 0, administracao: 20, outros: 0,
+      margemPadrao: 0.25, margemMinima: 0.1, configurado: true
+    },
+    canais: canais,
+    insumos: insumos,
+    fichas: [
+      peca('Camiseta básica', insumos[0], 44.9),
+      peca('Calça jeans', insumos[1], 119.9)
+    ]
+  }
+}
+
+/* Caso da confeitaria, o mesmo usado na proposta do projeto. */
+function modeloConfeitaria () {
   const agora = new Date().toISOString()
   const insumos = [
     ['Farinha de trigo', 'kg', 1, 6.2, 'Atacado'],
@@ -882,9 +1125,9 @@ function carregarExemplo () {
   precosPraticados[canais[0].id] = 12
   precosPraticados[canais[3].id] = 12
 
-  dados = {
-    exemplo: true,
+  return {
     negocio: {
+      nome: 'Doces da Ana',
       porte: 'MEI',
       aliquotaSimples: 0,
       custosFixos: [
@@ -929,7 +1172,6 @@ function carregarExemplo () {
       precosPraticados: precosPraticados
     }]
   }
-  salvar()
 }
 
 
@@ -939,14 +1181,29 @@ function carregarExemplo () {
    com data-acao no elemento.
    ========================================================================== */
 
+const ICONE = d => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>'
 const TELAS = [
-  { rota: 'painel', rotulo: 'Painel' },
-  { rota: 'base', rotulo: 'Base' },
-  { rota: 'insumos', rotulo: 'Insumos' },
-  { rota: 'fichas', rotulo: 'Fichas' },
-  { rota: 'precos', rotulo: 'Preços' },
-  { rota: 'simulador', rotulo: 'Simular' }
+  { rota: 'painel', rotulo: 'Painel', icone: ICONE('<path d="M4 15a8 8 0 0 1 16 0"/><path d="M12 15l4-4"/><path d="M4 19h16"/>') },
+  { rota: 'base', rotulo: 'Base', icone: ICONE('<path d="M4 10h16l-1.6-5H5.6z"/><path d="M5 10v9h14v-9"/><path d="M10 19v-5h4v5"/>') },
+  { rota: 'insumos', rotulo: 'Insumos', icone: ICONE('<path d="M3 7.5l9-4 9 4-9 4z"/><path d="M3 7.5v9l9 4 9-4v-9"/><path d="M12 11.5v9"/>') },
+  { rota: 'fichas', rotulo: 'Fichas', icone: ICONE('<rect x="5" y="4" width="14" height="17" rx="1.5"/><path d="M9 4V3h6v1"/><path d="M8.5 10h7M8.5 14h7M8.5 18h4"/>') },
+  { rota: 'precos', rotulo: 'Preços', icone: ICONE('<path d="M3 12.5V4h8.5L21 13.5 13.5 21z"/><circle cx="7.5" cy="8.5" r="1.5"/>') },
+  { rota: 'simulador', rotulo: 'Simular', icone: ICONE('<path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/>') }
 ]
+
+/* botão grande no fim de cada tela, para quem não sabe a ordem */
+function proximo (rota, texto) {
+  return '<a class="proximo" href="#' + rota + '"><span class="proximo-rotulo">Próximo passo</span>' +
+    '<span class="proximo-texto">' + esc(texto) + '</span><span class="proximo-seta" aria-hidden="true">→</span></a>'
+}
+
+/* valor em reais dentro de campo: 2200 -> "2.200,00" (zero vira campo vazio) */
+function dinheiro (v) {
+  if (typeof v === 'string') { if (!v.trim()) return ''; v = numeroDeCampo(v) }
+  if (typeof v !== 'number' || !isFinite(v)) return ''
+  return v ? v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 4 }) : ''
+}
+const PREFIXO_RS = '<span class="prefixo" aria-hidden="true">R$</span>'
 
 function titulo (texto, apoio) {
   return '<header class="titulo"><h1>' + esc(texto) + '</h1>' +
@@ -969,6 +1226,8 @@ function campo (o) {
   const texto = o.inputmode === 'text'
   /* zero vira campo vazio com "0" de dica: no celular, apagar o zero antes de digitar é chato */
   const vazio = o.valor === 0 && !texto
+  const exibido = o.moeda ? dinheiro(o.valor) : (vazio ? '' : numBR(o.valor))
+  const dica = o.placeholder ? o.placeholder : (o.moeda ? '0,00' : (vazio ? '0' : ''))
   const input = '<input type="' + (o.tipo || 'text') + '" ' + ATR_CAMPO +
     'data-acao="' + o.acao + '" ' +
     (o.indice != null ? 'data-indice="' + o.indice + '" ' : '') +
@@ -976,12 +1235,13 @@ function campo (o) {
     'data-foco="' + esc(id) + '" ' +
     (o.inputmode ? 'inputmode="' + o.inputmode + '" ' : 'inputmode="decimal" ') +
     (texto ? 'autocapitalize="sentences" ' : '') +
-    (o.placeholder ? 'placeholder="' + esc(o.placeholder) + '" ' : (vazio ? 'placeholder="0" ' : '')) +
-    'value="' + esc(vazio ? '' : numBR(o.valor)) + '" />'
+    (dica ? 'placeholder="' + esc(dica) + '" ' : '') +
+    'value="' + esc(exibido) + '" />'
 
   return '<label class="campo"><span>' + esc(o.rotulo) + '</span>' +
-    (o.sufixo
-      ? '<span class="com-sufixo">' + input + '<span class="sufixo">' + esc(o.sufixo) + '</span></span>'
+    (o.sufixo || o.moeda
+      ? '<span class="com-sufixo">' + (o.moeda ? PREFIXO_RS : '') + input +
+        (o.sufixo ? '<span class="sufixo">' + esc(o.sufixo) + '</span>' : '') + '</span>'
       : input) +
     (o.ajuda ? '<span class="ajuda apoio">' + esc(o.ajuda) + '</span>' : '') +
     '</label>'
@@ -1010,11 +1270,11 @@ function avisoArmazenamento () {
 
 function telaPainel () {
   if (!dados.fichas.length) {
-    return titulo('Etiqueta', 'Saiba quanto cobrar. E quanto sobra.') + avisoArmazenamento() +
+    return titulo('Painel', 'Saiba quanto cobrar. E quanto sobra.') + avisoArmazenamento() +
       '<div class="vazio">Comece pela base do negócio: dez minutos, uma vez só.' +
       '<div class="botoes" style="justify-content:center">' +
       '<button class="acao" data-acao="ir" data-chave="base">Começar com os meus dados</button>' +
-      '<button class="acao secundaria" data-acao="exemplo">Ver com o exemplo pronto</button>' +
+      '<button class="acao secundaria" data-acao="ir" data-chave="modelos">Usar um modelo pronto</button>' +
       '</div></div>'
   }
 
@@ -1027,7 +1287,21 @@ function telaPainel () {
     return { ficha: f, custo: custo, pior: comPreco[0], estado: comPreco[0] ? comPreco[0].semaforo : 'sem' }
   }).sort((a, b) => ordem[a.estado] - ordem[b.estado])
 
-  let html = titulo('Etiqueta', 'Saiba quanto cobrar. E quanto sobra.') + avisoArmazenamento()
+  let html = titulo('Painel', 'Saiba quanto cobrar. E quanto sobra.') + avisoArmazenamento()
+
+  /* resumo: quantos produtos em cada sinal (cada um conta pelo canal em que sobra menos) */
+  const conta = { verde: 0, amarelo: 0, vermelho: 0, prejuizo: 0, sem: 0 }
+  linhas.forEach(l => { conta[l.estado]++ })
+  html += '<div class="resumo-painel" role="list" aria-label="Resumo dos produtos">' +
+    [['verde', 'Saudáveis'], ['amarelo', 'Revisar'], ['vermelho', 'Abaixo do mínimo'], ['prejuizo', 'Com prejuízo']]
+      .map(r => '<div class="resumo-item' + (conta[r[0]] ? '' : ' zerado') + '" role="listitem" data-sinal="' + r[0] + '">' +
+        semaforo(r[0]) + '<strong class="num">' + conta[r[0]] + '</strong><span>' + r[1] + '</span></div>').join('') +
+    '</div>'
+  if (conta.sem) {
+    html += '<p class="apoio" style="margin:-.5rem 0 1rem">' +
+      (conta.sem === 1 ? '1 produto ainda não tem' : conta.sem + ' produtos ainda não têm') +
+      ' o preço que você cobra. Informe em <a href="#precos">Preços</a> para entrar no resumo.</p>'
+  }
 
   /* radar de defasagem */
   dados.fichas.forEach(f => {
@@ -1066,15 +1340,21 @@ function telaPainel () {
       '<span>' + semaforo(l.estado) + esc(l.ficha.nome) +
       '<span class="sub">' + (l.pior
         ? esc(l.pior.canalNome) + ': cobra ' + moeda(l.pior.precoPraticado) +
-          ', sobra ' + moeda(l.pior.sobra) + ' — margem de ' + percentual(l.pior.margemReal)
-        : 'Sem preço praticado cadastrado') +
+          ' · margem de ' + percentual(l.pior.margemReal) + ' · custo ' + moeda(l.custo.custoUnitario)
+        : 'Sem preço cobrado cadastrado · custo ' + moeda(l.custo.custoUnitario)) +
       '</span></span>' +
-      '<span class="num">' + moeda(l.custo.custoUnitario) + '</span></button></li>'
+      (l.pior
+        ? '<span class="num sobra-venda"' + (l.pior.sobra < 0 ? ' style="color:var(--prejuizo)"' : '') + '>' +
+          moeda(l.pior.sobra) + '<small>sobra por venda</small></span>'
+        : '<span class="num sobra-venda">' + moeda(l.custo.custoUnitario) + '<small>custo</small></span>') +
+      '</button></li>'
   })
   html += '</ul>'
 
-  html += '<div class="botoes"><button class="acao secundaria" data-acao="ir" data-chave="ajustes">' +
-    'Backup e ajustes</button></div>'
+  html += '<div class="botoes">' +
+    '<button class="acao" data-acao="ir" data-chave="tabela">Tabela de preços para clientes</button>' +
+    '<button class="acao secundaria" data-acao="ir" data-chave="modelos">Modelos prontos</button>' +
+    '<button class="acao secundaria" data-acao="ir" data-chave="ajustes">Backup e ajustes</button></div>'
   return html
 }
 
@@ -1122,10 +1402,10 @@ function telaBase () {
       '<input type="text" class="cresce" ' + ATR_CAMPO + 'autocapitalize="sentences" ' +
       'data-acao="fixo-desc" data-indice="' + i + '" data-foco="fd' + i + '" ' +
       'aria-label="Descrição da conta" placeholder="Internet, aluguel, DAS…" value="' + esc(c.descricao) + '" />' +
-      '<span class="junto">' +
+      '<span class="junto">' + PREFIXO_RS +
       '<input type="text" inputmode="decimal" ' + ATR_CAMPO + 'data-acao="fixo-valor" data-indice="' + i + '" ' +
-      'data-foco="fv' + i + '" aria-label="Valor por mês" placeholder="0,00" ' +
-      'value="' + esc(c.valor ? numBR(c.valor) : '') + '" class="num valor-curto" />' +
+      'data-foco="fv' + i + '" aria-label="Valor por mês, em reais" placeholder="0,00" ' +
+      'value="' + esc(dinheiro(c.valor)) + '" class="num valor-curto" />' +
       '<button class="remover" data-acao="fixo-remover" data-indice="' + i + '" ' +
       'aria-label="Remover conta">×</button></span></li>'
   })
@@ -1135,7 +1415,7 @@ function telaBase () {
 
   /* 3. retirada e horas */
   html += '<div class="cartao"><h2>3. Quanto você quer tirar, e quanto consegue cobrar</h2>' +
-    campo({ rotulo: 'Retirada pretendida por mês', valor: n.proLabore, acao: 'prolabore', foco: 'prolabore' }) +
+    campo({ rotulo: 'Retirada pretendida por mês', moeda: true, valor: n.proLabore, acao: 'prolabore', foco: 'prolabore' }) +
     '<p class="apoio" style="margin-top:.75rem">Ninguém fatura todas as horas que trabalha. ' +
     'Desconte o que não vira dinheiro.</p>' +
     '<p class="apoio"><strong>Todas as horas aqui são do mês inteiro.</strong> Se você pensa por dia, ' +
@@ -1172,7 +1452,7 @@ function telaBase () {
   html += '</ul>' +
     campo({ rotulo: 'Nome do canal', valor: ui.canalNome || '', acao: 'canal-nome', foco: 'canal-nome', inputmode: 'text', placeholder: 'Balcão, cartão, aplicativo…' }) +
     campo({ rotulo: 'Taxa sobre a venda', sufixo: '%', valor: ui.canalTaxa || '', acao: 'canal-taxa', foco: 'canal-taxa' }) +
-    campo({ rotulo: 'Custo fixo por pedido', valor: ui.canalFixo || '', acao: 'canal-fixo', foco: 'canal-fixo', ajuda: 'Motoboy, embalagem de entrega. Zero se não tiver.' }) +
+    campo({ rotulo: 'Custo fixo por pedido', moeda: true, valor: ui.canalFixo || '', acao: 'canal-fixo', foco: 'canal-fixo', ajuda: 'Motoboy, embalagem de entrega. Zero se não tiver.' }) +
     campo({ rotulo: 'Itens por pedido, em média', valor: ui.canalItens || '1', acao: 'canal-itens', foco: 'canal-itens', ajuda: 'Para dividir o custo do pedido entre as unidades.' }) +
     '<div class="botoes"><button class="acao secundaria" data-acao="canal-novo">Adicionar canal</button></div></div>'
 
@@ -1182,6 +1462,7 @@ function telaBase () {
     campo({ rotulo: 'Margem mínima aceitável', sufixo: '%', valor: campoDeFracao(n.margemMinima), acao: 'margem-minima', foco: 'margem-minima',
       ajuda: 'Abaixo disso o produto fica vermelho no painel.' }) + '</div>'
 
+  html += proximo('insumos', 'Cadastrar os insumos')
   return html
 }
 
@@ -1213,7 +1494,9 @@ function telaInsumos () {
   if (!dados.insumos.length) {
     html += '<div class="vazio">Nada cadastrado ainda. Comece pelo que você mais compra.' +
       '<div class="botoes" style="justify-content:center">' +
-      '<button class="acao" data-acao="insumo-novo">Cadastrar o primeiro insumo</button></div></div>'
+      '<button class="acao" data-acao="insumo-novo">Cadastrar o primeiro insumo</button></div></div>' +
+      '<p class="apoio" style="margin-top:.75rem">Presta serviço e não compra insumos? ' +
+      'O material entra direto na ficha.</p>' + proximo('fichas', 'Ir para as fichas')
     return html
   }
 
@@ -1225,6 +1508,7 @@ function telaInsumos () {
       '</span></span><span class="num">' + moeda(i.precoEmbalagem) + '</span></button></li>'
   })
   html += '</ul><div class="botoes"><button class="acao" data-acao="insumo-novo">Novo insumo</button></div>'
+  html += proximo('fichas', 'Montar a ficha de um produto')
   return html
 }
 
@@ -1243,7 +1527,7 @@ function formularioInsumo (f) {
     '<label class="campo" style="min-width:5.5rem"><span>Unidade</span><select data-acao="ins-unidade" data-foco="ins-unidade">' +
     LISTA_UNIDADES.map(u => '<option value="' + u + '"' + (f.unidade === u ? ' selected' : '') + '>' + u + '</option>').join('') +
     '</select></label></div>' +
-    campo({ rotulo: 'Preço pago pela embalagem', valor: f.precoEmbalagem, acao: 'ins-preco', foco: 'ins-preco' }) +
+    campo({ rotulo: 'Preço pago pela embalagem', moeda: true, valor: f.precoEmbalagem, acao: 'ins-preco', foco: 'ins-preco' }) +
     campo({ rotulo: 'Fornecedor', valor: f.fornecedor || '', acao: 'ins-fornecedor', foco: 'ins-fornecedor', inputmode: 'text' }) +
     exemplo +
     historicoDoInsumo(f) +
@@ -1298,6 +1582,7 @@ function telaFichas () {
       '<span class="num">' + moeda(c.custoUnitario) + '</span></button></li>'
   })
   html += '</ul><div class="botoes"><button class="acao" data-acao="ficha-nova">Nova ficha</button></div>'
+  html += proximo('precos', 'Ver os preços por canal')
   return html
 }
 
@@ -1317,7 +1602,7 @@ function editorFicha (f) {
 
   if (f.tipo === 'produto') {
     html += campo({ rotulo: 'Rendimento', sufixo: 'unidades', valor: f.rendimento, acao: 'fic-rendimento', foco: 'fic-rendimento', ajuda: 'Quantas unidades saem de uma produção.' }) +
-      campo({ rotulo: 'Embalagem por unidade', valor: f.custoEmbalagemUnitario, acao: 'fic-embalagem', foco: 'fic-embalagem' }) +
+      campo({ rotulo: 'Embalagem por unidade', moeda: true, valor: f.custoEmbalagemUnitario, acao: 'fic-embalagem', foco: 'fic-embalagem' }) +
       campo({ rotulo: 'Perda e quebra', sufixo: '%', valor: campoDeFracao(f.indicePerda), acao: 'fic-perda', foco: 'fic-perda' })
   }
 
@@ -1371,10 +1656,10 @@ function editorFicha (f) {
         '<input type="text" class="cresce" ' + ATR_CAMPO + 'autocapitalize="sentences" ' +
         'data-acao="mat-desc" data-indice="' + i + '" data-foco="md' + i + '" ' +
         'aria-label="Material" placeholder="disjuntor, cabo…" value="' + esc(m.descricao) + '" />' +
-        '<span class="junto">' +
+        '<span class="junto">' + PREFIXO_RS +
         '<input type="text" inputmode="decimal" ' + ATR_CAMPO + 'class="num valor-curto" ' +
-        'aria-label="Custo do material" placeholder="custo" ' +
-        'data-acao="mat-custo" data-indice="' + i + '" data-foco="mc' + i + '" value="' + esc(m.custo ? numBR(m.custo) : '') + '" />' +
+        'aria-label="Custo do material, em reais" placeholder="0,00" ' +
+        'data-acao="mat-custo" data-indice="' + i + '" data-foco="mc' + i + '" value="' + esc(dinheiro(m.custo)) + '" />' +
         '<input type="text" inputmode="decimal" ' + ATR_CAMPO + 'class="num valor-mini" ' +
         'aria-label="Margem sobre o material, em %" ' +
         'data-acao="mat-margem" data-indice="' + i + '" data-foco="mm' + i + '" value="' + esc(campoDeFracao(m.margem)) + '" />' +
@@ -1468,10 +1753,11 @@ function telaPrecos () {
       '<div style="border-top:1px solid var(--linha);margin-top:.75rem;padding-top:.5rem">' +
       '<label style="display:flex;justify-content:space-between;align-items:center;gap:1rem">' +
       '<span class="apoio">Preço que você cobra hoje</span>' +
+      '<span class="junto" style="display:flex;align-items:center;gap:.35rem">' + PREFIXO_RS +
       '<input type="text" inputmode="decimal" ' + ATR_CAMPO + 'class="num" style="width:7rem;text-align:right" ' +
       'placeholder="0,00" ' +
       'data-acao="preco-praticado" data-chave="' + p.canalId + '" data-foco="pp' + p.canalId + '" ' +
-      'value="' + esc(p.precoPraticado != null ? numBR(p.precoPraticado) : '') + '" /></label>'
+      'value="' + esc(p.precoPraticado != null ? (dinheiro(p.precoPraticado) || '0,00') : '') + '" /></span></label>'
 
     if (p.precoPraticado != null) {
       html += '<p class="apoio" style="margin-top:.5rem">' + semaforo(p.semaforo) +
@@ -1496,6 +1782,7 @@ function telaPrecos () {
     'Marcar como reajustado hoje</button></div>' +
     '<p class="apoio" style="margin-top:.5rem">Congela o custo de hoje. O radar compara a alta ' +
     'dos insumos com esta data.</p>'
+  html += proximo('simulador', 'Testar uma decisão no simulador')
   return html
 }
 
@@ -1533,6 +1820,7 @@ function telaSimulador () {
   if (ui.cenario === 'insumo') html += simInsumo(f, c)
   if (ui.cenario === 'canal') html += simCanal(f, c, precos)
   if (ui.cenario === 'retirada') html += simRetirada(f, c)
+  html += proximo('tabela', 'Montar a tabela de preços para os clientes')
   return html
 }
 
@@ -1640,7 +1928,7 @@ function simRetirada (f, c) {
   const margem = f.margemDesejada != null ? f.margemDesejada : dados.negocio.margemPadrao
 
   let html = '<div class="cartao">' +
-    campo({ rotulo: 'Quanto você quer tirar por mês', placeholder: '0,00',
+    campo({ rotulo: 'Quanto você quer tirar por mês', moeda: true,
       valor: ui.retirada == null ? dados.negocio.proLabore : ui.retirada,
       acao: 'sim-retirada', foco: 'sim-retirada' }) +
     linha('Valor-hora necessário', moeda(vhNovo) + '/h') +
@@ -1650,6 +1938,132 @@ function simRetirada (f, c) {
   })
   if (!precos.length) html += '<p class="apoio">Cadastre um canal para ver o preço.</p>'
   return html + '</div>'
+}
+
+
+/* ------------------------- TABELA DE PREÇOS ------------------------- */
+
+/* preço-alvo arredondado para cima, de 10 em 10 centavos (11,23 vira 11,30) */
+function arredondaPreco (v) { return Math.ceil(v * 10 - 1e-9) / 10 }
+
+function linhasDaTabela () {
+  const usar = ui.tabelaPreco || 'praticado'
+  const canalSel = dados.canais.some(c => c.id === ui.tabelaCanal) ? ui.tabelaCanal : ''
+  const produtos = []
+  let faltando = 0
+  dados.fichas.forEach(f => {
+    const c = calcularFicha(f)
+    const itens = []
+    precosDaFicha(f, c.custoUnitario).forEach(p => {
+      if (canalSel && p.canalId !== canalSel) return
+      const v = usar === 'alvo' ? arredondaPreco(p.precoAlvo) : p.precoPraticado
+      if (v == null || !isFinite(v)) { faltando++; return }
+      itens.push({ canal: p.canalNome, valor: v })
+    })
+    if (itens.length) produtos.push({ nome: f.nome, itens: itens })
+  })
+  const canal = canalSel ? dados.canais.filter(c => c.id === canalSel)[0].nome : null
+  return { produtos: produtos, faltando: faltando, canal: canal, usar: usar }
+}
+
+/* texto no formato do WhatsApp: *asteriscos* viram negrito */
+function textoTabela (t) {
+  const nome = (dados.negocio.nome || '').trim()
+  const cabecalho = '*' + (nome ? nome + ' — ' : '') +
+    (t.canal ? 'preços em ' + t.canal : 'tabela de preços') + '*'
+  const corpo = t.canal
+    ? t.produtos.map(p => '• ' + p.nome + ': ' + moeda(p.itens[0].valor)).join('\n')
+    : t.produtos.map(p => '*' + p.nome + '*\n' +
+        p.itens.map(i => '• ' + i.canal + ': ' + moeda(i.valor)).join('\n')).join('\n\n')
+  return cabecalho + '\n\n' + corpo + '\n\nValores atualizados em ' +
+    new Date().toLocaleDateString('pt-BR') + '.'
+}
+
+function telaTabela () {
+  let html = titulo('Tabela de preços', 'Uma lista pronta para mandar aos clientes pelo WhatsApp.')
+  if (!dados.fichas.length) {
+    return html + '<div class="vazio">Crie uma ficha e informe os preços para montar a tabela.' +
+      '<div class="botoes" style="justify-content:center">' +
+      '<button class="acao" data-acao="ir" data-chave="fichas">Ir para as fichas</button></div></div>'
+  }
+  const usar = ui.tabelaPreco || 'praticado'
+  html += '<div class="cartao">' +
+    campo({ rotulo: 'Nome do negócio', valor: dados.negocio.nome || '', acao: 'nome-negocio', foco: 'nome-negocio',
+      inputmode: 'text', placeholder: 'Aparece no topo da tabela' }) +
+    '<label class="campo"><span>Canal</span><select data-acao="tabela-canal" data-foco="tabela-canal">' +
+    '<option value="">Todos os canais</option>' +
+    dados.canais.map(c => '<option value="' + c.id + '"' + (ui.tabelaCanal === c.id ? ' selected' : '') + '>' +
+      esc(c.nome) + '</option>').join('') + '</select></label>' +
+    '<fieldset><legend>Preço que vai na tabela</legend><div class="opcoes" style="flex-wrap:wrap;column-gap:1.25rem;row-gap:0">' +
+    '<label><input type="radio" name="tabela-preco" data-acao="tabela-preco" data-chave="praticado"' +
+    (usar === 'praticado' ? ' checked' : '') + ' /> O que eu cobro hoje</label>' +
+    '<label><input type="radio" name="tabela-preco" data-acao="tabela-preco" data-chave="alvo"' +
+    (usar === 'alvo' ? ' checked' : '') + ' /> O preço-alvo calculado</label></div></fieldset>' +
+    (usar === 'alvo' ? '<p class="apoio">O preço-alvo vai arredondado para cima, de 10 em 10 centavos.</p>' : '') +
+    '</div>'
+
+  const t = linhasDaTabela()
+  if (!t.produtos.length) {
+    html += '<div class="vazio">Nenhum preço para mostrar ainda. ' +
+      (usar === 'praticado'
+        ? 'Informe o preço que você cobra em <a href="#precos">Preços</a> ou escolha o preço-alvo acima.'
+        : 'Cadastre onde você vende na <a href="#base">Base</a>.') + '</div>'
+    return html + proximo('painel', 'Voltar ao painel')
+  }
+  const texto = textoTabela(t)
+  html += '<div class="cartao"><h2>Prévia</h2>' +
+    '<div class="previa" id="previa-tabela">' + esc(texto) + '</div>' +
+    (t.faltando
+      ? '<p class="apoio" style="margin-top:.5rem">' + (t.faltando === 1 ? '1 preço ficou' : t.faltando + ' preços ficaram') +
+        ' de fora porque você ainda não informou quanto cobra.</p>'
+      : '') +
+    '<div class="botoes"><button class="acao" data-acao="tabela-copiar">Copiar texto</button>' +
+    '<a class="acao secundaria" data-link="whatsapp" href="https://wa.me/?text=' + encodeURIComponent(texto) +
+    '" target="_blank" rel="noopener">Abrir no WhatsApp</a></div>' +
+    '<p class="apoio" style="margin-top:.5rem">No WhatsApp os asteriscos viram negrito. ' +
+    'Confira os valores antes de mandar.</p></div>'
+  return html + proximo('painel', 'Voltar ao painel')
+}
+
+function copiarTabela () {
+  const texto = textoTabela(linhasDaTabela())
+  const selecionar = function () {
+    const el = document.getElementById('previa-tabela')
+    try {
+      const r = document.createRange()
+      r.selectNodeContents(el)
+      const sel = window.getSelection()
+      sel.removeAllRanges()
+      sel.addRange(r)
+    } catch (e) { /* sem seleção */ }
+    avisar('Texto selecionado. Use o "Copiar" do celular.')
+  }
+  try {
+    if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('sem área de transferência')
+    navigator.clipboard.writeText(texto).then(function () {
+      avisar('Tabela copiada. Cole no WhatsApp ou onde quiser.')
+    }, selecionar)
+  } catch (e) { selecionar() }
+}
+
+
+/* ------------------------------ MODELOS ------------------------------ */
+
+function telaModelos () {
+  let html = titulo('Modelos prontos', 'Comece por um negócio parecido com o seu e troque os números pelos seus.')
+  html += '<p class="apoio" style="margin-bottom:1rem">Os números são fictícios, só para mostrar o caminho. ' +
+    'Usar um modelo substitui o que estiver cadastrado neste aparelho.</p>'
+  Object.keys(MODELOS).forEach(k => {
+    const m = MODELOS[k]
+    const emUso = dados.exemplo && dados.modelo === k
+    html += '<div class="cartao modelo"><span class="etiq-ramo">' + esc(m.ramo) + ' · ' + esc(m.porte) + '</span>' +
+      '<h2>' + esc(m.titulo) + '</h2><p class="apoio">' + esc(m.descricao) + '</p>' +
+      '<div class="botoes">' + (emUso
+        ? '<button class="acao secundaria" data-acao="ir" data-chave="painel">Em uso · ver no painel</button>'
+        : '<button class="acao" data-acao="modelo" data-chave="' + k + '">Usar este modelo</button>') +
+      '</div></div>'
+  })
+  return html
 }
 
 
@@ -1689,9 +2103,10 @@ function telaAjustes () {
       : '') +
     '</div>' +
 
-    '<div class="cartao"><h2>Demonstração</h2>' +
-    '<p class="apoio">Carrega o caso da confeitaria usado na proposta. Isto apaga o que estiver cadastrado.</p>' +
-    '<div class="botoes"><button class="acao secundaria" data-acao="exemplo">Carregar exemplo</button>' +
+    '<div class="cartao"><h2>Modelos prontos</h2>' +
+    '<p class="apoio">Confeitaria, eletricista ou loja de roupas, para começar por um negócio parecido ' +
+    'com o seu. Usar um modelo apaga o que estiver cadastrado.</p>' +
+    '<div class="botoes"><button class="acao secundaria" data-acao="ir" data-chave="modelos">Ver os modelos</button>' +
     '<button class="acao secundaria" data-acao="apagar">Apagar tudo</button></div></div>' +
 
     '<div class="cartao"><h2>Sobre os cálculos</h2>' +
@@ -1786,7 +2201,8 @@ function morfar (de, para) {
 
 const TELAS_FUNCOES = {
   painel: telaPainel, base: telaBase, insumos: telaInsumos,
-  fichas: telaFichas, precos: telaPrecos, simulador: telaSimulador, ajustes: telaAjustes
+  fichas: telaFichas, precos: telaPrecos, simulador: telaSimulador, ajustes: telaAjustes,
+  tabela: telaTabela, modelos: telaModelos
 }
 
 let telaAnterior = null
@@ -1815,7 +2231,7 @@ function render () {
 
   atualizar(document.getElementById('navegacao'), TELAS.map(t =>
     '<li><a href="#' + t.rota + '"' + (t.rota === rota ? ' class="ativo" aria-current="page"' : '') + '>' +
-    t.rotulo + '</a></li>').join(''))
+    t.icone + '<span>' + t.rotulo + '</span></a></li>').join(''))
 
   atualizar(document.getElementById('camada'), dialogoHtml())
 
@@ -1845,10 +2261,13 @@ function render () {
 }
 
 function faixaExemplo () {
+  const m = MODELOS[dados.modelo] || MODELOS.confeitaria
   return '<div class="faixa-exemplo" role="note">' +
-    '<p><strong>Você está vendo um exemplo.</strong>Os números são de uma confeitaria fictícia. ' +
-    'Para usar com o seu negócio, comece com os campos em branco.</p>' +
-    '<button class="acao" data-acao="comecar-meu">Começar com os meus dados</button></div>'
+    '<p><strong>Você está usando o modelo ' + esc(m.titulo.toLowerCase()) + '.</strong>' +
+    'Os números são fictícios. Troque pelos do seu negócio ou comece com tudo em branco.</p>' +
+    '<div class="botoes" style="margin-top:0">' +
+    '<button class="acao" data-acao="comecar-meu">Começar em branco</button>' +
+    '<button class="acao secundaria" data-acao="modelo-assumir">Adaptar este modelo</button></div></div>'
 }
 
 /* ---- diálogo de confirmação e aviso rápido ----
@@ -1868,9 +2287,72 @@ function dialogoHtml () {
     '<h2 id="dialogo-titulo">' + esc(p.titulo) + '</h2>' +
     '<p class="apoio">' + esc(p.texto) + '</p>' +
     '<div class="botoes">' +
-    '<button class="acao" data-acao="' + esc(p.acao) + '">' + esc(p.sim) + '</button>' +
-    '<button class="acao secundaria" data-acao="pergunta-cancelar">Cancelar</button>' +
+    (p.botoes
+      ? p.botoes.map((b, i) => '<button class="acao' + (i ? ' secundaria' : '') + '" data-acao="' + esc(b[1]) + '">' +
+          esc(b[0]) + '</button>').join('')
+      : '<button class="acao" data-acao="' + esc(p.acao) + '">' + esc(p.sim) + '</button>' +
+        '<button class="acao secundaria" data-acao="pergunta-cancelar">Cancelar</button>') +
     '</div></div></div>'
+}
+
+/* ---- ficha ou insumo aberto com mudança não salva ----
+   Antes, "Voltar", a barra de baixo ou o voltar do Android fechavam o editor
+   e a mudança se perdia sem aviso. */
+
+function abrirFicha (f) { ui.fichaAberta = f; ui.fichaBase = JSON.stringify(f) }
+function abrirInsumo (i) { ui.insumoAberto = i; ui.insumoBase = JSON.stringify(i) }
+
+function fecharEditores () {
+  ui.fichaAberta = null; ui.fichaBase = null
+  ui.insumoAberto = null; ui.insumoBase = null
+  ui.impacto = null
+}
+
+function editorSujo () {
+  if (ui.fichaAberta && JSON.stringify(ui.fichaAberta) !== ui.fichaBase) return 'ficha'
+  if (ui.insumoAberto && JSON.stringify(ui.insumoAberto) !== ui.insumoBase) return 'insumo'
+  return null
+}
+
+function perguntarSair () {
+  const qual = editorSujo()
+  const nome = qual === 'ficha' ? ui.fichaAberta.nome : ui.insumoAberto.nome
+  ui.pergunta = {
+    titulo: 'Sair sem salvar?',
+    texto: 'Você mudou ' + (nome ? '"' + nome + '"' : (qual === 'ficha' ? 'esta ficha' : 'este insumo')) +
+      ' e ainda não salvou.',
+    botoes: [['Salvar e sair', 'sair-salvar'], ['Sair sem salvar', 'sair-descartar'], ['Continuar editando', 'sair-ficar']]
+  }
+}
+
+function gravarFicha (f) {
+  if (f.id) {
+    dados.fichas = dados.fichas.map(x => x.id === f.id ? f : x)
+  } else {
+    f.id = novoId()
+    dados.fichas.push(f)
+  }
+}
+
+/* devolve false quando falta o nome (e deixa o editor aberto) */
+function salvarEditorAberto () {
+  if (ui.fichaAberta) {
+    if (!ui.fichaAberta.nome) { avisar('Dê um nome para a ficha.'); return false }
+    gravarFicha(ui.fichaAberta)
+    avisar('Ficha salva.')
+  } else if (ui.insumoAberto) {
+    if (!ui.insumoAberto.nome) { avisar('Dê um nome para o insumo.'); return false }
+    gravarInsumo(ui.insumoAberto)
+    avisar('Insumo salvo.')
+  }
+  fecharEditores()
+  return true
+}
+
+function irDestinoPendente () {
+  const d = ui.destinoPendente
+  ui.destinoPendente = null
+  if (d && d !== rotaAtual()) location.hash = d
 }
 
 let avisoTempo = null
@@ -1950,6 +2432,7 @@ document.addEventListener('input', function (e) {
     case 'sim-retirada': ui.retirada = el.value; break
 
     case 'backup-texto': ui.textoColado = el.value; redesenhar = false; break
+    case 'nome-negocio': dados.negocio.nome = el.value; salvar(); break
 
     default: redesenhar = false
   }
@@ -1966,6 +2449,7 @@ document.addEventListener('change', function (e) {
   const el = e.target
   const acao = el.dataset.acao
   if (!acao) return
+  if (el.tagName === 'INPUT' && el.type === 'text') { setTimeout(render, 0); return }
 
   switch (acao) {
     case 'porte':
@@ -1978,6 +2462,8 @@ document.addEventListener('change', function (e) {
     case 'sim-ficha': ui.simFicha = el.value; ui.simCanal = null; ui.simInsumo = null; render(); break
     case 'sim-canal': ui.simCanal = el.value; render(); break
     case 'sim-insumo': ui.simInsumo = el.value; render(); break
+    case 'tabela-canal': ui.tabelaCanal = el.value; render(); break
+    case 'tabela-preco': ui.tabelaPreco = el.dataset.chave; render(); break
   }
 })
 
@@ -2013,12 +2499,14 @@ document.addEventListener('click', function (e) {
 
     /* insumos */
     case 'insumo-novo':
-      ui.insumoAberto = { id: null, nome: '', unidade: 'g', quantidadeEmbalagem: 0, precoEmbalagem: 0, fornecedor: '', historico: [] }
+      abrirInsumo({ id: null, nome: '', unidade: 'g', quantidadeEmbalagem: 0, precoEmbalagem: 0, fornecedor: '', historico: [] })
       break
     case 'insumo-abrir':
-      ui.insumoAberto = JSON.parse(JSON.stringify(dados.insumos.filter(x => x.id === chave)[0]))
+      abrirInsumo(JSON.parse(JSON.stringify(dados.insumos.filter(x => x.id === chave)[0])))
       break
-    case 'insumo-fechar': ui.insumoAberto = null; break
+    case 'insumo-fechar':
+      if (editorSujo()) { ui.destinoPendente = null; perguntarSair(); break }
+      fecharEditores(); break
     case 'insumo-excluir':
       perguntar('Excluir ' + (ui.insumoAberto.nome || 'este insumo') + '?',
         'Ele também sai de todas as fichas que o usam.', 'Excluir', 'insumo-excluir-sim')
@@ -2029,7 +2517,7 @@ document.addEventListener('click', function (e) {
       dados.fichas.forEach(fi => {
         fi.itens = (fi.itens || []).filter(it => it.insumoId !== ui.insumoAberto.id)
       })
-      ui.insumoAberto = null
+      fecharEditores()
       break
     case 'insumo-salvar': {
       const novo = ui.insumoAberto
@@ -2047,21 +2535,25 @@ document.addEventListener('click', function (e) {
         }
       }
       gravarInsumo(novo)
-      ui.insumoAberto = null
+      fecharEditores()
+      avisar('Insumo salvo.')
       break
     }
     case 'impacto-confirmar':
       gravarInsumo(ui.insumoAberto)
-      ui.impacto = null; ui.insumoAberto = null
+      fecharEditores()
+      avisar('Preço atualizado nas fichas.')
       break
     case 'impacto-cancelar': ui.impacto = null; break
 
     /* fichas */
-    case 'ficha-nova': ui.fichaAberta = fichaVazia(); break
+    case 'ficha-nova': abrirFicha(fichaVazia()); break
     case 'ficha-abrir':
-      ui.fichaAberta = JSON.parse(JSON.stringify(dados.fichas.filter(x => x.id === chave)[0]))
+      abrirFicha(JSON.parse(JSON.stringify(dados.fichas.filter(x => x.id === chave)[0])))
       break
-    case 'ficha-fechar': ui.fichaAberta = null; break
+    case 'ficha-fechar':
+      if (editorSujo()) { ui.destinoPendente = null; perguntarSair(); break }
+      fecharEditores(); break
     case 'ficha-excluir':
       perguntar('Excluir ' + (ui.fichaAberta.nome || 'esta ficha') + '?',
         'A ficha e os preços cadastrados nela serão apagados.', 'Excluir', 'ficha-excluir-sim')
@@ -2069,19 +2561,36 @@ document.addEventListener('click', function (e) {
     case 'ficha-excluir-sim':
       ui.pergunta = null
       dados.fichas = dados.fichas.filter(x => x.id !== ui.fichaAberta.id)
-      ui.fichaAberta = null
+      fecharEditores()
       break
     case 'ficha-salvar': {
       if (!f.nome) { avisar('Dê um nome para a ficha.'); focar('fic-nome'); return }
-      if (f.id) {
-        dados.fichas = dados.fichas.map(x => x.id === f.id ? f : x)
-      } else {
-        f.id = novoId()
-        dados.fichas.push(f)
-      }
-      ui.fichaAberta = null
+      gravarFicha(f)
+      fecharEditores()
+      avisar('Ficha salva.')
       break
     }
+
+    /* respostas do "Sair sem salvar?" */
+    case 'sair-salvar': {
+      ui.pergunta = null
+      const qual = editorSujo()
+      if (!salvarEditorAberto()) {
+        ui.destinoPendente = null
+        salvar(); render()
+        focar(qual === 'insumo' ? 'ins-nome' : 'fic-nome')
+        return
+      }
+      salvar()
+      irDestinoPendente()
+      break
+    }
+    case 'sair-descartar':
+      ui.pergunta = null
+      fecharEditores()
+      irDestinoPendente()
+      break
+    case 'sair-ficar': ui.pergunta = null; ui.destinoPendente = null; break
     case 'item-adicionar': {
       if (!ui.itemInsumo) { avisar('Escolha o insumo na lista.'); return }
       const insumo = insumosPorId()[ui.itemInsumo]
@@ -2105,22 +2614,37 @@ document.addEventListener('click', function (e) {
     /* simulador */
     case 'cenario': ui.cenario = chave; break
 
-    /* ajustes */
+    /* modelos prontos ("exemplo" continua valendo: é o modelo da confeitaria) */
     case 'exemplo':
-      if (dados.fichas.length || dados.insumos.length) {
-        perguntar('Carregar o exemplo?', 'Isto apaga o que está cadastrado neste aparelho.',
-          'Carregar exemplo', 'exemplo-sim')
+    case 'modelo': {
+      const qual = acao === 'exemplo' ? 'confeitaria' : chave
+      ui.modeloPendente = qual
+      if (!dados.exemplo && (dados.fichas.length || dados.insumos.length)) {
+        perguntar('Usar o modelo ' + MODELOS[qual].titulo.toLowerCase() + '?',
+          'Isto apaga o que está cadastrado neste aparelho. Se quiser guardar, faça um backup antes.',
+          'Usar o modelo', 'modelo-sim')
         break
       }
-      carregarExemplo()
-      avisar('Exemplo carregado.')
+      fecharEditores()
+      carregarModelo(qual)
+      avisar('Modelo carregado: ' + MODELOS[qual].titulo.toLowerCase() + '.')
       location.hash = 'painel'
       break
+    }
     case 'exemplo-sim':
+    case 'modelo-sim': {
       ui.pergunta = null
-      carregarExemplo()
-      avisar('Exemplo carregado.')
+      const qual = ui.modeloPendente || 'confeitaria'
+      fecharEditores()
+      carregarModelo(qual)
+      avisar('Modelo carregado: ' + MODELOS[qual].titulo.toLowerCase() + '.')
       location.hash = 'painel'
+      break
+    }
+    case 'modelo-assumir':
+      dados.exemplo = false
+      delete dados.modelo
+      avisar('Pronto, agora é seu. Troque os números pelos do seu negócio, começando pela Base.')
       break
     case 'apagar':
       perguntar('Apagar tudo?', 'Base, canais, insumos e fichas deste aparelho serão apagados. ' +
@@ -2128,16 +2652,18 @@ document.addEventListener('click', function (e) {
       break
     case 'apagar-sim':
       ui.pergunta = null
+      fecharEditores()
       dados = { negocio: Object.assign({}, NEGOCIO_PADRAO), canais: [], insumos: [], fichas: [] }
       ui.mensagem = 'Tudo apagado.'
       break
     case 'comecar-meu':
-      perguntar('Começar com os seus dados?',
-        'O exemplo da confeitaria sai deste aparelho e todos os campos ficam em branco para você ' +
+      perguntar('Começar em branco?',
+        'Os números do modelo saem deste aparelho e todos os campos ficam em branco para você ' +
         'preencher, começando pela base do negócio.', 'Começar em branco', 'comecar-meu-sim')
       break
     case 'comecar-meu-sim':
       ui.pergunta = null
+      fecharEditores()
       dados = { negocio: Object.assign({}, NEGOCIO_PADRAO), canais: [], insumos: [], fichas: [] }
       salvar()
       avisar('Campos em branco. Comece pela base do negócio.')
@@ -2148,6 +2674,7 @@ document.addEventListener('click', function (e) {
 
     case 'backup-baixar': baixarBackup(); return
     case 'backup-copiar': copiarBackup(); return
+    case 'tabela-copiar': copiarTabela(); return
     case 'backup-restaurar': document.getElementById('arquivo-backup').click(); return
     case 'backup-colar': ui.colando = true; ui.mostrarBackup = false; ui.mensagem = null; render(); focar('backup-texto'); return
     case 'backup-colar-cancelar': ui.colando = false; ui.textoColado = ''; break
@@ -2312,6 +2839,7 @@ function restaurarDeTexto (texto) {
     d.insumos = d.insumos || []
     d.fichas = d.fichas || []
     if (d.exemplo === undefined) d.exemplo = pareceExemplo(d)
+    if (d.exemplo && !d.modelo) d.modelo = 'confeitaria'
     dados = d
     salvar()
     ui.mensagem = 'Backup restaurado.'
@@ -2366,15 +2894,38 @@ document.addEventListener('keydown', function (e) {
   }
 })
 
+let rotaMostrada = rotaAtual()
+let ignorarHash = false
+
 window.addEventListener('hashchange', function () {
-  ui.fichaAberta = null
-  ui.insumoAberto = null
-  ui.impacto = null
+  if (ignorarHash) { ignorarHash = false; return }
+  if (editorSujo()) {
+    /* volta o endereço para o editor e pergunta antes de sair */
+    ui.destinoPendente = rotaAtual()
+    try {
+      history.pushState(null, '', '#' + rotaMostrada)
+    } catch (e) {
+      ignorarHash = true
+      location.hash = rotaMostrada
+    }
+    perguntarSair()
+    render()
+    return
+  }
+  rotaMostrada = rotaAtual()
+  fecharEditores()
   ui.mensagem = null
   ui.pergunta = null
   ui.colando = false
   ui.mostrarBackup = false
   render()
+})
+
+/* fechar a aba ou recarregar com ficha não salva: o navegador pergunta */
+window.addEventListener('beforeunload', function (e) {
+  if (!editorSujo()) return
+  e.preventDefault()
+  e.returnValue = ''
 })
 
 render()
@@ -2383,7 +2934,6 @@ render()
 <p class="rodape-aviso">
   Ferramenta de apoio gerencial. Não substitui a contabilidade nem cumpre obrigação fiscal.
   Seus dados ficam guardados apenas neste navegador.
-  <a href="index.html">Sobre o projeto</a>
 </p>
 </body>
 </html>
